@@ -3,6 +3,9 @@
 
 
 int main() {
-    std::list<int> l;
+    List<int> l;
+    (void) l;
+    // for (int i = 1; i < 11; i++)
+        // l.push_back(i);
     return 0;
 }
