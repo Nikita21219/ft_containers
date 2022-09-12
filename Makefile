@@ -1,4 +1,4 @@
-NAME = container
+NAME = containers
 CC = c++
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
