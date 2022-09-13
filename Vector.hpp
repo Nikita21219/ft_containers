@@ -45,6 +45,14 @@ public:
     };
 
     reference operator[] (size_type n) const {return *(arr + n);};
+    size_type capacity() const {return cp;};
+    size_type size() const {return sz;};
+    bool empty() const {return sz == 0;};
+    reference front() {return arr[0];}
+    const_reference front() const {return arr[0];}
+    reference back() {return arr[sz - 1];}
+    const_reference back() const {return arr[sz - 1];}
+
     vector& operator= (const vector& x) {
         sz = x.size();
         cp = x.capacity();
@@ -53,9 +61,7 @@ public:
             this->alloc.construct(arr + i, x[i]);
         return *this;
     };
-    size_type capacity() const {return cp;};
-    size_type size() const {return sz;};
-    bool empty() const {return sz == 0;};
+
     void reserve(size_type new_cap) {
         cp = new_cap;
         value_type *old_arr = arr;
@@ -63,6 +69,7 @@ public:
         for (size_t i = 0; i < sz; ++i)
             this->alloc.construct(arr + i, old_arr[i]);
     };
+
     reference at(size_type n) {
         if (n >= sz || n < 0)
             throw std::out_of_range("out of range");
@@ -73,14 +80,6 @@ public:
         if (n >= sz || n < 0)
             throw std::out_of_range("out of range");
         return arr[n];
-    }
-
-    reference front() {
-        
-    }
-
-    const_reference front() const {
-
     }
 
 private:

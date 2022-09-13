@@ -61,7 +61,15 @@ int main() {
     // }
 
     {
-        std::vector<int> v;
+        std::vector<int> v(5, 5);
+        int &val = v.front();
+        val = 99;
+        std::cout << v.at(0) << std::endl;
+
+        vector<int> v2(5, 5);
+        int &val2 = v2.front();
+        val2 = 99;
+        std::cout << v2.at(0) << std::endl;
     }
 
     return 0;
