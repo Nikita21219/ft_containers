@@ -4,14 +4,13 @@ struct Node;
 
 template <typename T, typename Alloc = std::allocator<T> >
 class List {
-public:
-
     typedef struct Node {
         T data;
         struct Node *next;
         struct Node *prev;
     } Node;
 
+public:
     typedef Alloc allocator_type;
     typedef T value_type;
     typedef size_t size_type;
@@ -55,14 +54,10 @@ public:
         sz += 1;
     }
 
-    // ~List();
-    // List<T> &operator=(const List &st); //TODO return value is const or not????
-    // bool empty();
-    // T &top();
-    // void push(const T &val);
-    // void emplace(const T &val);
-    // void pop();
-    // size_t size();
+    template<typename _Tp>
+    struct iterator {
+        
+    };
 
 private:
     Node *list;

@@ -5,9 +5,6 @@
 #include <iostream>
 #include <stack>
 
-#include "List.hpp"
-#include "List.tpp"
-#include "Stack.hpp"
-#include "Stack.tpp"
+#include "Vector.hpp"
 
 #endif

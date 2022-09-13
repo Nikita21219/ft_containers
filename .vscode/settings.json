@@ -78,6 +78,7 @@
         "ranges": "cpp",
         "stop_token": "cpp",
         "*.tpp": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "__functional_03": "cpp"
     }
 }
