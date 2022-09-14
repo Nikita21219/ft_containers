@@ -61,15 +61,25 @@ int main() {
     // }
 
     {
-        std::vector<int> v(5, 5);
-        int &val = v.front();
-        val = 99;
-        std::cout << v.at(0) << std::endl;
+        // std::vector<int> v;
+        // for (size_t i = 0; i < 10; i++) {
+        //     v.push_back(i);
+        //     std::cout << "Capacity: " << v.capacity();
+        //     std::cout << " Size: " << v.size();
+        //     std::cout << " Element: " << v[i];
+        //     std::cout << std::endl;
+        // }
+        // std::cout << std::endl;
 
-        vector<int> v2(5, 5);
-        int &val2 = v2.front();
-        val2 = 99;
-        std::cout << v2.at(0) << std::endl;
+        vector<int> ft_v;
+        for (size_t i = 0; i < 10; i++) {
+            ft_v.push_back(i);
+            std::cout << "Capacity: " << ft_v.capacity();
+            std::cout << " Size: " << ft_v.size();
+            std::cout << " Element: " << ft_v[i];
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
     }
 
     return 0;

@@ -13,7 +13,7 @@ public:
 
     explicit vector(const allocator_type& alloc = allocator_type()) {
         (void) alloc;
-        cp = 0;
+        cp = 1;
         sz = 0;
         arr = this->alloc.allocate(1);
     };
@@ -80,6 +80,18 @@ public:
         if (n >= sz || n < 0)
             throw std::out_of_range("out of range");
         return arr[n];
+    }
+
+    void push_back(const value_type& val) {
+        (void) val;
+        if (sz == cp) {
+            reserve(cp * 2);
+            arr[sz] = val;
+        } else {
+            arr[sz] = val;
+            std::cout << "";
+        }
+        sz += 1;
     }
 
 private:
