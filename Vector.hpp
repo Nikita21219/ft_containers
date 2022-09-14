@@ -71,6 +71,7 @@ public:
     friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
 
     void reserve(size_type new_cap) {
+        if (new_cap < cp) return;
         cp = new_cap;
         value_type *old_arr = arr;
         arr = this->alloc.allocate(sizeof(value_type) * cp);
@@ -103,6 +104,22 @@ public:
     void pop_back() {
         alloc.destroy(arr + (sz - 1));
         sz -= 1;
+    };
+
+    void swap(vector& x) {
+        value_type tmp_val;
+        size_type x_size = x.size();
+        size_type min_size = x_size < sz ? x_size : sz;
+        size_type x_capacity = x.capacity();
+        if (cp != x_capacity) {
+            x.reserve(cp);
+            reserve(x_capacity);
+        }
+        for (size_type i = 0; i < min_size; i++) {
+            tmp_val = arr[i];
+            arr[i] = x[i];
+            x[i] = tmp_val;
+        }
     };
 
 private:
