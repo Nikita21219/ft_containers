@@ -96,6 +96,11 @@ public:
         alloc.destroy(arr + (sz - 1));
         sz -= 1;
     }
+    
+    // void swap(vector& other) {
+
+    // }
+
 
 private:
     value_type *arr;

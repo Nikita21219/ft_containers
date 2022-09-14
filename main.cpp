@@ -61,7 +61,9 @@ int main() {
     // }
 
     {
-           
+        std::vector<int> v1(5, 5);
+        std::vector<int> v2(5, 5);
+        std::cout << v1 == v2 << std::endl;
     }
 
     return 0;
