@@ -25,10 +25,7 @@ public:
         arr = this->alloc.allocate(sizeof(value_type) * n);
         for (size_t i = 0; i < sz; ++i)
             this->alloc.construct(arr + i, val);
-    }
-
-    // template <class InputIterator>
-    // vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+    };
 
     vector(const vector& x) {
         sz = x.size();
@@ -36,7 +33,7 @@ public:
         arr = this->alloc.allocate(sizeof(value_type) * cp);
         for (size_t i = 0; i < cp; ++i)
             this->alloc.construct(arr + i, x[i]);
-    }
+    };
 
     ~vector() {
         for (size_t i = 0; i < sz; ++i)
@@ -48,10 +45,10 @@ public:
     size_type capacity() const {return cp;};
     size_type size() const {return sz;};
     bool empty() const {return sz == 0;};
-    reference front() {return arr[0];}
-    const_reference front() const {return arr[0];}
-    reference back() {return arr[sz - 1];}
-    const_reference back() const {return arr[sz - 1];}
+    reference front() {return arr[0];};
+    const_reference front() const {return arr[0];};
+    reference back() {return arr[sz - 1];};
+    const_reference back() const {return arr[sz - 1];};
 
     vector& operator= (const vector& x) {
         sz = x.size();
@@ -61,6 +58,17 @@ public:
             this->alloc.construct(arr + i, x[i]);
         return *this;
     };
+
+    friend bool operator==(const vector& lhs, const vector& rhs) {
+        size_type size = lhs.size();
+        if (size != rhs.size()) return false;
+        for (size_t i = 0; i < size; i++)
+            if (lhs[i] != rhs[i])
+                return false;
+        return true;
+    };
+
+    friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
 
     void reserve(size_type new_cap) {
         cp = new_cap;
@@ -74,13 +82,13 @@ public:
         if (n >= sz || n < 0)
             throw std::out_of_range("out of range");
         return arr[n];
-    }
+    };
 
     const_reference at (size_type n) const {
         if (n >= sz || n < 0)
             throw std::out_of_range("out of range");
         return arr[n];
-    }
+    };
 
     void push_back(const value_type& val) {
         if (sz == cp) {
@@ -90,17 +98,12 @@ public:
             arr[sz] = val;
         }
         sz += 1;
-    }
+    };
 
     void pop_back() {
         alloc.destroy(arr + (sz - 1));
         sz -= 1;
-    }
-    
-    // void swap(vector& other) {
-
-    // }
-
+    };
 
 private:
     value_type *arr;
