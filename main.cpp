@@ -94,8 +94,20 @@ int main() {
     //         std::cout << "v1: " << v1[i] << std::endl;
     // }
 
+    // {
+    //     std::vector<int*> v1;
+    //     v1.reserve(10);
+    //     v1.push_back(new int(10));
+    //     v1.clear();
+    // }
+
     {
-        std::vector<int> v1;
+        vector<int*> v1;
+        v1.reserve(10);
+        v1.push_back(new int(10));
+        v1.clear();
+        vector<int*> v2;
+        v1.swap(v2);       
     }
     return 0;
 }

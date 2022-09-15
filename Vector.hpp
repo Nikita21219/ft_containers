@@ -36,8 +36,7 @@ public:
     };
 
     ~vector() {
-        for (size_t i = 0; i < sz; ++i)
-            this->alloc.destroy(arr + i);
+        this->clear();
         this->alloc.deallocate(arr, cp);
     };
 
@@ -117,6 +116,20 @@ public:
     value_type* data() {return &this->arr.front();}
 
     const value_type* data() const {return &this->arr.front();}
+
+    void swap (vector& x) {
+        size_type tmp_sz = x.size();
+        size_type tmp_cp = x.capacity();
+        value_type *tmp_arr = arr;
+
+        x.cp = cp;
+        cp = tmp_cp;
+        x.sz = sz;
+        sz = tmp_sz;
+
+        arr = x.arr;
+        x.arr = tmp_arr;
+    }
 
 private:
     value_type *arr;

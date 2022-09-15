@@ -6,5 +6,6 @@
 #include <stack>
 
 #include "Vector.hpp"
+#include "Iterator.hpp"
 
 #endif
