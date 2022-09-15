@@ -13,9 +13,9 @@ public:
 
     explicit vector(const allocator_type& alloc = allocator_type()) {
         (void) alloc;
-        cp = 1;
+        cp = 0;
         sz = 0;
-        arr = this->alloc.allocate(1);
+        arr = this->alloc.allocate(0);
     };
 
     explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) {
@@ -49,6 +49,8 @@ public:
     const_reference front() const {return arr[0];};
     reference back() {return arr[sz - 1];};
     const_reference back() const {return arr[sz - 1];};
+    allocator_type get_allocator() const {return this->alloc;}
+    friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
 
     vector& operator= (const vector& x) {
         sz = x.size();
@@ -68,7 +70,6 @@ public:
         return true;
     };
 
-    friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
 
     void reserve(size_type new_cap) {
         if (new_cap < cp) return;
@@ -93,6 +94,7 @@ public:
 
     void push_back(const value_type& val) {
         if (sz == cp) {
+            if (cp == 0) cp = 1;
             reserve(cp * 2);
             arr[sz] = val;
         } else {
@@ -106,25 +108,25 @@ public:
         sz -= 1;
     };
 
-    void swap(vector& x) {
-        value_type tmp_val;
-        size_type x_size = x.size();
-        size_type min_size = x_size < sz ? x_size : sz;
-        size_type x_capacity = x.capacity();
-        if (cp != x_capacity) {
-            x.reserve(cp);
-            reserve(x_capacity);
-        }
-        for (size_type i = 0; i < min_size; i++) {
-            tmp_val = arr[i];
-            arr[i] = x[i];
-            x[i] = tmp_val;
-        }
-    };
+    void clear() {
+        for (size_type i = 0; i < sz; i++)
+            this->alloc.destroy(arr + i);
+        sz = 0;
+    }
+
+    value_type* data() {return &this->arr.front();}
+
+    const value_type* data() const {return &this->arr.front();}
 
 private:
     value_type *arr;
     size_type sz;
     size_type cp;
     allocator_type alloc;
+
+    void free_arr() {
+        for (size_type i = 0; i < sz; i++)
+            this->alloc.destroy(arr + i);
+        this->alloc.deallocate(arr);
+    } // TODO not used (I think)
 };

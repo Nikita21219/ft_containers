@@ -3,6 +3,25 @@
 #include <list> //TODO tmp line
 #include <vector> //TODO tmp line
 
+template <typename T>
+void print_info(std::vector<T> &v) {
+    std::cout << "size = " << v.size() << std::endl;
+    std::cout << "cap = " << v.capacity() << std::endl;
+    std::cout << "vector: ";
+    for (size_t i = 0; i < v.size(); i++)
+        std::cout << v[i] << " ";
+    std::cout << std::endl << std::endl;
+} //TODO delene func
+
+template <typename T>
+void print_info(vector<T> &v) {
+    std::cout << "size = " << v.size() << std::endl;
+    std::cout << "cap = " << v.capacity() << std::endl;
+    std::cout << "vector: ";
+    for (size_t i = 0; i < v.size(); i++)
+        std::cout << v[i] << " ";
+    std::cout << std::endl << std::endl;
+} //TODO delene func
 
 int main() {
 
@@ -75,41 +94,8 @@ int main() {
     //         std::cout << "v1: " << v1[i] << std::endl;
     // }
 
-    // {
-    //     std::vector<int> v1;
-    //     std::vector<int> v2(5, 5);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(15);
-    //     v1.swap(v2);
-    //     std::cout << "v2.size() = " << v2.size() << std::endl;
-    //     std::cout << "v2.capacity() = " << v2.capacity() << std::endl;
-    //     for (size_t i = 0; i < v2.size(); i++)
-    //         std::cout << "v2: " << v2[i] << std::endl;
-    // }
-    // std::cout << std::endl;
-    // {
-    //     vector<int> v1;
-    //     vector<int> v2(5, 5);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(10);
-    //     v1.push_back(15);
-    //     v1.swap(v2);
-    //     std::cout << "v2.size() = " << v2.size() << std::endl;
-    //     std::cout << "v2.capacity() = " << v2.capacity() << std::endl;
-    //     for (size_t i = 0; i < v2.size(); i++)
-    //         std::cout << "v2: " << v2[i] << std::endl;
-    // }
-
-
-
+    {
+        std::vector<int> v1;
+    }
     return 0;
 }
