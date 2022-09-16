@@ -137,23 +137,23 @@ int main() {
         ft::vector<int> v1;
         for (size_t i = 0; i < 30; i++) v1.push_back(i);
 
-        for (ft::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) {
-            *it = 999;
-            std::cout << *it << " ";
-        }
-        std::cout << std::endl;
+        // ft::vector<int>::iter
+
+        // ft::vector<int>::iter it = v1.begin();
+        // std::cout << *it << std::endl;
+
     }
 
-    {
-        std::vector<int> v1;
-        for (size_t i = 0; i < 30; i++) v1.push_back(i);
+    // {
+    //     std::vector<int> v1;
+    //     for (size_t i = 0; i < 30; i++) v1.push_back(i);
 
-        for (std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) {
-            *it = 999;
-            std::cout << *it << " ";
-        }
-        std::cout << std::endl;
-    }
+    //     for (std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) {
+    //         *it = 999;
+    //         std::cout << *it << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
 
     return 0;
 }

@@ -14,14 +14,14 @@ namespace ft {
     typedef          difference_type             distance_type;
     };
 
-    // template <typename T>
-    // struct iterator_traits<T *> {
-    //     typedef random_access_iterator_tag  iterator_category;
-    //     typedef T                           value_type;
-    //     typedef ptrdiff_t                   distance_type;
-    //     typedef T                           *pointer;
-    //     typedef T&                          reference;
-    // };
+    template <typename T>
+    struct iterator_traits<T *> {
+        typedef random_access_iterator_tag  iterator_category;
+        typedef T                           value_type;
+        typedef ptrdiff_t                   distance_type;
+        typedef T                           *pointer;
+        typedef T&                          reference;
+    };
 
     template<
         bool isConst,
@@ -37,10 +37,11 @@ namespace ft {
         typedef Distance    difference_type;
         typedef Pointer     pointer;
         typedef Reference   reference;
+        typedef std::conditional<isConst, const pointer, pointer> conditional_ptr;
 
-        iterator(value_type *ptr = NULL) {this->ptr = ptr;};
-        ~iterator() {};
-        
+        iterator(conditional_ptr ptr) {this->ptr = ptr;};
+        conditional_ptr operator*()                           {return *ptr;};
+        /*        
         iterator& operator++() {
             ptr++;
             return *this;
@@ -87,9 +88,9 @@ namespace ft {
         pointer operator->()                            {return ptr;}
         bool operator ==(const iterator &other) const   {return ptr == other.ptr;}
         bool operator !=(const iterator &other) const   {return !(*this == other);}
-        reference operator*()                           {return *ptr;};
+        */
 
     private:
-        pointer ptr;
+        conditional_ptr ptr;
     };
 }

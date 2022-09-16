@@ -5,13 +5,15 @@ namespace ft {
     template <typename T, typename Alloc = std::allocator<T> >
     class vector {
     public:
-        typedef          Alloc                                                   allocator_type;
-        typedef typename allocator_type::reference                               reference;
-        typedef typename allocator_type::const_reference                         const_reference;
-        typedef          T                                                       value_type;
-        typedef          size_t                                                  size_type;
-        typedef          iterator<false, random_access_iterator_tag, value_type> iterator;
+        typedef          Alloc                                                       allocator_type;
+        typedef typename allocator_type::reference                                   reference;
+        typedef typename allocator_type::const_reference                             const_reference;
+        typedef          T                                                           value_type;
+        typedef          size_t                                                      size_type;
+        typedef          iterator<false, ft::random_access_iterator_tag, value_type> iterator;
         // typedef          iterator<true, random_access_iterator_tag, value_type>  const_iterator;
+
+        
 
         explicit vector(const allocator_type& alloc = allocator_type()) {
             cp = 0;
@@ -52,8 +54,8 @@ namespace ft {
         const_reference back() const                                 {return arr[sz - 1];}
         allocator_type get_allocator() const                         {return this->alloc;}
         friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
-        iterator begin()                                             {return iterator(arr);}
-        iterator end()                                               {return iterator(arr + sz);}
+        value_type *begin()                                              {return iter(arr);}
+        // iterator end()                                               {return iterator(arr + sz);}
 
         vector& operator= (const vector& x) {
             sz = x.size();
