@@ -54,11 +54,6 @@ public:
         sz += 1;
     }
 
-    template<typename _Tp>
-    struct iterator {
-        
-    };
-
 private:
     Node *list;
     size_type sz;

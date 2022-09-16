@@ -14,7 +14,7 @@ void print_info(std::vector<T> &v) {
 } //TODO delene func
 
 template <typename T>
-void print_info(vector<T> &v) {
+void print_info(ft::vector<T> &v) {
     std::cout << "size = " << v.size() << std::endl;
     std::cout << "cap = " << v.capacity() << std::endl;
     std::cout << "vector: ";
@@ -102,12 +102,23 @@ int main() {
     // }
 
     {
-        vector<int*> v1;
-        v1.reserve(10);
-        v1.push_back(new int(10));
-        v1.clear();
-        vector<int*> v2;
-        v1.swap(v2);       
+        ft::vector<int> v1;
+        for (size_t i = 0; i < 5; i++)
+            v1.push_back(i);
+        ft::iterator<ft::random_access_iterator, int> it = v1.begin();
+        std::cout << *it << std::endl;
+        it++;
+        std::cout << *it << std::endl;
+    }
+    std::cout << "\n";
+    {
+        std::vector<int> v1;
+        for (size_t i = 0; i < 5; i++)
+            v1.push_back(i);
+        std::vector<int>::iterator it = v1.begin();
+        std::cout << *it << std::endl;
+        it++;
+        std::cout << *it << std::endl;
     }
     return 0;
 }
