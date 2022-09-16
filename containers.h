@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <stack>
+#include <unistd.h>
 
 #include "Vector.hpp"
 // #include "Iterator.hpp"

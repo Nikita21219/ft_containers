@@ -23,6 +23,20 @@ void print_info(ft::vector<T> &v) {
     std::cout << std::endl << std::endl;
 } //TODO delene func
 
+class Test {
+public:
+    Test() {arr = new int(5);}
+    ~Test() {}
+private:
+    int *arr;
+};
+
+void foo() {
+    int *test;
+    test = new int(5);
+    std::cout << sizeof(test) << std::endl;
+}
+
 int main() {
 
     // Constructor and copy constructor
@@ -101,24 +115,45 @@ int main() {
     //     v1.clear();
     // }
 
+    // {
+    //     ft::vector<int> v1;
+    //     for (size_t i = 2; i < 40; i *= 2)
+    //         v1.push_back(i);
+    //     for (ft::vector<int>::iterator it = v1.begin(); it != v1.end(); it++)
+    //         std::cout << *it << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << "\n";
+    // {
+    //     std::vector<int> v1;
+    //     for (size_t i = 2; i < 40; i *= 2)
+    //         v1.push_back(i);
+    //     for (std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++)
+    //         std::cout << *it << " ";
+    //     std::cout << std::endl;
+    // }
+
     {
         ft::vector<int> v1;
-        for (size_t i = 0; i < 5; i++)
-            v1.push_back(i);
-        ft::iterator<ft::random_access_iterator, int> it = v1.begin();
-        std::cout << *it << std::endl;
-        it++;
-        std::cout << *it << std::endl;
+        for (size_t i = 0; i < 30; i++) v1.push_back(i);
+
+        for (ft::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) {
+            *it = 999;
+            std::cout << *it << " ";
+        }
+        std::cout << std::endl;
     }
-    std::cout << "\n";
+
     {
         std::vector<int> v1;
-        for (size_t i = 0; i < 5; i++)
-            v1.push_back(i);
-        std::vector<int>::iterator it = v1.begin();
-        std::cout << *it << std::endl;
-        it++;
-        std::cout << *it << std::endl;
+        for (size_t i = 0; i < 30; i++) v1.push_back(i);
+
+        for (std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) {
+            *it = 999;
+            std::cout << *it << " ";
+        }
+        std::cout << std::endl;
     }
+
     return 0;
 }
