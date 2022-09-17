@@ -136,12 +136,16 @@ int main() {
     {
         ft::vector<int> v1;
         for (size_t i = 0; i < 30; i++) v1.push_back(i);
-
-        // ft::vector<int>::iter
-
         ft::vector<int>::iterator it = v1.begin();
-        std::cout << *it << std::endl;
+        ++it;
+        std::cout << it[1] << std::endl;
+    }
 
+    {
+        std::vector<int> v1;
+        for (size_t i = 0; i < 30; i++) v1.push_back(i);
+        std::vector<int>::iterator it = v1.begin();
+        ++it;
     }
 
     // {

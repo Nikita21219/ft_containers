@@ -10,7 +10,7 @@ namespace ft {
         typedef typename allocator_type::const_reference                             const_reference;
         typedef          T                                                           value_type;
         typedef          size_t                                                      size_type;
-        typedef          Iterator<false, ft::random_access_iterator_tag, value_type> iterator;
+        typedef          iterator<false, ft::random_access_iterator_tag, value_type> iterator;
         // typedef          iterator<true, random_access_iterator_tag, value_type>  const_iterator;
 
         
@@ -54,12 +54,15 @@ namespace ft {
         const_reference back() const                                 {return arr[sz - 1];}
         allocator_type get_allocator() const                         {return this->alloc;}
         friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
+
         iterator begin() {
-            Iterator<false, ft::random_access_iterator_tag, value_type> it(arr);
+            ft::iterator<false, ft::random_access_iterator_tag, value_type> it(arr);
             return it;
-            // return iterator(arr);
         }
-        // iterator end()                                               {return iterator(arr + sz);}
+
+        // iterator end() {
+        //     return iterator(arr + sz);
+        // }
 
         vector& operator= (const vector& x) {
             sz = x.size();

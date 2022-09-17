@@ -30,7 +30,7 @@ namespace ft {
         class Distance = ptrdiff_t,
         class Pointer = T*,
         class Reference = T&
-    > class Iterator {
+    > class iterator {
     public:
         typedef Category    iterator_category;
         typedef T           value_type;
@@ -40,30 +40,30 @@ namespace ft {
         typedef typename std::conditional<isConst, const pointer, pointer>::type conditional_ptr;
         typedef typename std::conditional<isConst, const reference, reference>::type conditional_ref;
 
-        Iterator(conditional_ptr ptr) {this->ptr = ptr;};
+        iterator(conditional_ptr ptr) {this->ptr = ptr;};
         conditional_ref operator*()                           {return *ptr;};
-        /*        
-        iterator& operator++() {
+        
+        iterator operator++() {
             ptr++;
             return *this;
         };
         
-        iterator& operator+=(int n) {
+        iterator operator+=(int n) {
             ptr += n;
             return *this;
         };
         
-        iterator& operator-=(int n) {
+        iterator operator-=(int n) {
             ptr -= n;
             return *this;
         };
         
-        iterator& operator+(int n) {
+        iterator operator+(int n) {
             ptr += n;
             return *this;
         };
         
-        iterator& operator-(int n) {
+        iterator operator-(int n) {
             ptr -= n;
             return *this;
         };
@@ -74,7 +74,7 @@ namespace ft {
             return it;
         };
         
-        iterator& operator--() {
+        iterator operator--() {
             ptr--;
             return *this;
         };
@@ -85,11 +85,9 @@ namespace ft {
             return it;
         };
 
-        reference operator[](int idx)                   {return *(ptr + idx);}
-        pointer operator->()                            {return ptr;}
+        conditional_ref operator[](int idx)                   {return *(ptr + idx);}
         bool operator ==(const iterator &other) const   {return ptr == other.ptr;}
         bool operator !=(const iterator &other) const   {return !(*this == other);}
-        */
 
     private:
         conditional_ptr ptr;
