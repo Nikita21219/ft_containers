@@ -139,8 +139,8 @@ int main() {
 
         // ft::vector<int>::iter
 
-        // ft::vector<int>::iter it = v1.begin();
-        // std::cout << *it << std::endl;
+        ft::vector<int>::iterator it = v1.begin();
+        std::cout << *it << std::endl;
 
     }
 

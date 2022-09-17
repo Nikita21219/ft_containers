@@ -30,17 +30,18 @@ namespace ft {
         class Distance = ptrdiff_t,
         class Pointer = T*,
         class Reference = T&
-    > class iterator {
+    > class Iterator {
     public:
         typedef Category    iterator_category;
         typedef T           value_type;
         typedef Distance    difference_type;
         typedef Pointer     pointer;
         typedef Reference   reference;
-        typedef std::conditional<isConst, const pointer, pointer> conditional_ptr;
+        typedef typename std::conditional<isConst, const pointer, pointer>::type conditional_ptr;
+        typedef typename std::conditional<isConst, const reference, reference>::type conditional_ref;
 
-        iterator(conditional_ptr ptr) {this->ptr = ptr;};
-        conditional_ptr operator*()                           {return *ptr;};
+        Iterator(conditional_ptr ptr) {this->ptr = ptr;};
+        conditional_ref operator*()                           {return *ptr;};
         /*        
         iterator& operator++() {
             ptr++;
