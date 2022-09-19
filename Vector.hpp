@@ -9,8 +9,11 @@ namespace ft {
         typedef          size_t                                             size_type;
         typedef typename allocator_type::reference                          reference;
         typedef typename allocator_type::const_reference                    const_reference;
-        typedef ft::iterator<true, random_access_iterator_tag, value_type>  const_iterator;
+
         typedef ft::iterator<false, random_access_iterator_tag, value_type> iterator;
+        typedef ft::iterator<true, random_access_iterator_tag, value_type>  const_iterator;
+        typedef ft::reverse_iterator<false, iterator>                              reverse_iterator;
+
 
         explicit vector(const allocator_type& alloc = allocator_type()) {
             cp = 0;
@@ -53,8 +56,10 @@ namespace ft {
         friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
         iterator begin()                                             {return iterator(arr);}
         iterator end()                                               {return iterator(arr + sz);}
-        const_iterator cbegin() const                                {return const_iterator(arr);};
-        const_iterator cend() const                                  {return const_iterator(arr + sz);};
+        const_iterator cbegin() const                                {return const_iterator(arr);}
+        const_iterator cend() const                                  {return const_iterator(arr + sz);}
+        reverse_iterator rbegin() {return reverse_iterator(arr);}
+        reverse_iterator rend() {return reverse_iterator(arr + sz);}
 
         vector& operator= (const vector& x) {
             sz = x.size();

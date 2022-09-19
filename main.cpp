@@ -167,19 +167,32 @@ int main() {
     // ft::vector<Test<int> >::iterator it = v1.begin();
     // std::cout << *it << std::endl;
 
-    {
-        std::vector<int>::iterator iter;
-        std::vector<int>::const_iterator const_iter;
-        //должно работать
-        const_iter = iter;
-        //не должно работать
-        // iter = const_iter;
-    }
-    {
-        ft::vector<int>::iterator iter;
-        ft::vector<int>::const_iterator const_iter;
-        // const_iter = iter;
-    }
+    // {
+    //     std::vector<int>::iterator iter;
+    //     std::vector<int>::const_iterator const_iter;
+    //     //должно работать
+    //     const_iter.operator=(iter);
+    //     const_iter = iter;
+    //     //не должно работать
+    //     // iter = const_iter;
+
+    //     // std::vector<int>::reverse_iterator::
+
+    // }
+    // {
+    //     ft::vector<int>::iterator iter;
+    //     ft::vector<int>::const_iterator const_iter;
+    //     // const_iter = iter;
+    // }
+
+
+    ft::vector<int> v1;
+    v1.push_back(10);
+    v1.push_back(11);
+    v1.push_back(12);
+    v1.push_back(13);
+    ft::vector<int>::reverse_iterator it = v1.rbegin();
+    std::cout << *it << std::endl;
 
     return 0;
 }
