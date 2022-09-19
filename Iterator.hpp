@@ -96,62 +96,62 @@ namespace ft {
     };
 
 
-    template <bool isConst, typename Iter>
+    template <typename Iter>
     class reverse_iterator {
-        typedef typename std::conditional<isConst, const typename Iter::value_type*, typename Iter::value_type*>::type CondPtr;
-        typedef typename std::conditional<isConst, const typename Iter::value_type&, typename Iter::value_type&>::type CondRef;
     public:
         typedef Iter iterator_type;
+        typedef typename iterator_type::reference reference;
+        typedef typename iterator_type::pointer pointer;
 
-        reverse_iterator(Iter iter): iter(iter) {};
-        iterator_type base() const {return iter;} //TODO realise base method
-        CondRef operator*()                  {return *iter;}
-        // CondRef operator[](int idx)          {return *(ptr + idx);}
-        // bool operator==(const reverse_iterator &other) const {return ptr == other.ptr;}
-        // bool operator!=(const reverse_iterator &other) const {return !(*this == other);}
-        // CondPtr operator->() const           {return ptr;}
+        reverse_iterator(Iter iter): iter(iter) {}
+        iterator_type base() const {return iter;}
+        reference operator*()                                {return *iter;}
+        reference operator[](int idx)                        {return *(iter + idx);}
+        bool operator==(const reverse_iterator &other) const {return this->iter == other.iter;}
+        bool operator!=(const reverse_iterator &other) const {return !(*this == other);}
+        // pointer operator->() const                           {return iter.ptr;} //TODO fix this
 
-        // reverse_iterator<iterator_type>& operator++() {
-        //     iter--;
-        //     return *this;
-        // }
-        /*
-        // reverse_iterator operator+=(int n) {
-        //     ptr += n;
-        //     return *this;
-        // };
+        reverse_iterator<iterator_type>& operator++() {
+            iter--;
+            return *this;
+        }
 
-        // reverse_iterator operator-=(int n) {
-        //     ptr -= n;
-        //     return *this;
-        // };
+        reverse_iterator<iterator_type>& operator--() {
+            iter++;
+            return *this;
+        }
+
+        reverse_iterator<iterator_type>& operator+=(int n) {
+            iter -= n;
+            return *this;
+        };
+
+        reverse_iterator<iterator_type>& operator-=(int n) {
+            iter += n;
+            return *this;
+        };
         
-        // reverse_iterator operator+(int n) {
-        //     ptr += n;
-        //     return *this;
-        // };
+        reverse_iterator<iterator_type>& operator+(int n) {
+            iter -= n;
+            return *this;
+        };
         
-        // reverse_iterator operator-(int n) {
-        //     ptr -= n;
-        //     return *this;
-        // };
+        reverse_iterator<iterator_type>& operator-(int n) {
+            iter += n;
+            return *this;
+        };
 
-        // reverse_iterator operator++(int) {
-        //     reverse_iterator it = *this;
-        //     ++(*this);
-        //     return it;
-        // };
-        // reverse_iterator operator--() {
-        //     ptr--;
-        //     return *this;
-        // };
+        reverse_iterator<iterator_type>& operator++(int) {
+            reverse_iterator<iterator_type>& it = *this;
+            --(*this);
+            return it;
+        };
 
-        // reverse_iterator operator--(int) {
-        //     reverse_iterator it = *this;
-        //     --(*this);
-        //     return it;
-        // };
-        */
+        reverse_iterator<iterator_type>& operator--(int) {
+            reverse_iterator<iterator_type>& it = *this;
+            ++(*this);
+            return it;
+        };
 
     private:
         iterator_type iter;

@@ -186,13 +186,19 @@ int main() {
     // }
 
 
-    ft::vector<int> v1;
-    v1.push_back(10);
-    v1.push_back(11);
-    v1.push_back(12);
-    v1.push_back(13);
-    ft::vector<int>::reverse_iterator it = v1.rbegin();
-    std::cout << *it << std::endl;
+    // ******************** Reverse iterators ****************************
+    {
+        std::vector<size_t> v1;
+        for (size_t i = 0; i <= 10; i++) {v1.push_back(i);}
+        for (std::vector<size_t>::reverse_iterator it = v1.rbegin(); it != v1.rend(); it++) {std::cout << *it << " ";}
+        std::cout << std::endl;
+    }
+    {
+        ft::vector<size_t> v1;
+        for (size_t i = 0; i <= 10; i++) {v1.push_back(i);}
+        for (ft::vector<size_t>::reverse_iterator it = v1.rbegin(); it != v1.rend(); it++) {std::cout << *it << " ";}
+        std::cout << std::endl;
+    }
 
     return 0;
 }

@@ -12,7 +12,7 @@ namespace ft {
 
         typedef ft::iterator<false, random_access_iterator_tag, value_type> iterator;
         typedef ft::iterator<true, random_access_iterator_tag, value_type>  const_iterator;
-        typedef ft::reverse_iterator<false, iterator>                              reverse_iterator;
+        typedef ft::reverse_iterator<iterator>                              reverse_iterator;
 
 
         explicit vector(const allocator_type& alloc = allocator_type()) {
