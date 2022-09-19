@@ -1,7 +1,7 @@
 NAME = containers
 CC = c++
 
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 #-fsanitize=address
 
 OBJDIR = ./objs
 VPATH = .
@@ -18,8 +18,8 @@ $(OBJDIR)/%.o :	%.cpp $^
 $(NAME):	Makefile $(OBJDIR) $(OBJ)
 	@$(CC) $(CPPFLAGS) -o $(NAME) $(OBJ) 
 	@echo "$(NAME) compile"
-
 $(OBJDIR):
+
 	@if [ ! -d $(OBJDIR) ] ; then mkdir $(OBJDIR); fi
 
 clean:

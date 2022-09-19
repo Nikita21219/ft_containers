@@ -13,6 +13,7 @@ namespace ft {
         typedef ft::iterator<false, random_access_iterator_tag, value_type> iterator;
         typedef ft::iterator<true, random_access_iterator_tag, value_type>  const_iterator;
         typedef ft::reverse_iterator<iterator>                              reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>                        const_reverse_iterator;
 
 
         explicit vector(const allocator_type& alloc = allocator_type()) {
@@ -58,8 +59,10 @@ namespace ft {
         iterator end()                                               {return iterator(arr + sz);}
         const_iterator cbegin() const                                {return const_iterator(arr);}
         const_iterator cend() const                                  {return const_iterator(arr + sz);}
-        reverse_iterator rbegin() {return reverse_iterator(arr);}
-        reverse_iterator rend() {return reverse_iterator(arr + sz);}
+        reverse_iterator rbegin()                                    {return reverse_iterator(--end());}
+        reverse_iterator rend()                                      {return reverse_iterator(--begin());}
+        const_reverse_iterator crbegin()                             {return const_reverse_iterator(--cend());}
+        const_reverse_iterator crend()                               {return const_reverse_iterator(--cbegin());}
 
         vector& operator= (const vector& x) {
             sz = x.size();
@@ -79,14 +82,17 @@ namespace ft {
             return true;
         }
 
-
         void reserve(size_type new_cap) {
+            if (new_cap > alloc.max_size()) throw std::bad_alloc();
             if (new_cap < cp) return;
+            value_type *new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
+            for (size_t i = 0; i < sz; ++i) {
+                this->alloc.construct(new_arr + i, arr[i]);
+                this->alloc.destroy(arr + i);
+            }
+            this->alloc.deallocate(arr, cp);
+            arr = new_arr;
             cp = new_cap;
-            value_type *old_arr = arr;
-            arr = this->alloc.allocate(sizeof(value_type) * cp);
-            for (size_t i = 0; i < sz; ++i)
-                this->alloc.construct(arr + i, old_arr[i]);
         }
 
         reference at(size_type n) {
@@ -105,7 +111,7 @@ namespace ft {
             if (sz == cp) {
                 if (cp == 0) cp = 1;
                 reserve(cp * 2);
-                arr[sz] = val;
+                alloc.construct(arr + sz, val);
             } else {
                 arr[sz] = val;
             }
@@ -117,7 +123,7 @@ namespace ft {
             sz -= 1;
         }
 
-        void clear() {}
+        void clear() {} //TODO realize method
 
         value_type* data() {return &this->arr.front();}
 

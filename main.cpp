@@ -38,24 +38,18 @@ public:
 
 int main() {
 
-
-    // Test<true, int> test = Test<true, int>(new int(10));
-    // std::cout << *(test.arr) << std::endl;
-    // *(test.arr) = 99;
-    // std::cout << *(test.arr) << std::endl;
-    // return 0;
-
-    // Constructor and copy constructor
+    // ---------------------------------------------------------------------------------------------------------
+    // // Constructor and copy constructor
     // {
     //     // ------------------------FT----------------------------
-    //     vector<int> v1(10, 1);
+    //     ft::vector<int> v1(10, 1);
     //     std::cout << "FT v1: " << v1.size() << std::endl;
     //     std::cout << "FT v1: " << v1.capacity() << std::endl;
     //     std::cout << "FT v1: ";
     //     for (int i = 0; i < 10; i++)
     //         std::cout << v1[i] << " ";
     //     std::cout << "\n";
-    //     vector<int> v1_copy(v1);
+    //     ft::vector<int> v1_copy(v1);
     //     std::cout << "FT v1_copy: " << v1.size() << std::endl;
     //     std::cout << "FT v1_copy: " << v1.capacity() << std::endl;
     //     std::cout << "FT v1_copy: ";
@@ -80,7 +74,9 @@ int main() {
     //         std::cout << v2_copy[i] << " ";
     //     std::cout << "\n";
     // }
+    // ---------------------------------------------------------------------------------------------------------
 
+    // ---------------------------------------------------------------------------------------------------------
     // // Copy assigment
     // {
     //     std::vector<int> stl_v(10, 5);
@@ -90,8 +86,8 @@ int main() {
     //         std::cout << stl_v_assigment[i];
     //     std::cout << "\n";
 
-    //     vector<int> ft_v(10, 5);
-    //     vector<int> ft_v_assigment = ft_v;
+    //     ft::vector<int> ft_v(10, 5);
+    //     ft::vector<int> ft_v_assigment = ft_v;
     //     std::cout << "FT:  ";
     //     for (size_t i = 0; i < 10; i++)
     //         std::cout << ft_v_assigment[i];
@@ -112,12 +108,16 @@ int main() {
     //     for (size_t i = 0; i < v1.size(); i++)   
     //         std::cout << "v1: " << v1[i] << std::endl;
     // }
-
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+    // // ***************** Iterators *******************
     // {
     //     std::vector<int*> v1;
     //     v1.reserve(10);
-    //     v1.push_back(new int(10));
+    //     int *i = new int(10);
+    //     v1.push_back(i);
     //     v1.clear();
+    //     delete i;
     // }
 
     // {
@@ -137,7 +137,8 @@ int main() {
     //         std::cout << *it << " ";
     //     std::cout << std::endl;
     // }
-
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
     // // ***************** Const iterators *******************
     // {
     //     ft::vector<int> v1;
@@ -159,15 +160,113 @@ int main() {
     //     for (std::vector<int>::const_iterator it = v1.cbegin(); it != v1.cend(); it++) {std::cout << *it << " ";}
     //     std::cout << std::endl;
     // }
-    
-
-    // Test<int> test = Test<int>(new int(10));
-    // ft::vector<Test<int> > v1;
-    // v1.push_back(test);
-    // ft::vector<Test<int> >::iterator it = v1.begin();
-    // std::cout << *it << std::endl;
-
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+    // // ******************** Reverse iterators ****************************
     // {
+    //     std::vector<std::string> v1;
+    //     for (size_t i = 0; i <= 10; i++) {v1.push_back("hello");}
+    //     v1.pop_back();
+    //     v1.pop_back();
+    //     for (std::vector<std::string>::reverse_iterator it = v1.rbegin(); it != v1.rend(); it++) {std::cout << *it << " ";}
+    //     std::cout << std::endl;
+    // }
+    // {
+    //     ft::vector<std::string> v1;
+    //     for (size_t i = 0; i <= 10; i++) {v1.push_back("hello");}
+    //     v1.pop_back();
+    //     v1.pop_back();
+    //     for (ft::vector<std::string>::reverse_iterator it = v1.rbegin(); it != v1.rend(); it++) {std::cout << *it << " ";}
+    //     std::cout << std::endl;
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+    // // ******************* Const reverse iterator ********************
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 0; i < 10; i++) {v1.push_back(i);}
+    //     for (std::vector<int>::const_reverse_iterator it = v1.crbegin(); it != v1.crend(); it++) {std::cout << *it << " ";}
+    //     std::cout << "\n";
+    // }
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 0; i < 10; i++) {v1.push_back(i);}
+    //     for (ft::vector<int>::const_reverse_iterator it = v1.crbegin(); it != v1.crend(); it++) {std::cout << *it << " ";}
+    //     std::cout << "\n";
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+    // // ******************* Test -> operator ********************
+    // {
+    //     std::vector<Test<int> > v1;
+    //     for (size_t i = 0; i <= 10; i++) {v1.push_back(Test<int> (new int(10)));}
+    //     std::vector<Test<int> >::reverse_iterator it = v1.rbegin();
+    //     std::cout << *(it->arr) << std::endl;
+    // }
+    // {
+    //     ft::vector<Test<int> > v1;
+    //     for (size_t i = 0; i <= 10; i++) {v1.push_back(Test<int> (new int(10)));}
+    //     ft::vector<Test<int> >::reverse_iterator it = v1.rbegin();
+    //     std::cout << *(it->arr) << std::endl;
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+    // // ******************* Test >, <, >=, <= operators ********************
+    // {
+    //     std::cout << "STL:" << std::endl;
+    //     std::vector<size_t> v1;
+    //     for (size_t i = 0; i <= 10; i++) {v1.push_back(i);}
+    //     std::vector<size_t>::iterator it_1 = v1.begin();
+    //     std::vector<size_t>::iterator it_2 = v1.begin();
+    //     if (it_1 == it_2) std::cout << "==" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     it_1++;
+    //     if (it_1 > it_2) std::cout << ">" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     if (it_1 >= it_2) std::cout << ">=" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     it_2++;
+    //     it_2++;
+    //     if (it_1 < it_2) std::cout << "<" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     if (it_1 <= it_2) std::cout << "<=" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    // }
+    // {
+    //     std::cout << "FT:" << std::endl;
+    //     ft::vector<size_t> v1;
+    //     for (size_t i = 0; i <= 10; i++) {v1.push_back(i);}
+    //     ft::vector<size_t>::iterator it_1 = v1.begin();
+    //     ft::vector<size_t>::iterator it_2 = v1.begin();
+    //     if (it_1 == it_2) std::cout << "==" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     it_1++;
+    //     if (it_1 > it_2) std::cout << ">" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     if (it_1 >= it_2) std::cout << ">=" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     it_2++;
+    //     it_2++;
+    //     if (it_1 < it_2) std::cout << "<" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    //     if (it_1 <= it_2) std::cout << "<=" << std::endl;
+    //     else std::cout << "FAIL" << std::endl;
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+
+
+
+    // ---------------------------------------------------------------------------------------------------------
+    return 0;
+}
+
+
+
+
+
+
+ // {
     //     std::vector<int>::iterator iter;
     //     std::vector<int>::const_iterator const_iter;
     //     //должно работать
@@ -185,20 +284,3 @@ int main() {
     //     // const_iter = iter;
     // }
 
-
-    // ******************** Reverse iterators ****************************
-    {
-        std::vector<size_t> v1;
-        for (size_t i = 0; i <= 10; i++) {v1.push_back(i);}
-        for (std::vector<size_t>::reverse_iterator it = v1.rbegin(); it != v1.rend(); it++) {std::cout << *it << " ";}
-        std::cout << std::endl;
-    }
-    {
-        ft::vector<size_t> v1;
-        for (size_t i = 0; i <= 10; i++) {v1.push_back(i);}
-        for (ft::vector<size_t>::reverse_iterator it = v1.rbegin(); it != v1.rend(); it++) {std::cout << *it << " ";}
-        std::cout << std::endl;
-    }
-
-    return 0;
-}
