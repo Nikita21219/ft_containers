@@ -15,7 +15,6 @@ namespace ft {
         typedef ft::reverse_iterator<iterator>                              reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>                        const_reverse_iterator;
 
-
         explicit vector(const allocator_type& alloc = allocator_type()) {
             cp = 0;
             sz = 0;
@@ -39,9 +38,21 @@ namespace ft {
             for (size_t i = 0; i < cp; ++i)
                 this->alloc.construct(arr + i, x[i]);
         }
+        
+        // template <class InputIt>
+        // vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()) {
+        //     sz = 0;
+        //     this->alloc = alloc;
+        //     while (first != last) {
+        //         push_back(*first);
+        //         first++;
+        //         sz++;
+        //     }
+        // } //TODO fix error
 
         ~vector() {
-            this->clear();
+            for (size_t i = 0; i < sz; ++i)
+                this->alloc.destroy(arr + i);
             this->alloc.deallocate(arr, cp);
         }
 
@@ -63,6 +74,8 @@ namespace ft {
         reverse_iterator rend()                                      {return reverse_iterator(--begin());}
         const_reverse_iterator crbegin()                             {return const_reverse_iterator(--cend());}
         const_reverse_iterator crend()                               {return const_reverse_iterator(--cbegin());}
+        value_type* data()                                           {return &this->arr.front();}
+        const value_type* data() const                               {return &this->arr.front();}
 
         vector& operator= (const vector& x) {
             sz = x.size();
@@ -124,10 +137,6 @@ namespace ft {
         }
 
         void clear() {} //TODO realize method
-
-        value_type* data() {return &this->arr.front();}
-
-        const value_type* data() const {return &this->arr.front();}
 
         void swap (vector& x) {
             size_type tmp_sz = x.size();
