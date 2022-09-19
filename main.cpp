@@ -23,21 +23,27 @@ void print_info(ft::vector<T> &v) {
     std::cout << std::endl << std::endl;
 } //TODO delene func
 
+
+template<typename T>
 class Test {
 public:
-    Test() {arr = new int(5);}
+    // typedef typename std::conditional<isConst, const T*, T*>::type conditional_ptr;
+
+    Test(T *arr): arr(arr) {}
     ~Test() {}
-private:
-    int *arr;
+// private:
+    T *arr;
 };
 
-void foo() {
-    int *test;
-    test = new int(5);
-    std::cout << sizeof(test) << std::endl;
-}
 
 int main() {
+
+
+    // Test<true, int> test = Test<true, int>(new int(10));
+    // std::cout << *(test.arr) << std::endl;
+    // *(test.arr) = 99;
+    // std::cout << *(test.arr) << std::endl;
+    // return 0;
 
     // Constructor and copy constructor
     // {
@@ -55,7 +61,6 @@ int main() {
     //     std::cout << "FT v1_copy: ";
     //     for (int i = 0; i < 10; i++)
     //         std::cout << v1_copy[i] << " ";
-
 
     //     std::cout << "\n\n\n";
         
@@ -133,31 +138,48 @@ int main() {
     //     std::cout << std::endl;
     // }
 
-    {
-        ft::vector<int> v1;
-        for (size_t i = 0; i < 30; i++) v1.push_back(i);
-        ft::vector<int>::iterator it = v1.begin();
-        ++it;
-        std::cout << it[1] << std::endl;
-    }
-
-    {
-        std::vector<int> v1;
-        for (size_t i = 0; i < 30; i++) v1.push_back(i);
-        std::vector<int>::iterator it = v1.begin();
-        ++it;
-    }
-
+    // // ***************** Const iterators *******************
     // {
-    //     std::vector<int> v1;
-    //     for (size_t i = 0; i < 30; i++) v1.push_back(i);
-
-    //     for (std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) {
-    //         *it = 999;
-    //         std::cout << *it << " ";
-    //     }
+    //     ft::vector<int> v1;
+    //     v1.push_back(10);
+    //     v1.push_back(11);
+    //     v1.push_back(12);
+    //     v1.push_back(13);
+    //     v1.push_back(14);
+    //     for (ft::vector<int>::const_iterator it = v1.cbegin(); it != v1.cend(); it++) {std::cout << *it << " ";}
     //     std::cout << std::endl;
     // }
+    // {
+    //     std::vector<int> v1;
+    //     v1.push_back(10);
+    //     v1.push_back(11);
+    //     v1.push_back(12);
+    //     v1.push_back(13);
+    //     v1.push_back(14);
+    //     for (std::vector<int>::const_iterator it = v1.cbegin(); it != v1.cend(); it++) {std::cout << *it << " ";}
+    //     std::cout << std::endl;
+    // }
+    
+
+    // Test<int> test = Test<int>(new int(10));
+    // ft::vector<Test<int> > v1;
+    // v1.push_back(test);
+    // ft::vector<Test<int> >::iterator it = v1.begin();
+    // std::cout << *it << std::endl;
+
+    {
+        std::vector<int>::iterator iter;
+        std::vector<int>::const_iterator const_iter;
+        //должно работать
+        const_iter = iter;
+        //не должно работать
+        // iter = const_iter;
+    }
+    {
+        ft::vector<int>::iterator iter;
+        ft::vector<int>::const_iterator const_iter;
+        // const_iter = iter;
+    }
 
     return 0;
 }

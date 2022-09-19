@@ -6,7 +6,7 @@
 #include <stack>
 #include <unistd.h>
 
+#include "Iterator.hpp"
 #include "Vector.hpp"
-// #include "Iterator.hpp"
 
 #endif

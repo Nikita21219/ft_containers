@@ -1,19 +1,16 @@
 #include "containers.h"
-#include "Iterator.hpp"
 
 namespace ft {
     template <typename T, typename Alloc = std::allocator<T> >
     class vector {
     public:
-        typedef          Alloc                                                       allocator_type;
-        typedef typename allocator_type::reference                                   reference;
-        typedef typename allocator_type::const_reference                             const_reference;
-        typedef          T                                                           value_type;
-        typedef          size_t                                                      size_type;
-        typedef          iterator<false, ft::random_access_iterator_tag, value_type> iterator;
-        // typedef          iterator<true, random_access_iterator_tag, value_type>  const_iterator;
-
-        
+        typedef          Alloc                                              allocator_type;
+        typedef          T                                                  value_type;
+        typedef          size_t                                             size_type;
+        typedef typename allocator_type::reference                          reference;
+        typedef typename allocator_type::const_reference                    const_reference;
+        typedef ft::iterator<true, random_access_iterator_tag, value_type>  const_iterator;
+        typedef ft::iterator<false, random_access_iterator_tag, value_type> iterator;
 
         explicit vector(const allocator_type& alloc = allocator_type()) {
             cp = 0;
@@ -54,15 +51,10 @@ namespace ft {
         const_reference back() const                                 {return arr[sz - 1];}
         allocator_type get_allocator() const                         {return this->alloc;}
         friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
-
-        iterator begin() {
-            ft::iterator<false, ft::random_access_iterator_tag, value_type> it(arr);
-            return it;
-        }
-
-        // iterator end() {
-        //     return iterator(arr + sz);
-        // }
+        iterator begin()                                             {return iterator(arr);}
+        iterator end()                                               {return iterator(arr + sz);}
+        const_iterator cbegin() const                                {return const_iterator(arr);};
+        const_iterator cend() const                                  {return const_iterator(arr + sz);};
 
         vector& operator= (const vector& x) {
             sz = x.size();
@@ -145,11 +137,5 @@ namespace ft {
         size_type sz;
         size_type cp;
         allocator_type alloc;
-
-        void free_arr() {
-            for (size_type i = 0; i < sz; i++)
-                this->alloc.destroy(arr + i);
-            this->alloc.deallocate(arr);
-        } // TODO not used (I think)
     };
 }

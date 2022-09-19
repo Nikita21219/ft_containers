@@ -37,22 +37,27 @@ namespace ft {
         typedef Distance    difference_type;
         typedef Pointer     pointer;
         typedef Reference   reference;
-        typedef typename std::conditional<isConst, const pointer, pointer>::type conditional_ptr;
-        typedef typename std::conditional<isConst, const reference, reference>::type conditional_ref;
+        typedef typename std::conditional<isConst, const T*, T*>::type conditional_ptr;
+        typedef typename std::conditional<isConst, const T&, T&>::type conditional_ref;
 
-        iterator(conditional_ptr ptr) {this->ptr = ptr;};
-        conditional_ref operator*()                           {return *ptr;};
-        
+        iterator()                                   {};
+        iterator(conditional_ptr ptr): ptr(ptr)      {};
+        conditional_ref operator*()                  {return *ptr;};
+        conditional_ref operator[](int idx)          {return *(ptr + idx);}
+        bool operator==(const iterator &other) const {return ptr == other.ptr;}
+        bool operator!=(const iterator &other) const {return !(*this == other);}
+        conditional_ptr operator->() const           {return ptr;}
+
         iterator operator++() {
             ptr++;
             return *this;
         };
-        
+
         iterator operator+=(int n) {
             ptr += n;
             return *this;
         };
-        
+
         iterator operator-=(int n) {
             ptr -= n;
             return *this;
@@ -84,10 +89,6 @@ namespace ft {
             --(*this);
             return it;
         };
-
-        conditional_ref operator[](int idx)                   {return *(ptr + idx);}
-        bool operator ==(const iterator &other) const   {return ptr == other.ptr;}
-        bool operator !=(const iterator &other) const   {return !(*this == other);}
 
     private:
         conditional_ptr ptr;
