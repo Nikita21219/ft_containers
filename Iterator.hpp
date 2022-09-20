@@ -117,7 +117,6 @@ namespace ft {
         CondPtr ptr;
     };
 
-
     template <typename Iter>
     class ReverseRandAccessIt {
     public:

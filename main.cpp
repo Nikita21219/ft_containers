@@ -13,15 +13,15 @@
 //     std::cout << std::endl << std::endl;
 // } //TODO delene func
 
-// template <typename T>
-// void print_info(ft::vector<T> &v) {
-//     std::cout << "size = " << v.size() << std::endl;
-//     std::cout << "cap = " << v.capacity() << std::endl;
-//     std::cout << "vector: ";
-//     for (size_t i = 0; i < v.size(); i++)
-//         std::cout << v[i] << " ";
-//     std::cout << std::endl << std::endl;
-// } //TODO delene func
+template <typename vector_type>
+void print_info(vector_type &v) {
+    std::cout << "size = " << v.size() << std::endl;
+    std::cout << "cap = " << v.capacity() << std::endl;
+    std::cout << "vector: ";
+    for (size_t i = 0; i < v.size(); i++)
+        std::cout << v[i] << " ";
+    std::cout << std::endl << std::endl;
+} //TODO delene func
 
 
 template<typename T>
@@ -277,18 +277,29 @@ int main() {
     }
     // ---------------------------------------------------------------------------------------------------------
 
-    // for (ft::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) std::cout << *it << " ";
-    // std::cout << "\n";
-    // for (ft::vector<int>::const_iterator it = v1.cbegin(); it != v1.cend(); it++) std::cout << *it << " ";
-    // std::cout << "\n";
+    ft::vector<int> v1;
+    for (int i = 0; i < 6; i++) v1.push_back(i);
+    ft::vector<int>::iterator it = v1.begin();
+    ft::vector<int>::iterator it_end = v1.end();
+    (void) it;
+    (void) it_end;
+    ft::vector<int> v2(it, it_end);
+    print_info(v2);
 
+    // ft::vector<int>::iterator it = v2.begin();
+    // std::cout << *it++ << std::endl;
+    // std::cout << *it++ << std::endl;
+    // std::cout << *it++ << std::endl;
+    // std::cout << *it++ << std::endl;
+    // std::cout << *it++ << std::endl;
+    // std::cout << *it++ << std::endl;
+    // if (it == v2.end())
+    //     std::cout << "✅Equel!" << std::endl;
+    // else
+    //     std::cout << "❌Not equel!" << std::endl;
+    // print_info(v2);
     return 0;
 }
-
-
-
-
-
 
  // {
     //     std::vector<int>::iterator iter;

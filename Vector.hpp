@@ -40,21 +40,15 @@ namespace ft {
             for (size_t i = 0; i < cp; ++i)
                 this->alloc.construct(arr + i, x[i]);
         }
-        
-    //     // template <class InputIt>
-    //     // vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()) {
-    //     //     this->alloc = alloc;
-    //     //     // sz = 0;
-    //     //     // this->alloc = alloc;
-    //     //     // while (first != last) {
-    //     //     //     push_back(*first);
-    //     //     //     first++;
-    //     //     //     sz++;
-    //     //     // }
-    //     //     difference_type n = std::distance(first, last);
-    //     //     std::cout << "Distance = " << n << "\n";
 
-    //     // } //TODO fix error
+        template <class InputIt>
+        vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()) {
+            cp = 0;
+            sz = 0;
+            this->alloc = alloc;
+            while (first != last)
+                push_back(*first++);
+        }
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
@@ -128,12 +122,12 @@ namespace ft {
 
         void push_back(const value_type& val) {
             if (sz == cp) {
-                if (cp == 0) cp = 1;
-                reserve(cp * 2);
-                alloc.construct(arr + sz, val);
-            } else {
-                arr[sz] = val;
+                if (cp == 0)
+                    reserve(1);
+                else
+                    reserve(cp * 2);
             }
+            alloc.construct(arr + sz, val);
             sz += 1;
         }
 
