@@ -276,28 +276,42 @@ int main() {
         // std::cout << "\n";
     }
     // ---------------------------------------------------------------------------------------------------------
-
-    ft::vector<int> v1;
-    for (int i = 0; i < 6; i++) v1.push_back(i);
-    ft::vector<int>::iterator it = v1.begin();
-    ft::vector<int>::iterator it_end = v1.end();
-    (void) it;
-    (void) it_end;
-    ft::vector<int> v2(it, it_end);
-    print_info(v2);
-
-    // ft::vector<int>::iterator it = v2.begin();
-    // std::cout << *it++ << std::endl;
-    // std::cout << *it++ << std::endl;
-    // std::cout << *it++ << std::endl;
-    // std::cout << *it++ << std::endl;
-    // std::cout << *it++ << std::endl;
-    // std::cout << *it++ << std::endl;
-    // if (it == v2.end())
-    //     std::cout << "✅Equel!" << std::endl;
-    // else
-    //     std::cout << "❌Not equel!" << std::endl;
-    // print_info(v2);
+    // ---------------------------------------------------------------------------------------------------------
+    // ******************** Test erase() ***************************
+    {
+        std::vector<int> v1(15, 1);
+        std::vector<int>::iterator it = v1.begin();
+        v1.erase(it);
+        it = v1.begin();
+        it++;
+        it++;
+        it++;
+        v1.erase(it);
+        it = v1.end();
+        it--;
+        it--;
+        v1.erase(it);
+        print_info(v1);
+    }
+    std::cout << std::endl;
+    {
+        std::vector<int> v1(15, 1);
+        std::vector<int>::iterator it = v1.begin();
+        v1.erase(it);
+        it = v1.begin();
+        it++;
+        it++;
+        it++;
+        v1.erase(it);
+        it = v1.end();
+        it--;
+        it--;
+        v1.erase(it);
+        print_info(v1);
+    }
+    // ---------------------------------------------------------------------------------------------------------
+    
+    
     return 0;
 }
 

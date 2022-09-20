@@ -17,38 +17,35 @@ namespace ft {
         typedef ft::ReverseRandAccessIt<iterator>                       reverse_iterator;
         typedef ft::ReverseRandAccessIt<const_iterator>                 const_reverse_iterator;
 
-        explicit vector(const allocator_type& alloc = allocator_type()) {
-            cp = 0;
-            sz = 0;
-            this->alloc = alloc;
-            arr = this->alloc.allocate(0);
+        explicit vector(const allocator_type& alloc = allocator_type()):
+        alloc(alloc), cp(0), sz(0)
+        {
+            arr = this->alloc.allocate(cp);
         }
 
-        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) {
-            cp = n;
-            sz = n;
-            this->alloc = alloc;
+        explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()):
+        alloc(alloc), cp(n), sz(n)
+        {
             arr = this->alloc.allocate(sizeof(value_type) * n);
             for (size_t i = 0; i < sz; ++i)
                 this->alloc.construct(arr + i, val);
         }
 
-        vector(const vector& x) {
-            sz = x.size();
-            cp = x.capacity();
+        vector(const vector& x):
+        alloc(x.alloc), cp(x.capacity()), sz(x.size())
+        {
             arr = this->alloc.allocate(sizeof(value_type) * cp);
             for (size_t i = 0; i < cp; ++i)
                 this->alloc.construct(arr + i, x[i]);
         }
 
-        template <class InputIt>
-        vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()) {
-            cp = 0;
-            sz = 0;
-            this->alloc = alloc;
-            while (first != last)
-                push_back(*first++);
-        }
+        // template <class InputIt>
+        // vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()):
+        // alloc(alloc), cp(0), sz(0)
+        // {
+        //     while (first != last)
+        //         push_back(*first++); //TODO realise std::distance()
+        // }
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
@@ -64,7 +61,7 @@ namespace ft {
         const_reference front() const                                {return arr[0];}
         reference back()                                             {return arr[sz - 1];}
         const_reference back() const                                 {return arr[sz - 1];}
-        allocator_type get_allocator() const                         {return this->alloc;}
+        allocator_type get_allocator() const                         {return alloc;}
         friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
         iterator begin()                                             {return iterator(arr);}
         iterator end()                                               {return iterator(arr + sz);}
@@ -94,6 +91,21 @@ namespace ft {
                     return false;
             return true;
         }
+
+        iterator erase(iterator pos) {
+            iterator it_end = end();
+            it_end--;
+            while (pos != it_end) {
+                *pos = *(pos + 1);
+                pos++;
+            }
+            sz--;
+            return end();
+        }
+
+        // iterator erase (iterator first, iterator last) {
+
+        // }
 
         void reserve(size_type new_cap) {
             if (new_cap > alloc.max_size()) throw std::bad_alloc();
@@ -154,8 +166,8 @@ namespace ft {
 
     private:
         value_type *arr;
-        size_type sz;
-        size_type cp;
         allocator_type alloc;
+        size_type cp;
+        size_type sz;
     };
 }
