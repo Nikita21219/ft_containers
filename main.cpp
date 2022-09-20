@@ -3,25 +3,25 @@
 #include <list> //TODO tmp line
 #include <vector> //TODO tmp line
 
-template <typename T>
-void print_info(std::vector<T> &v) {
-    std::cout << "size = " << v.size() << std::endl;
-    std::cout << "cap = " << v.capacity() << std::endl;
-    std::cout << "vector: ";
-    for (size_t i = 0; i < v.size(); i++)
-        std::cout << v[i] << " ";
-    std::cout << std::endl << std::endl;
-} //TODO delene func
+// template <typename T>
+// void print_info(std::vector<T> &v) {
+//     std::cout << "size = " << v.size() << std::endl;
+//     std::cout << "cap = " << v.capacity() << std::endl;
+//     std::cout << "vector: ";
+//     for (size_t i = 0; i < v.size(); i++)
+//         std::cout << v[i] << " ";
+//     std::cout << std::endl << std::endl;
+// } //TODO delene func
 
-template <typename T>
-void print_info(ft::vector<T> &v) {
-    std::cout << "size = " << v.size() << std::endl;
-    std::cout << "cap = " << v.capacity() << std::endl;
-    std::cout << "vector: ";
-    for (size_t i = 0; i < v.size(); i++)
-        std::cout << v[i] << " ";
-    std::cout << std::endl << std::endl;
-} //TODO delene func
+// template <typename T>
+// void print_info(ft::vector<T> &v) {
+//     std::cout << "size = " << v.size() << std::endl;
+//     std::cout << "cap = " << v.capacity() << std::endl;
+//     std::cout << "vector: ";
+//     for (size_t i = 0; i < v.size(); i++)
+//         std::cout << v[i] << " ";
+//     std::cout << std::endl << std::endl;
+// } //TODO delene func
 
 
 template<typename T>
@@ -276,6 +276,12 @@ int main() {
         // std::cout << "\n";
     }
     // ---------------------------------------------------------------------------------------------------------
+
+    // for (ft::vector<int>::iterator it = v1.begin(); it != v1.end(); it++) std::cout << *it << " ";
+    // std::cout << "\n";
+    // for (ft::vector<int>::const_iterator it = v1.cbegin(); it != v1.cend(); it++) std::cout << *it << " ";
+    // std::cout << "\n";
+
     return 0;
 }
 

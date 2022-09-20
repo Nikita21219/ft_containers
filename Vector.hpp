@@ -4,18 +4,18 @@ namespace ft {
     template <typename T, typename Alloc = std::allocator<T> >
     class vector {
     public:
-        typedef          Alloc                                              allocator_type;
-        typedef          T                                                  value_type;
-        typedef          size_t                                             size_type;
-        typedef typename allocator_type::reference                          reference;
-        typedef typename allocator_type::pointer                            pointer;
-        typedef typename allocator_type::const_reference                    const_reference;
-        typedef typename allocator_type::const_pointer                      const_pointer;
-        typedef ft::iterator<false, random_access_iterator_tag, value_type> iterator;
-        typedef ft::iterator<true, random_access_iterator_tag, value_type>  const_iterator;
-        typedef typename iterator_traits<iterator>::difference_type         difference_type;
-        typedef ft::reverse_iterator<iterator>                              reverse_iterator;
-        typedef ft::reverse_iterator<const_iterator>                        const_reverse_iterator;
+        typedef          Alloc                                       allocator_type;
+        typedef          T                                           value_type;
+        typedef          size_t                                      size_type;
+        typedef typename allocator_type::reference                   reference;
+        typedef typename allocator_type::pointer                     pointer;
+        typedef typename allocator_type::const_reference             const_reference;
+        typedef typename allocator_type::const_pointer               const_pointer;
+        typedef ft::RandAccessIt<false, value_type>                  iterator;
+        typedef ft::RandAccessIt<true, value_type>                   const_iterator;
+        typedef typename ft::RandAccessIt<true, value_type>::difference_type  difference_type;
+        typedef ft::ReverseRandAccessIt<iterator>                       reverse_iterator;
+        typedef ft::ReverseRandAccessIt<const_iterator>                 const_reverse_iterator;
 
         explicit vector(const allocator_type& alloc = allocator_type()) {
             cp = 0;
@@ -41,20 +41,20 @@ namespace ft {
                 this->alloc.construct(arr + i, x[i]);
         }
         
-        // template <class InputIt>
-        // vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()) {
-        //     this->alloc = alloc;
-        //     // sz = 0;
-        //     // this->alloc = alloc;
-        //     // while (first != last) {
-        //     //     push_back(*first);
-        //     //     first++;
-        //     //     sz++;
-        //     // }
-        //     difference_type n = std::distance(first, last);
-        //     std::cout << "Distance = " << n << "\n";
+    //     // template <class InputIt>
+    //     // vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()) {
+    //     //     this->alloc = alloc;
+    //     //     // sz = 0;
+    //     //     // this->alloc = alloc;
+    //     //     // while (first != last) {
+    //     //     //     push_back(*first);
+    //     //     //     first++;
+    //     //     //     sz++;
+    //     //     // }
+    //     //     difference_type n = std::distance(first, last);
+    //     //     std::cout << "Distance = " << n << "\n";
 
-        // } //TODO fix error
+    //     // } //TODO fix error
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
