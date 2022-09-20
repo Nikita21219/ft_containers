@@ -310,19 +310,6 @@ int main() {
     //     print_info(v1);
     // }
 
-    {
-        std::vector<int> v1;
-        for (int i = 1; i <= 10; i++) v1.push_back(i);
-        std::vector<int>::iterator first = v1.begin();
-        std::vector<int>::iterator last = v1.end();
-        first++;
-        first++;
-        last--;
-        last--;
-        v1.erase(first, last)
-        print_info(v1);
-    }
-
     // ---------------------------------------------------------------------------------------------------------
     
     return 0;

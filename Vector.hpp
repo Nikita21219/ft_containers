@@ -103,13 +103,13 @@ namespace ft {
             return end();
         }
 
-        iterator erase (iterator first, iterator last) {
-            iterator it_end = end();
-            it_end--;
-            while (first != it_end) {
+        // iterator erase (iterator first, iterator last) {
+        //     iterator it_end = end();
+        //     it_end--;
+        //     while (first != it_end) {
                 
-            }
-        }
+        //     }
+        // }
 
         void reserve(size_type new_cap) {
             if (new_cap > alloc.max_size()) throw std::bad_alloc();
