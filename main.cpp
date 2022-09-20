@@ -259,21 +259,22 @@ int main() {
     //     std::vector<int> v1(10, 5);
     //     std::vector<int>::iterator first = v1.begin();
     //     std::vector<int>::iterator last = v1.end();
+    //     std::cout << std::distance(first, last) << "\n";
     //     std::vector<int> v2(first, last);
     //     for (int i = 0; i < 10; i++) std::cout << v2[i] << " ";
     //     std::cout << "\n";
     //     std::cout << "v2.capacity(): " << v2.capacity() << std::endl;
     // }
 
-    // {
-    //     ft::vector<int> v1(10, 5);
-    //     ft::vector<int>::iterator first = v1.begin();
-    //     ft::vector<int>::iterator last = v1.end();
-    //     ft::vector<int> v2(first, last);
-    //     for (int i = 0; i < 10; i++) std::cout << v2[i] << " ";
-    //     std::cout << "\n";
-    // }
-
+    {
+        // ft::vector<int> v1(10, 5);
+        // ft::vector<int>::iterator first = v1.begin();
+        // ft::vector<int>::iterator last = v1.end();
+        // std::cout << std::distance(first, last) << "\n";
+        // ft::vector<int> v2(first, last);
+        // for (int i = 0; i < 10; i++) std::cout << v2[i] << " ";
+        // std::cout << "\n";
+    }
     // ---------------------------------------------------------------------------------------------------------
     return 0;
 }

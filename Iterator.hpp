@@ -27,7 +27,7 @@ namespace ft {
     struct iterator_traits<const T*> {
         typedef random_access_iterator_tag iterator_category;
         typedef T                          value_type;
-        typedef ptrdiff_t                  difference_type;
+        typedef ptrdiff_t                  distance_type;
         typedef const T*                   pointer;
         typedef const T&                   reference;
     };
@@ -46,6 +46,7 @@ namespace ft {
         typedef Distance    difference_type;
         typedef Pointer     pointer;
         typedef Reference   reference;
+
         typedef typename std::conditional<isConst, const T*, T*>::type CondPtr;
         typedef typename std::conditional<isConst, const T&, T&>::type CondRef;
 
