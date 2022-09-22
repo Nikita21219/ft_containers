@@ -97,11 +97,12 @@ namespace ft {
             it_end--;
             std::move(pos + 1, end(), pos - 1);
             sz--;
-            return pos; //TODO fix return (ERROR!!!!)
+            return pos;
         }
 
         iterator erase(iterator first, iterator last) {
-            std::move(first + 1, end(), last - 1);
+            std::move(last, end(), first);
+            sz -= distance(first, last);
             return first;
         }
  
