@@ -325,43 +325,6 @@ int main() {
     // }
 
 
-
-// 1 2 3 4 5 6
-
-// first=4 last=5 res=5
-// first=3 last=5 res=5
-// first=2 last=5 res=5
-// first=4 last=6 res=6
-// first=1 last=2 res=2
-
-
-    {
-        std::vector<int> v1;
-        for (int i = 1; i <= 6; i++) v1.push_back(i);
-        std::vector<int>::iterator it_begin = v1.begin();
-        std::vector<int>::iterator it_end = v1.end();
-        it_begin++;
-        it_begin++;
-        it_end--;
-        it_end--;
-        std::cout << "🟨erase: " << *(v1.erase(it_begin, it_end)) << std::endl;
-        print_info(v1);
-    }
-    {
-        ft::vector<int> v1;
-        for (int i = 1; i <= 6; i++) v1.push_back(i);
-        ft::vector<int>::iterator it_begin = v1.begin();
-        ft::vector<int>::iterator it_end = v1.end();
-        it_begin++;
-        it_begin++;
-        it_end--;
-        it_end--;
-        std::cout << "🟨erase: " << *(v1.erase(it_begin, it_end)) << std::endl;
-        print_info(v1);
-    }
-
-
-
     // ---------------------------------------------------------------------------------------------------------
     
     return 0;
