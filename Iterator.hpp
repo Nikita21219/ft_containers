@@ -68,6 +68,7 @@ namespace ft {
         friend bool operator<(const RandAccessIt& lhs, const RandAccessIt& rhs)  {return lhs.ptr < rhs.ptr;}
         friend bool operator>=(const RandAccessIt& lhs, const RandAccessIt& rhs) {return lhs.ptr >= rhs.ptr;}
         friend bool operator<=(const RandAccessIt& lhs, const RandAccessIt& rhs) {return lhs.ptr <= rhs.ptr;}
+        const pointer& base() const {return ptr;}
 
         RandAccessIt operator++() {
             ptr++;
@@ -119,7 +120,7 @@ namespace ft {
         pointer ptr;
     };
 
-    template <typename Iter>
+    template <typename Iter> // TODO inheritance typedefs from general iterator
     class ReverseRandAccessIt {
     public:
         typedef Iter iterator_type;
@@ -181,7 +182,7 @@ namespace ft {
             return it;
         };
 
-        //TODO need to realize operator-. reverse_iter1 - reverse_iter2
+        //TODO need to realize operator-(iterator). reverse_iter1 - reverse_iter2
 
     private:
         iterator_type iter;

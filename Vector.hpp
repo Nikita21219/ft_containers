@@ -95,23 +95,29 @@ namespace ft {
         iterator erase(iterator pos) {
             iterator it_end = end();
             it_end--;
-            while (pos != it_end) {
-                *pos = *(pos + 1);
-                pos++;
-            }
+            std::move(pos + 1, end(), pos - 1);
             sz--;
-            return end(); //TODO fix return (ERROR!!!!)
+            return pos; //TODO fix return (ERROR!!!!)
         }
 
-        iterator erase (iterator first, iterator last) {
-            if (first == last) return end(); //TODO check, if first == last
-            iterator tmp = last;
-            iterator end_it = end();
-            sz -= ft::distance(first, last);
-            while (last != end_it)
-                *first++ = *last++;
-            return tmp; //TODO fix return (ERROR!!!!)
+        iterator erase(iterator first, iterator last) {
+            std::move(first + 1, end(), last - 1);
+            return first;
         }
+ 
+        // iterator erase(iterator first, iterator last) {
+        //     if (first == last) return end(); //TODO check, if first == last
+        //     iterator end_it = end();
+        //     iterator tmp = last;
+        //     sz -= ft::distance(first, last);
+        //     while (last != end_it) {
+        //         if (first == tmp)
+        //             tmp = first;
+        //         first->~value_type();
+        //         *first++ = *last++;
+        //     }
+        //     return tmp; //TODO fix return (ERROR!!!!)
+        // }
 
         void reserve(size_type new_cap) {
             if (new_cap > alloc.max_size()) throw std::bad_alloc();
@@ -154,7 +160,7 @@ namespace ft {
             sz -= 1;
         }
 
-        void clear() {} //TODO realize method
+        void clear() {erase(begin(), end());}
 
         void swap (vector& x) {
             size_type tmp_sz = x.size();

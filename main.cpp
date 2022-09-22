@@ -2,6 +2,7 @@
 #include <algorithm> //TODO tmp line
 #include <list> //TODO tmp line
 #include <vector> //TODO tmp line
+#include <iostream>
 
 // template <typename T>
 // void print_info(std::vector<T> &v) {
@@ -29,14 +30,27 @@ class Test {
 public:
     // typedef typename std::conditional<isConst, const T*, T*>::type conditional_ptr;
 
-    Test(T *arr): arr(arr) {}
-    ~Test() {}
+    Test(T i) {el = i;}
+    ~Test() {std::cout << "Destructor called\n";}
 // private:
-    T *arr;
+    T el;
 };
 
 
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
+{
+    os << dt.el;
+    return os;
+}
+
 int main() {
+
+    // Test<int> t(10);
+    // Test<int> *test = &t;
+    // test->~Test();
+
+    // exit(0);
 
     // ---------------------------------------------------------------------------------------------------------
     // // Constructor and copy constructor
@@ -310,33 +324,42 @@ int main() {
     //     print_info(v1);
     // }
 
+
+
+// 1 2 3 4 5 6
+
+// first=4 last=5 res=5
+// first=3 last=5 res=5
+// first=2 last=5 res=5
+// first=4 last=6 res=6
+// first=1 last=2 res=2
+
+
     {
         std::vector<int> v1;
         for (int i = 1; i <= 6; i++) v1.push_back(i);
-        std::vector<int>::iterator first = v1.begin();
-        std::vector<int>::iterator last = v1.end();
-        first++;
-        first++;
-        first++;
-        last--;
-        last--;
-        std::cout << "erase: " << *(v1.erase(first, last)) << "\n";
+        std::vector<int>::iterator it_begin = v1.begin();
+        std::vector<int>::iterator it_end = v1.end();
+        it_begin++;
+        it_begin++;
+        it_end--;
+        it_end--;
+        std::cout << "🟨erase: " << *(v1.erase(it_begin, it_end)) << std::endl;
         print_info(v1);
     }
-
     {
         ft::vector<int> v1;
         for (int i = 1; i <= 6; i++) v1.push_back(i);
-        ft::vector<int>::iterator first = v1.begin();
-        ft::vector<int>::iterator last = v1.end();
-        first++;
-        first++;
-        first++;
-        last--;
-        last--;
-        std::cout << "erase: " << *(v1.erase(first, last)) << "\n";
+        ft::vector<int>::iterator it_begin = v1.begin();
+        ft::vector<int>::iterator it_end = v1.end();
+        it_begin++;
+        it_begin++;
+        it_end--;
+        it_end--;
+        std::cout << "🟨erase: " << *(v1.erase(it_begin, it_end)) << std::endl;
         print_info(v1);
     }
+
 
 
     // ---------------------------------------------------------------------------------------------------------
