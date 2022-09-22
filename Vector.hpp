@@ -105,20 +105,6 @@ namespace ft {
             sz -= distance(first, last);
             return first;
         }
- 
-        // iterator erase(iterator first, iterator last) {
-        //     if (first == last) return end(); //TODO check, if first == last
-        //     iterator end_it = end();
-        //     iterator tmp = last;
-        //     sz -= ft::distance(first, last);
-        //     while (last != end_it) {
-        //         if (first == tmp)
-        //             tmp = first;
-        //         first->~value_type();
-        //         *first++ = *last++;
-        //     }
-        //     return tmp; //TODO fix return (ERROR!!!!)
-        // }
 
         void reserve(size_type new_cap) {
             if (new_cap > alloc.max_size()) throw std::bad_alloc();
