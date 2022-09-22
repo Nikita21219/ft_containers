@@ -183,4 +183,18 @@ namespace ft {
     private:
         iterator_type iter;
     };
+
+    template<class It>
+    typename ft::iterator_traits<It>::difference_type 
+    do_distance(It first, It last, ft::random_access_iterator_tag)
+    {
+        return last - first;
+    }
+    
+    template<class It>
+    typename std::iterator_traits<It>::difference_type 
+    distance(It first, It last)
+    {
+        return do_distance(first, last, typename ft::iterator_traits<It>::iterator_category());
+    }
 }

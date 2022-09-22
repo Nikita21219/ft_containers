@@ -104,11 +104,13 @@ namespace ft {
         }
 
         // iterator erase (iterator first, iterator last) {
-        //     iterator it_end = end();
-        //     it_end--;
-        //     while (first != it_end) {
-                
+        //     iterator end_it = end();
+        //     sz -= ft::distance(first, last); //TODO use distance
+        //     while (last != end_it) {
+        //         // std::cout << "first: " << *first << " last: " << *last << "\n";
+        //         *first++ = *last++;
         //     }
+        //     return last;
         // }
 
         void reserve(size_type new_cap) {
