@@ -100,18 +100,18 @@ namespace ft {
                 pos++;
             }
             sz--;
-            return end();
+            return end(); //TODO fix return (ERROR!!!!)
         }
 
-        // iterator erase (iterator first, iterator last) {
-        //     iterator end_it = end();
-        //     sz -= ft::distance(first, last); //TODO use distance
-        //     while (last != end_it) {
-        //         // std::cout << "first: " << *first << " last: " << *last << "\n";
-        //         *first++ = *last++;
-        //     }
-        //     return last;
-        // }
+        iterator erase (iterator first, iterator last) {
+            if (first == last) return end(); //TODO check, if first == last
+            iterator tmp = last;
+            iterator end_it = end();
+            sz -= ft::distance(first, last);
+            while (last != end_it)
+                *first++ = *last++;
+            return tmp; //TODO fix return (ERROR!!!!)
+        }
 
         void reserve(size_type new_cap) {
             if (new_cap > alloc.max_size()) throw std::bad_alloc();

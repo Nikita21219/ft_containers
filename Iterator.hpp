@@ -93,6 +93,10 @@ namespace ft {
             ptr -= n;
             return *this;
         };
+        
+        difference_type operator-(RandAccessIt it) {
+            return ptr - it.ptr;
+        };
 
         RandAccessIt operator++(int) {
             RandAccessIt it = *this;
@@ -121,6 +125,7 @@ namespace ft {
         typedef Iter iterator_type;
         typedef typename iterator_type::reference reference;
         typedef typename iterator_type::pointer pointer;
+        typedef typename iterator_type::difference_type difference_type;
 
         ReverseRandAccessIt(Iter iter): iter(iter)                                          {}
         iterator_type base() const                                                       {return iter;}
@@ -176,21 +181,19 @@ namespace ft {
             return it;
         };
 
+        //TODO need to realize operator-. reverse_iter1 - reverse_iter2
+
     private:
         iterator_type iter;
     };
 
-    // template<class It>
-    // typename ft::iterator_traits<It>::difference_type 
-    // do_distance(It first, It last, ft::random_access_iterator_tag)
-    // {
-    //     return last - first;
-    // }
-    
-    // template<class It>
-    // typename std::iterator_traits<It>::difference_type 
-    // distance(It first, It last)
-    // {
-    //     return do_distance(first, last, typename ft::iterator_traits<It>::iterator_category());
-    // }
+    template<class It>
+    typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::random_access_iterator_tag) {
+        return last - first;
+    }
+
+    template<class It>
+    typename ft::iterator_traits<It>::difference_type distance(It first, It last) {
+        return distance_helper(first, last, typename ft::iterator_traits<It>::iterator_category());
+    }
 }
