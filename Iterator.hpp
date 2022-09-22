@@ -15,7 +15,7 @@ namespace ft {
     };
 
     template <typename T>
-    struct iterator_traits<T *> {
+    struct iterator_traits<T*> {
         typedef random_access_iterator_tag iterator_category;
         typedef T                          value_type;
         typedef ptrdiff_t                  difference_type;
@@ -23,11 +23,11 @@ namespace ft {
         typedef T&                         reference;
     };
 
-    template< class T >
+    template<typename T>
     struct iterator_traits<const T*> {
         typedef random_access_iterator_tag iterator_category;
-        typedef T                          value_type;
         typedef ptrdiff_t                  difference_type;
+        typedef const T                    value_type;
         typedef const T*                   pointer;
         typedef const T&                   reference;
     };
@@ -47,23 +47,21 @@ namespace ft {
         typedef Reference   reference;
     };
 
-    template<bool isConst, typename T>
+    template<typename T>
     class RandAccessIt {
     public:
-        typedef typename std::conditional<isConst, const T*, T*>::type CondPtr;
-        typedef typename std::conditional<isConst, const T&, T&>::type CondRef;
         typedef typename ft::iterator<ft::random_access_iterator_tag, T> iterator;
-        typedef typename iterator::value_type                            value_type;
-        typedef typename iterator::iterator_category                     iterator_category;
-        typedef typename iterator::difference_type                       difference_type;
-        typedef typename iterator::pointer                               pointer;
-        typedef typename iterator::reference                             reference;
+        typedef typename iterator_traits<T*>::value_type                 value_type;
+        typedef typename iterator_traits<T*>::iterator_category          iterator_category;
+        typedef typename iterator_traits<T*>::difference_type            difference_type;
+        typedef typename iterator_traits<T*>::pointer                    pointer;
+        typedef typename iterator_traits<T*>::reference                  reference;
 
         RandAccessIt()                                                       {};
-        RandAccessIt(CondPtr ptr): ptr(ptr)                                  {};
-        CondRef operator*()                                              {return *ptr;};
-        CondPtr operator->() const                                       {return ptr;}
-        CondRef operator[](int idx)                                      {return *(ptr + idx);}
+        RandAccessIt(pointer ptr): ptr(ptr)                                  {};
+        reference operator*()                                              {return *ptr;};
+        pointer operator->() const                                       {return ptr;}
+        reference operator[](int idx)                                      {return *(ptr + idx);}
         bool operator==(const RandAccessIt &other) const                     {return ptr == other.ptr;}
         bool operator!=(const RandAccessIt &other) const                     {return !(*this == other);}
         friend bool operator>(const RandAccessIt& lhs, const RandAccessIt& rhs)  {return lhs.ptr > rhs.ptr;}
@@ -114,7 +112,7 @@ namespace ft {
         };
 
     private:
-        CondPtr ptr;
+        pointer ptr;
     };
 
     template <typename Iter>
@@ -123,14 +121,12 @@ namespace ft {
         typedef Iter iterator_type;
         typedef typename iterator_type::reference reference;
         typedef typename iterator_type::pointer pointer;
-        typedef typename iterator_type::CondRef CondRef;
-        typedef typename iterator_type::CondPtr CondPtr;
 
         ReverseRandAccessIt(Iter iter): iter(iter)                                          {}
         iterator_type base() const                                                       {return iter;}
         iterator_type operator->() const                                                 {return iter;}
-        CondRef operator*()                                                              {return *iter;}
-        CondRef operator[](int idx)                                                      {return *(iter + idx);}
+        reference operator*()                                                              {return *iter;}
+        reference operator[](int idx)                                                      {return *(iter + idx);}
         bool operator!=(const ReverseRandAccessIt &other) const                             {return !(*this == other);}
         bool operator==(const ReverseRandAccessIt &other) const                             {return this->iter == other.iter;}
         friend bool operator>(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs)  {return lhs.ptr > rhs.ptr;}
@@ -184,17 +180,17 @@ namespace ft {
         iterator_type iter;
     };
 
-    template<class It>
-    typename ft::iterator_traits<It>::difference_type 
-    do_distance(It first, It last, ft::random_access_iterator_tag)
-    {
-        return last - first;
-    }
+    // template<class It>
+    // typename ft::iterator_traits<It>::difference_type 
+    // do_distance(It first, It last, ft::random_access_iterator_tag)
+    // {
+    //     return last - first;
+    // }
     
-    template<class It>
-    typename std::iterator_traits<It>::difference_type 
-    distance(It first, It last)
-    {
-        return do_distance(first, last, typename ft::iterator_traits<It>::iterator_category());
-    }
+    // template<class It>
+    // typename std::iterator_traits<It>::difference_type 
+    // distance(It first, It last)
+    // {
+    //     return do_distance(first, last, typename ft::iterator_traits<It>::iterator_category());
+    // }
 }

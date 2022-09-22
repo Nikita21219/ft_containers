@@ -11,9 +11,9 @@ namespace ft {
         typedef typename allocator_type::pointer                     pointer;
         typedef typename allocator_type::const_reference             const_reference;
         typedef typename allocator_type::const_pointer               const_pointer;
-        typedef ft::RandAccessIt<false, value_type>                  iterator;
-        typedef ft::RandAccessIt<true, value_type>                   const_iterator;
-        typedef typename ft::RandAccessIt<true, value_type>::difference_type  difference_type;
+        typedef ft::RandAccessIt<value_type>                         iterator;
+        typedef ft::RandAccessIt<const value_type>                         const_iterator;
+        typedef typename iterator::difference_type  difference_type;
         typedef ft::ReverseRandAccessIt<iterator>                       reverse_iterator;
         typedef ft::ReverseRandAccessIt<const_iterator>                 const_reverse_iterator;
 
