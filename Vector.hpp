@@ -237,8 +237,8 @@ namespace ft {
             return result;
         }
 
-        template <class InputIterator>
-        iterator insert(iterator position, InputIterator first, InputIterator last) {
+        template <class Iter>
+        iterator insert(iterator position, Iter first, Iter last) {
             difference_type dist = distance(first, last);
             size_type new_capacity = sz + dist > cp ? cp * 2 : cp;
             if (sz + dist >= cp * 2)
