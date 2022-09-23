@@ -39,13 +39,17 @@ namespace ft {
                 this->alloc.construct(arr + i, x[i]);
         }
 
-        // template <class InputIt>
-        // vector(InputIt first, InputIt last, const allocator_type& alloc = allocator_type()):
-        // alloc(alloc), cp(0), sz(0)
-        // {
-        //     while (first != last)
-        //         push_back(*first++); //TODO realise std::distance()
-        // }
+        template <class Iter>
+        vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
+        alloc(alloc), cp(0), sz(0)
+        {
+            memory_reserve(distance(first, last));
+            size_type i = 0;
+            while (first != last) {
+                this->alloc(arr + i++, *first++);
+                sz++;
+            }
+        }
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
@@ -102,21 +106,14 @@ namespace ft {
 
         iterator erase(iterator first, iterator last) {
             std::move(last, end(), first);
-            sz -= distance(first, last);
+            sz -= ft::distance(first, last);
             return first;
-        }
+        } //TODO check, if first == last
 
         void reserve(size_type new_cap) {
             if (new_cap > alloc.max_size()) throw std::bad_alloc();
             if (new_cap < cp) return;
-            value_type *new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
-            for (size_t i = 0; i < sz; ++i) {
-                this->alloc.construct(new_arr + i, arr[i]);
-                this->alloc.destroy(arr + i);
-            }
-            this->alloc.deallocate(arr, cp);
-            arr = new_arr;
-            cp = new_cap;
+            memory_reserve(new_cap);
         }
 
         reference at(size_type n) {
@@ -134,9 +131,9 @@ namespace ft {
         void push_back(const value_type& val) {
             if (sz == cp) {
                 if (cp == 0)
-                    reserve(1);
+                    memory_reserve(1);
                 else
-                    reserve(cp * 2);
+                    memory_reserve(cp * 2);
             }
             alloc.construct(arr + sz, val);
             sz += 1;
@@ -163,10 +160,41 @@ namespace ft {
             x.arr = tmp_arr;
         }
 
+        void assign(size_type n, const value_type &val) {
+            if (cp != n)
+                memory_reserve(n);
+            sz = 0;
+            while (sz != n) {
+                alloc.construct(arr + sz, val);
+                sz++;
+            }
+        }
+
+        template <class Iter>
+        void assign (Iter first, Iter last) {
+            memory_reserve(distance(first, last));
+            size_type i = 0;
+            while (first != last) {
+                alloc.construct(arr + i++, *first++);
+                sz++;
+            }
+        }
+
     private:
         value_type *arr;
         allocator_type alloc;
         size_type cp;
         size_type sz;
+
+        void memory_reserve(size_type new_cap) {
+            value_type *new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
+            for (size_t i = 0; i < sz; ++i) {
+                this->alloc.construct(new_arr + i, arr[i]);
+                this->alloc.destroy(arr + i);
+            }
+            this->alloc.deallocate(arr, cp);
+            arr = new_arr;
+            cp = new_cap;
+        }
     };
 }

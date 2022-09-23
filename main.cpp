@@ -291,7 +291,7 @@ int main() {
     }
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
-    // // ******************** Test erase() ***************************
+    // // ******************** Test erase(pos) ***************************
     // {
     //     std::vector<int> v1(15, 1);
     //     std::vector<int>::iterator it = v1.begin();
@@ -323,10 +323,64 @@ int main() {
     //     v1.erase(it);
     //     print_info(v1);
     // }
+    // // ******************** Test erase(first, last) ***************************
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 6; i++) v1.push_back(i);
+    //     std::vector<int>::iterator first = v1.begin();
+    //     std::vector<int>::iterator last = v1.end();
+    //     first++;
+    //     first++;
+    //     last--;
+    //     std::cout << "erase: " << *(v1.erase(first, last)) << "\n";
+    //     print_info(v1);
+    // }
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 6; i++) v1.push_back(i);
+    //     ft::vector<int>::iterator first = v1.begin();
+    //     ft::vector<int>::iterator last = v1.end();
+    //     first++;
+    //     first++;
+    //     last--;
+    //     std::cout << "erase: " << *(v1.erase(first, last)) << "\n";
+    //     print_info(v1);
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+    // // ******************** Test assign(n, val) ***************************
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 6; i++) v1.push_back(i);
+    //     v1.assign(3, 999);
+    //     print_info(v1);
+    // }
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 6; i++) v1.push_back(i);
+    //     v1.assign(3, 999);
+    //     print_info(v1);
+    // }
+    // // ******************** Test assign(iter, iter) ***************************
+    
+    {
+        std::vector<int> v1;
+        std::vector<int> v2;
+        for (int i = 1; i <= 17; i++) v1.push_back(i);
+        v2.assign(v1.begin(), v1.end());
+        print_info(v2);
+    }
+    
+    {
+        ft::vector<int> v1;
+        ft::vector<int> v2;
+        for (int i = 1; i <= 17; i++) v1.push_back(i);
+        v2.assign(v1.begin(), v1.end());
+        print_info(v2);
+    }
 
 
     // ---------------------------------------------------------------------------------------------------------
-    
     return 0;
 }
 
