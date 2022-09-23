@@ -221,7 +221,7 @@ namespace ft {
             iterator result;
             while (i <= sz + n) {
                 if (it == position) {
-                    result = iterator(new_arr + i);//TODO not correct!
+                    result = iterator(new_arr + i);
                     while (++count <= n)
                         alloc.construct(new_arr + i++, val);
                 }
@@ -235,7 +235,7 @@ namespace ft {
             cp = new_capacity;
             sz += n;
             return result;
-        } //TODO check, if (position == end())
+        }
 
     private:
         pointer arr;

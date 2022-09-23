@@ -448,13 +448,15 @@ int main() {
         std::cout << "🔰insert: " << *(res) << "\n";
         std::vector<int>::iterator it2 = v1.end();
         std::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
+        std::cout << "🔰insert: " << *(res2) << "\n";
         std::vector<int>::iterator it3 = v1.begin();
         it3++;
         it3++;
         it3++;
         std::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
-        std::cout << "🔰insert: " << *(res2) << "\n";
         std::cout << "🔰insert: " << *(res3) << "\n";
+        std::vector<int>::iterator res4 = v1.insert(v1.begin(), 3, 999);
+        std::cout << "🔰insert: " << *(res4) << "\n";
         print_info(v1);
     }
     {
@@ -468,17 +470,17 @@ int main() {
         std::cout << "🔰insert: " << *(res) << "\n";
         ft::vector<int>::iterator it2 = v1.end();
         ft::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
+        std::cout << "🔰insert: " << *(res2) << "\n";
         ft::vector<int>::iterator it3 = v1.begin();
         it3++;
         it3++;
         it3++;
         ft::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
-        std::cout << "🔰insert: " << *(res2) << "\n";
         std::cout << "🔰insert: " << *(res3) << "\n";
+        ft::vector<int>::iterator res4 = v1.insert(v1.begin(), 3, 999);
+        std::cout << "🔰insert: " << *(res4) << "\n";
         print_info(v1);
     }
-
-
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
     return 0;

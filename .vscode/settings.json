@@ -80,6 +80,7 @@
         "*.tpp": "cpp",
         "list": "cpp",
         "__functional_03": "cpp",
-        "version": "cpp"
+        "version": "cpp",
+        "iomanip": "cpp"
     }
 }
