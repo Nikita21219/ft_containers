@@ -3,6 +3,7 @@
 #include <list> //TODO tmp line
 #include <vector> //TODO tmp line
 #include <iostream>
+#include <iomanip>
 
 // template <typename T>
 // void print_info(std::vector<T> &v) {
@@ -379,34 +380,101 @@ int main() {
     // }
     // ---------------------------------------------------------------------------------------------------------
     // // ******************** Test insert(pos, val) ***************************
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 17; i++) v1.push_back(i);
+    //     std::vector<int>::iterator it = v1.begin();
+    //     it++;
+    //     it++;
+    //     it++;
+    //     v1.insert(v1.begin(), 999);
+    //     v1.insert(it, 999);
+    //     std::vector<int>::iterator it_end = v1.end();
+    //     it_end--;
+    //     std::cout << "🔰insert: " << *(v1.insert(it_end, 999)) << "\n";
+    //     print_info(v1);
+    // }
+
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 17; i++) v1.push_back(i);
+    //     ft::vector<int>::iterator it = v1.begin();
+    //     it++;
+    //     it++;
+    //     it++;
+    //     v1.insert(v1.begin(), 999);
+    //     v1.insert(it, 999);
+    //     ft::vector<int>::iterator it_end = v1.end();
+    //     it_end--;
+    //     std::cout << "🔰insert: " << *(v1.insert(it_end, 999)) << "\n";
+    //     print_info(v1);
+    // }
+    // // ******************** Test insert(pos, n, val) ***************************
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 6; i++) v1.push_back(i);
+    //     v1.reserve(100);
+    //     std::vector<int>::iterator res = v1.insert(v1.begin(), 4, 999);
+    //     std::cout << "🔰insert: " << *(res) << "\n";
+    //     res++;
+    //     res++;
+    //     res++;
+    //     res++;
+    //     std::cout << "🔰insert: " << *(res) << "\n";
+    //     print_info(v1);
+    // }
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 6; i++) v1.push_back(i);
+    //     v1.reserve(100);
+    //     ft::vector<int>::iterator res = v1.insert(v1.begin(), 4, 999);
+    //     std::cout << "🔰insert: " << *(res) << "\n";
+    //     res++;
+    //     res++;
+    //     res++;
+    //     res++;
+    //     std::cout << "🔰insert: " << *(res) << "\n";
+    //     print_info(v1);
+    // }
 
     {
         std::vector<int> v1;
-        for (int i = 1; i <= 17; i++) v1.push_back(i);
+        for (int i = 1; i <= 7; i++) v1.push_back(i);
         std::vector<int>::iterator it = v1.begin();
         it++;
         it++;
         it++;
-        v1.insert(v1.begin(), 999);
-        v1.insert(it, 999);
-        std::vector<int>::iterator it_end = v1.end();
-        it_end--;
-        std::cout << "🔰insert: " << *(v1.insert(it_end, 999)) << "\n";
+        std::vector<int>::iterator res = v1.insert(++it, 1, 999);
+        std::cout << "🔰insert: " << *(res) << "\n";
+        std::vector<int>::iterator it2 = v1.end();
+        std::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
+        std::vector<int>::iterator it3 = v1.begin();
+        it3++;
+        it3++;
+        it3++;
+        std::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
+        std::cout << "🔰insert: " << *(res2) << "\n";
+        std::cout << "🔰insert: " << *(res3) << "\n";
         print_info(v1);
     }
-
     {
         ft::vector<int> v1;
-        for (int i = 1; i <= 17; i++) v1.push_back(i);
+        for (int i = 1; i <= 7; i++) v1.push_back(i);
         ft::vector<int>::iterator it = v1.begin();
         it++;
         it++;
         it++;
-        v1.insert(v1.begin(), 999);
-        v1.insert(it, 999);
-        ft::vector<int>::iterator it_end = v1.end();
-        it_end--;
-        std::cout << "🔰insert: " << *(v1.insert(it_end, 999)) << "\n";
+        ft::vector<int>::iterator res = v1.insert(++it, 1, 999);
+        std::cout << "🔰insert: " << *(res) << "\n";
+        ft::vector<int>::iterator it2 = v1.end();
+        ft::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
+        ft::vector<int>::iterator it3 = v1.begin();
+        it3++;
+        it3++;
+        it3++;
+        ft::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
+        std::cout << "🔰insert: " << *(res2) << "\n";
+        std::cout << "🔰insert: " << *(res3) << "\n";
         print_info(v1);
     }
 

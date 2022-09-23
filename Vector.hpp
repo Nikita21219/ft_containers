@@ -12,10 +12,10 @@ namespace ft {
         typedef typename allocator_type::const_reference             const_reference;
         typedef typename allocator_type::const_pointer               const_pointer;
         typedef ft::RandAccessIt<value_type>                         iterator;
-        typedef ft::RandAccessIt<const value_type>                         const_iterator;
-        typedef typename iterator::difference_type  difference_type;
-        typedef ft::ReverseRandAccessIt<iterator>                       reverse_iterator;
-        typedef ft::ReverseRandAccessIt<const_iterator>                 const_reverse_iterator;
+        typedef ft::RandAccessIt<const value_type>                   const_iterator;
+        typedef typename iterator::difference_type                   difference_type;
+        typedef ft::ReverseRandAccessIt<iterator>                    reverse_iterator;
+        typedef ft::ReverseRandAccessIt<const_iterator>              const_reverse_iterator;
 
         explicit vector(const allocator_type& alloc = allocator_type()):
         alloc(alloc), cp(0), sz(0)
@@ -39,17 +39,17 @@ namespace ft {
                 this->alloc.construct(arr + i, x[i]);
         }
 
-        template <class Iter>
-        vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
-        alloc(alloc), cp(0), sz(0)
-        {
-            memory_reserve(distance(first, last));
-            size_type i = 0;
-            while (first != last) {
-                this->alloc(arr + i++, *first++);
-                sz++;
-            }
-        }
+        // template <class Iter>
+        // vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
+        // alloc(alloc), cp(0), sz(0)
+        // {
+        //     memory_reserve(distance(first, last));
+        //     size_type i = 0;
+        //     while (first != last) {
+        //         this->alloc(arr + i++, *first++);
+        //         sz++;
+        //     }
+        // }
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
@@ -111,7 +111,6 @@ namespace ft {
         } //TODO check, if first == last
 
         void reserve(size_type new_cap) {
-            if (new_cap > alloc.max_size()) throw std::bad_alloc();
             if (new_cap < cp) return;
             memory_reserve(new_cap);
         }
@@ -149,7 +148,7 @@ namespace ft {
         void swap (vector& x) {
             size_type tmp_sz = x.size();
             size_type tmp_cp = x.capacity();
-            value_type *tmp_arr = arr;
+            pointer tmp_arr = arr;
 
             x.cp = cp;
             cp = tmp_cp;
@@ -213,15 +212,41 @@ namespace ft {
             return result;
         }
 
+        iterator insert(iterator position, size_type n, const value_type& val) {
+            size_type new_capacity = sz + n > cp ? cp * 2 : cp;
+            pointer new_arr = this->alloc.allocate(sizeof(value_type) * (new_capacity));
+            iterator it = begin();
+            size_type i = 0;
+            size_type count = 0;
+            iterator result;
+            while (i <= sz + n) {
+                if (it == position) {
+                    result = iterator(new_arr + i);//TODO not correct!
+                    while (++count <= n)
+                        alloc.construct(new_arr + i++, val);
+                }
+                alloc.construct(new_arr + i, *it++);
+                i++;
+            }
+            for (size_type i = 0; i < sz; i++)
+                alloc.destroy(arr + i);
+            alloc.deallocate(arr, cp);
+            arr = new_arr;
+            cp = new_capacity;
+            sz += n;
+            return result;
+        } //TODO check, if (position == end())
+
     private:
-        value_type *arr;
+        pointer arr;
         allocator_type alloc;
         size_type cp;
         size_type sz;
 
         void memory_reserve(size_type new_cap) {
-            value_type *new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
-            for (size_t i = 0; i < sz; ++i) {
+            if (new_cap > alloc.max_size()) throw std::bad_alloc();
+            pointer new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
+            for (size_type i = 0; i < sz; ++i) {
                 this->alloc.construct(new_arr + i, arr[i]);
                 this->alloc.destroy(arr + i);
             }
@@ -229,5 +254,27 @@ namespace ft {
             arr = new_arr;
             cp = new_cap;
         }
+        
+        void memory_reserve_for_insert(iterator pos, size_type new_cap, size_type n) {
+            pointer new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
+            size_type j = 0;
+            size_type i = -1;
+            size_type tmp_n = n;
+            iterator it = begin();
+            while (++i < sz) {
+                if (it == pos) {
+                    while (tmp_n--)
+                        j++;
+                    continue;
+                }
+                this->alloc.construct(new_arr + j, arr[i]);
+                this->alloc.destroy(arr + i);
+                j++;
+                it++;
+            }
+            this->alloc.deallocate(arr, cp);
+            arr = new_arr;
+            cp = new_cap;
+        }
     };
-}
+};
