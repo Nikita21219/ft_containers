@@ -237,6 +237,34 @@ namespace ft {
             return result;
         }
 
+        template <class InputIterator>
+        iterator insert(iterator position, InputIterator first, InputIterator last) {
+            difference_type dist = distance(first, last);
+            size_type new_capacity = sz + dist > cp ? cp * 2 : cp;
+            if (sz + dist >= cp * 2)
+                new_capacity = sz + dist;
+            pointer new_arr = this->alloc.allocate(sizeof(value_type) * (new_capacity));
+            iterator it = begin();
+            size_type i = 0;
+            iterator result;
+            while (i <= sz + dist) {
+                if (it == position) {
+                    result = iterator(new_arr + i);
+                    while (first != last)
+                        alloc.construct(new_arr + i++, *first++);
+                }
+                alloc.construct(new_arr + i, *it++);
+                i++;
+            }
+            for (size_type i = 0; i < sz; i++)
+                alloc.destroy(arr + i);
+            alloc.deallocate(arr, cp);
+            arr = new_arr;
+            cp = new_capacity;
+            sz += dist;
+            return result;
+        }
+
     private:
         pointer arr;
         allocator_type alloc;

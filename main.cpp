@@ -437,50 +437,117 @@ int main() {
     //     print_info(v1);
     // }
 
+    // // ******************** Test insert(pos, count, val) ***************************
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 7; i++) v1.push_back(i);
+    //     std::vector<int>::iterator it = v1.begin();
+    //     it++;
+    //     it++;
+    //     it++;
+    //     std::vector<int>::iterator res = v1.insert(++it, 1, 999);
+    //     std::cout << "🔰insert: " << *(res) << "\n";
+    //     std::vector<int>::iterator it2 = v1.end();
+    //     std::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
+    //     std::cout << "🔰insert: " << *(res2) << "\n";
+    //     std::vector<int>::iterator it3 = v1.begin();
+    //     it3++;
+    //     it3++;
+    //     it3++;
+    //     std::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
+    //     std::cout << "🔰insert: " << *(res3) << "\n";
+    //     std::vector<int>::iterator res4 = v1.insert(v1.begin(), 3, 999);
+    //     std::cout << "🔰insert: " << *(res4) << "\n";
+    //     print_info(v1);
+    // }
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 7; i++) v1.push_back(i);
+    //     ft::vector<int>::iterator it = v1.begin();
+    //     it++;
+    //     it++;
+    //     it++;
+    //     ft::vector<int>::iterator res = v1.insert(++it, 1, 999);
+    //     std::cout << "🔰insert: " << *(res) << "\n";
+    //     ft::vector<int>::iterator it2 = v1.end();
+    //     ft::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
+    //     std::cout << "🔰insert: " << *(res2) << "\n";
+    //     ft::vector<int>::iterator it3 = v1.begin();
+    //     it3++;
+    //     it3++;
+    //     it3++;
+    //     ft::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
+    //     std::cout << "🔰insert: " << *(res3) << "\n";
+    //     ft::vector<int>::iterator res4 = v1.insert(v1.begin(), 3, 999);
+    //     std::cout << "🔰insert: " << *(res4) << "\n";
+    //     print_info(v1);
+    // }
+    // // ******************** Test insert(pos, first, last) ***************************
+    // {
+    //     std::vector<int> v1;
+    //     std::vector<int> v2(3, 5);
+    //     for (int i = 1; i <= 7; i++) v1.push_back(i);
+    //     std::cout << "Capacity before: " << v2.capacity() << std::endl;
+    //     std::vector<int>::iterator it = v1.begin();
+    //     std::vector<int>::iterator it_end = v1.end();
+    //     v2.insert(v2.begin(), it, it_end);
+    //     print_info(v2);
+    // }
+    // {
+    //     ft::vector<int> v1;
+    //     ft::vector<int> v2(3, 5);
+    //     for (int i = 1; i <= 7; i++) v1.push_back(i);
+    //     std::cout << "Capacity before: " << v2.capacity() << std::endl;
+    //     ft::vector<int>::iterator it = v1.begin();
+    //     ft::vector<int>::iterator it_end = v1.end();
+    //     v2.insert(v2.begin(), it, it_end);
+    //     print_info(v2);
+    // }
+
+    // {
+    //     std::vector<int> v1;
+    //     std::vector<int> v2(25, 5);
+    //     for (int i = 1; i <= 15; i++) v1.push_back(i);
+    //     std::cout << "Cap: " << v2.capacity() << "\n";
+    //     std::vector<int>::iterator it = v1.begin();
+    //     std::vector<int>::iterator it_end = v1.end();
+    //     v2.insert(v2.begin(), it, it_end);
+    //     print_info(v2);
+    // }
+
+    // {
+    //     ft::vector<int> v1;
+    //     ft::vector<int> v2(25, 5);
+    //     for (int i = 1; i <= 15; i++) v1.push_back(i);
+    //     std::cout << "Cap: " << v2.capacity() << "\n";
+    //     ft::vector<int>::iterator it = v1.begin();
+    //     ft::vector<int>::iterator it_end = v1.end();
+    //     v2.insert(v2.begin(), it, it_end);
+    //     print_info(v2);
+    // }
+
     {
         std::vector<int> v1;
-        for (int i = 1; i <= 7; i++) v1.push_back(i);
+        std::vector<int> v2(23, 5);
+        for (int i = 1; i <= 15; i++) v1.push_back(i);
+        std::cout << "Cap: " << v2.capacity() << "\n";
         std::vector<int>::iterator it = v1.begin();
-        it++;
-        it++;
-        it++;
-        std::vector<int>::iterator res = v1.insert(++it, 1, 999);
-        std::cout << "🔰insert: " << *(res) << "\n";
-        std::vector<int>::iterator it2 = v1.end();
-        std::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
-        std::cout << "🔰insert: " << *(res2) << "\n";
-        std::vector<int>::iterator it3 = v1.begin();
-        it3++;
-        it3++;
-        it3++;
-        std::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
-        std::cout << "🔰insert: " << *(res3) << "\n";
-        std::vector<int>::iterator res4 = v1.insert(v1.begin(), 3, 999);
-        std::cout << "🔰insert: " << *(res4) << "\n";
-        print_info(v1);
+        std::vector<int>::iterator it_end = v1.end();
+        v2.insert(v2.begin(), it, it_end);
+        print_info(v2);
     }
+
     {
         ft::vector<int> v1;
-        for (int i = 1; i <= 7; i++) v1.push_back(i);
+        ft::vector<int> v2(23, 5);
+        for (int i = 1; i <= 15; i++) v1.push_back(i);
+        std::cout << "Cap: " << v2.capacity() << "\n";
         ft::vector<int>::iterator it = v1.begin();
-        it++;
-        it++;
-        it++;
-        ft::vector<int>::iterator res = v1.insert(++it, 1, 999);
-        std::cout << "🔰insert: " << *(res) << "\n";
-        ft::vector<int>::iterator it2 = v1.end();
-        ft::vector<int>::iterator res2 = v1.insert(it2, 1, 999);
-        std::cout << "🔰insert: " << *(res2) << "\n";
-        ft::vector<int>::iterator it3 = v1.begin();
-        it3++;
-        it3++;
-        it3++;
-        ft::vector<int>::iterator res3 = v1.insert(it3, 3, 999);
-        std::cout << "🔰insert: " << *(res3) << "\n";
-        ft::vector<int>::iterator res4 = v1.insert(v1.begin(), 3, 999);
-        std::cout << "🔰insert: " << *(res4) << "\n";
-        print_info(v1);
+        ft::vector<int>::iterator it_end = v1.end();
+        v2.insert(v2.begin(), it, it_end);
+        print_info(v2);
     }
+ 
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
     return 0;

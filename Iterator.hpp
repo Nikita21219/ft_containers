@@ -50,6 +50,8 @@ namespace ft {
 
     template<typename T>
     class RandAccessIt {
+    //TODO const_iter = iter
+    //TODO iter = const_iter
     public:
         typedef typename ft::iterator<ft::random_access_iterator_tag, T> iterator;
         typedef typename iterator_traits<T*>::value_type                 value_type;
