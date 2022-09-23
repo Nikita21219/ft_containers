@@ -180,6 +180,39 @@ namespace ft {
             }
         }
 
+        iterator insert(iterator pos, const value_type& val) {
+            if (sz == cp)
+                memory_reserve(cp + 1);
+            iterator it = begin();
+            iterator it_end = end();
+            iterator result;
+            if (pos == it_end) {
+                *it_end = val;
+                sz++;
+                return it;
+            }
+            value_type tmp_val;
+            while (it != it_end) {
+                if (it == pos) {
+                    tmp_val = *it;
+                    *it = val;
+                    result = it;
+                    sz++;
+                    break;
+                }
+                it++;
+            }
+            it++;
+            value_type tmp_val2 = *it;
+            while (it != it_end) {
+                tmp_val2 = tmp_val;
+                tmp_val = *it;
+                *it++ = tmp_val2;
+            }
+            *it = tmp_val;
+            return result;
+        }
+
     private:
         value_type *arr;
         allocator_type alloc;

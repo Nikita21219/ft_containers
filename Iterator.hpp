@@ -194,13 +194,13 @@ namespace ft {
         return last - first;
     }
 
-    // template<class It>
-    // typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::input_iterator_tag) {
-    //     typename ft::iterator_traits<It>::difference_type count = 0;
-    //     while (first++ != last++)
-    //         count++;
-    //     return count;
-    // }
+    template<class It>
+    typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::input_iterator_tag) {
+        typename ft::iterator_traits<It>::difference_type count = 0;
+        while (first++ != last++)
+            count++;
+        return count;
+    }
 
     template<class It>
     typename ft::iterator_traits<It>::difference_type distance(It first, It last) {

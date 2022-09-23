@@ -362,24 +362,56 @@ int main() {
     //     print_info(v1);
     // }
     // // ******************** Test assign(iter, iter) ***************************
+    // {
+    //     std::vector<int> v1;
+    //     std::vector<int> v2;
+    //     for (int i = 1; i <= 17; i++) v1.push_back(i);
+    //     v2.assign(v1.begin(), v1.end());
+    //     print_info(v2);
+    // }
     
+    // {
+    //     ft::vector<int> v1;
+    //     ft::vector<int> v2;
+    //     for (int i = 1; i <= 17; i++) v1.push_back(i);
+    //     v2.assign(v1.begin(), v1.end());
+    //     print_info(v2);
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // // ******************** Test insert(pos, val) ***************************
+
     {
         std::vector<int> v1;
-        std::vector<int> v2;
         for (int i = 1; i <= 17; i++) v1.push_back(i);
-        v2.assign(v1.begin(), v1.end());
-        print_info(v2);
+        std::vector<int>::iterator it = v1.begin();
+        it++;
+        it++;
+        it++;
+        v1.insert(v1.begin(), 999);
+        v1.insert(it, 999);
+        std::vector<int>::iterator it_end = v1.end();
+        it_end--;
+        std::cout << "🔰insert: " << *(v1.insert(it_end, 999)) << "\n";
+        print_info(v1);
     }
-    
+
     {
         ft::vector<int> v1;
-        ft::vector<int> v2;
         for (int i = 1; i <= 17; i++) v1.push_back(i);
-        v2.assign(v1.begin(), v1.end());
-        print_info(v2);
+        ft::vector<int>::iterator it = v1.begin();
+        it++;
+        it++;
+        it++;
+        v1.insert(v1.begin(), 999);
+        v1.insert(it, 999);
+        ft::vector<int>::iterator it_end = v1.end();
+        it_end--;
+        std::cout << "🔰insert: " << *(v1.insert(it_end, 999)) << "\n";
+        print_info(v1);
     }
 
 
+    // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
     return 0;
 }
