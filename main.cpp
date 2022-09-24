@@ -526,29 +526,52 @@ int main() {
     //     print_info(v2);
     // }
 
+    // {
+    //     std::vector<int> v1;
+    //     std::vector<int> v2(23, 5);
+    //     for (int i = 1; i <= 15; i++) v1.push_back(i);
+    //     std::cout << "Cap: " << v2.capacity() << "\n";
+    //     std::vector<int>::iterator it = v1.begin();
+    //     std::vector<int>::iterator it_end = v1.end();
+    //     v2.insert(v2.begin(), it, it_end);
+    //     print_info(v2);
+    // }
+
+    // {
+    //     ft::vector<int> v1;
+    //     ft::vector<int> v2(23, 5);
+    //     for (int i = 1; i <= 15; i++) v1.push_back(i);
+    //     std::cout << "Cap: " << v2.capacity() << "\n";
+    //     ft::vector<int>::iterator it = v1.begin();
+    //     ft::vector<int>::iterator it_end = v1.end();
+    //     v2.insert(v2.begin(), it, it_end);
+    //     print_info(v2);
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
+    // // ******************** Test emplace(pos, args) ***************************
+    
     {
         std::vector<int> v1;
-        std::vector<int> v2(23, 5);
-        for (int i = 1; i <= 15; i++) v1.push_back(i);
-        std::cout << "Cap: " << v2.capacity() << "\n";
+        for (int i = 1; i <= 2; i++) v1.push_back(i);
         std::vector<int>::iterator it = v1.begin();
+        it++;
+        it++;
         std::vector<int>::iterator it_end = v1.end();
-        v2.insert(v2.begin(), it, it_end);
-        print_info(v2);
+        v1.erase(it, it_end);
+        print_info(v1);
     }
-
     {
         ft::vector<int> v1;
-        ft::vector<int> v2(23, 5);
-        for (int i = 1; i <= 15; i++) v1.push_back(i);
-        std::cout << "Cap: " << v2.capacity() << "\n";
+        for (int i = 1; i <= 2; i++) v1.push_back(i);
         ft::vector<int>::iterator it = v1.begin();
+        it++;
+        it++;
         ft::vector<int>::iterator it_end = v1.end();
-        v2.insert(v2.begin(), it, it_end);
-        print_info(v2);
+        v1.erase(it, it_end);
+        print_info(v1);
     }
- 
-    // ---------------------------------------------------------------------------------------------------------
+
     // ---------------------------------------------------------------------------------------------------------
     return 0;
 }

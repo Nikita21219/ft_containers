@@ -108,7 +108,7 @@ namespace ft {
             std::move(last, end(), first);
             sz -= ft::distance(first, last);
             return first;
-        } //TODO check, if first == last
+        }
 
         void reserve(size_type new_cap) {
             if (new_cap < cp) return;
@@ -264,6 +264,13 @@ namespace ft {
             sz += dist;
             return result;
         }
+
+    // template <class... Args>
+    // iterator emplace (const_iterator position, Args&&... args) {
+    //     if (sz + 1 > cp)
+    //         std::cout << "Need to reallocate\n";
+    // }
+
 
     private:
         pointer arr;
