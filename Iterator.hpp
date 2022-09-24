@@ -191,24 +191,6 @@ namespace ft {
         iterator_type iter;
     };
 
-    // template<class It>
-    // typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::random_access_iterator_tag) {
-    //     return last - first;
-    // }
-
-    // template<class It>
-    // typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::input_iterator_tag) {
-    //     typename ft::iterator_traits<It>::difference_type count = 0;
-    //     while (first++ != last++)
-    //         count++;
-    //     return count;
-    // }
-
-    // template<class It>
-    // typename ft::iterator_traits<It>::difference_type distance(It first, It last) {
-    //     return distance_helper(first, last, typename ft::iterator_traits<It>::iterator_category());
-    // }
-
     template<class InputIt1, class InputIt2>
     bool lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2)
     {

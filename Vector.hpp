@@ -43,17 +43,11 @@ namespace ft {
                 this->alloc.construct(arr + i, x[i]);
         }
 
-        // template <class Iter>
+        // template <typename Iter>
         // vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
         // alloc(alloc), cp(0), sz(0)
         // {
-        //     memory_reserve(std::distance(first, last));
-        //     size_type i = 0;
-        //     while (first != last) {
-        //         this->alloc(arr + i++, *first);
-        //         first++;
-        //         sz++;
-        //     }
+        //     assign(first, last);
         // }
 
         ~vector() {
@@ -165,7 +159,7 @@ namespace ft {
         }
 
         template <class Iter>
-        void assign (Iter first, Iter last) {
+        void assign(Iter first, Iter last) {
             memory_reserve(std::distance(first, last));
             size_type i = 0;
             while (first != last) {
