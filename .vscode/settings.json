@@ -86,6 +86,7 @@
         "csignal": "cpp",
         "fstream": "cpp",
         "map": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "*.ipp": "cpp"
     }
 }

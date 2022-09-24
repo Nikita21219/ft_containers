@@ -35,6 +35,7 @@ std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
 } //TODO delene func
 
 int main() {
+    /*
     // ---------------------------------------------------------------------------------------------------------
     // // Constructor and copy constructor
     // {
@@ -263,15 +264,15 @@ int main() {
     //     std::cout << "v2.capacity(): " << v2.capacity() << std::endl;
     // }
 
-    {
-        // ft::vector<int> v1(10, 5);
-        // ft::vector<int>::iterator first = v1.begin();
-        // ft::vector<int>::iterator last = v1.end();
-        // std::cout << std::distance(first, last) << "\n";
-        // ft::vector<int> v2(first, last);
-        // for (int i = 0; i < 10; i++) std::cout << v2[i] << " ";
-        // std::cout << "\n";
-    }
+    // {
+    //     ft::vector<int> v1(10, 5);
+    //     ft::vector<int>::iterator first = v1.begin();
+    //     ft::vector<int>::iterator last = v1.end();
+    //     std::cout << std::distance(first, last) << "\n";
+    //     ft::vector<int> v2(first, last);
+    //     for (int i = 0; i < 10; i++) std::cout << v2[i] << " ";
+    //     std::cout << "\n";
+    // }
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
     // // ******************** Test erase(pos) ***************************
@@ -598,21 +599,46 @@ int main() {
     // }
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
+    // // ******************** Test resize() ***************************
+    // std::cout << "STL:\n";
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 5; i++) v1.push_back(i);
+    //     v1.resize(3, 99);
+    //     print_info(v1);
+    // }
+    // std::cout << "FT:\n";
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 5; i++) v1.push_back(i);
+    //     v1.resize(3, 99);
+    //     print_info(v1);
+    // }
+
     std::cout << "STL:\n";
     {
-        std::vector<int> v1(2, 999);
-        v1.resize(10);
+        std::vector<int> v1;
+        for (int i = 1; i <= 5; i++) v1.push_back(i);
+        v1.resize(10, 999);
         print_info(v1);
     }
     std::cout << "FT:\n";
     {
-        ft::vector<int> v1(2, 999);
-        v1.resize(10);
+        ft::vector<int> v1;
+        for (int i = 1; i <= 5; i++) v1.push_back(i);
+        v1.resize(10, 999);
         print_info(v1);
     }
+    */
+
+
+
+
     // ---------------------------------------------------------------------------------------------------------
     return 0;
 }
+
+
 
  // {
     //     std::vector<int>::iterator iter;

@@ -1,4 +1,8 @@
 #include "containers.h"
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
+
+
 
 namespace ft {
     template <typename T, typename Alloc = std::allocator<T> >
@@ -39,17 +43,17 @@ namespace ft {
                 this->alloc.construct(arr + i, x[i]);
         }
 
-        // template <class Iter>
-        // vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
-        // alloc(alloc), cp(0), sz(0)
-        // {
-        //     memory_reserve(distance(first, last));
-        //     size_type i = 0;
-        //     while (first != last) {
-        //         this->alloc(arr + i++, *first++);
-        //         sz++;
-        //     }
-        // }
+        template <class Iter>
+        vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
+        alloc(alloc), cp(0), sz(0)
+        {
+            memory_reserve(distance(first, last));
+            size_type i = 0;
+            while (first != last) {
+                this->alloc(arr + i++, *first++);
+                sz++;
+            }
+        }
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
@@ -170,12 +174,24 @@ namespace ft {
         }
 
         void resize(size_type n, value_type val = value_type()) {
-            (void) val; //TODO delete
             if (cp == n) return;
-            reserve(n);
-            for (size_t i = sz; i < sz + n; i++)
-                alloc.construct(arr + i, val);
-            sz = n;
+            if (sz > n) {
+                size_type end = sz + n;
+                for (size_type i = sz + 1; i < end; i++) {
+                    alloc.destroy(arr + i);
+                    sz--;
+                }
+            }
+            else if (sz < n) {
+                if (cp < n) {
+                    size_type new_cap = cp * 2 < n ? n : cp * 2;
+                    reserve(new_cap);
+                }
+                for (size_t i = sz; i < n; i++) {
+                    alloc.construct(arr + i, val);
+                    sz++;
+                }
+            }
         }
 
         iterator insert(iterator pos, const value_type& val) {
@@ -322,17 +338,16 @@ namespace ft {
     }
 
     template <class T, class Alloc>
-    bool operator<=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {
-        return l == r ? true : l < r;
-    }
+    bool operator<=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(r < l);}
 
     template <typename T, typename Alloc>
     bool operator!=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(l == r);}
 
     template <class T, class Alloc>
-    bool operator>(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(l < r);}
+    bool operator>(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return r < l;}
 
     template <class T, class Alloc>
-    bool operator>=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(l <= r);}
+    bool operator>=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(l < r);}
 
 };
+#endif
