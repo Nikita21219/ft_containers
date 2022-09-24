@@ -632,7 +632,17 @@ int main() {
     */
 
 
-
+    {
+        std::vector<int> v1(10, 5);
+        std::cout << "Distance: " << std::distance(v1.begin(), v1.end()) << std::endl;
+        // std::__1::iterator_traits<ft::RandAccessIt<int> >
+    }
+    {
+        ft::vector<int> v1(10, 5);
+        v1.pop_back();
+        v1.push_back(10);
+        // std::cout << "Distance: " << std::distance(v1.begin(), v1.end()) << std::endl;
+    }
 
     // ---------------------------------------------------------------------------------------------------------
     return 0;
