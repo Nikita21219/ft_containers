@@ -549,29 +549,74 @@ int main() {
     // }
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
-    // // ******************** Test emplace(pos, args) ***************************
+    // // ******************** Test relational operators ***************************
+    // std::cout << "STL:\n";
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 15; i++) v1.push_back(i);
+    //     std::vector<int> v2;
+    //     for (int i = 1; i <= 15; i++) v2.push_back(i);
+    //     if (v1 == v2)
+    //         std::cout << "✅Equal\n";
+    //     else
+    //         std::cout << "❌Not equal\n";
+    //     v1.push_back(1);
+    //     if (v1 > v2)
+    //         std::cout << "✅Bigger\n";
+    //     else
+    //         std::cout << "❌Not bigger\n";
+    //     v1.push_back(999);
+    //     if (v1 >= v2)
+    //         std::cout << "✅Bigger or equal\n";
+    //     else
+    //         std::cout << "❌Not bigger\n";
+    //     v2.push_back(999);
+    //     v1.push_back(10);
+    //     if (v1 < v2)
+    //         std::cout << "✅Less\n";
+    //     else
+    //         std::cout << "❌Not less\n";
+    //     v1.push_back(999);
+    //     if (v1 <= v2)
+    //         std::cout << "✅Less or equal\n";
+    //     else
+    //         std::cout << "❌Not less\n";
+    // }
+    // std::cout << "\nFT:\n";
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 15; i++) v1.push_back(i);
+    //     ft::vector<int> v2;
+    //     for (int i = 1; i <= 15; i++) v2.push_back(i);
+    //     if (v1 == v2)
+    //         std::cout << "✅Equal\n";
+    //     else
+    //         std::cout << "❌Not equal\n";
+    //     v1.push_back(1);
+    //     if (v1 > v2)
+    //         std::cout << "✅Bigger\n";
+    //     else
+    //         std::cout << "❌Not bigger\n";
+    //     v1.push_back(999);
+    //     if (v1 >= v2)
+    //         std::cout << "✅Bigger or equal\n";
+    //     else
+    //         std::cout << "❌Not bigger\n";
+    //     v2.push_back(999);
+    //     v1.push_back(10);
+    //     if (v1 < v2)
+    //         std::cout << "✅Less\n";
+    //     else
+    //         std::cout << "❌Not less\n";
+    //     v1.push_back(999);
+    //     if (v1 <= v2)
+    //         std::cout << "✅Less or equal\n";
+    //     else
+    //         std::cout << "❌Not less\n";
+    // }
+    // ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
     
-    {
-        std::vector<int> v1;
-        for (int i = 1; i <= 2; i++) v1.push_back(i);
-        std::vector<int>::iterator it = v1.begin();
-        it++;
-        it++;
-        std::vector<int>::iterator it_end = v1.end();
-        v1.erase(it, it_end);
-        print_info(v1);
-    }
-    {
-        ft::vector<int> v1;
-        for (int i = 1; i <= 2; i++) v1.push_back(i);
-        ft::vector<int>::iterator it = v1.begin();
-        it++;
-        it++;
-        ft::vector<int>::iterator it_end = v1.end();
-        v1.erase(it, it_end);
-        print_info(v1);
-    }
-
     // ---------------------------------------------------------------------------------------------------------
     return 0;
 }

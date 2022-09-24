@@ -66,7 +66,6 @@ namespace ft {
         reference back()                                             {return arr[sz - 1];}
         const_reference back() const                                 {return arr[sz - 1];}
         allocator_type get_allocator() const                         {return alloc;}
-        friend bool operator!=(const vector& lhs, const vector& rhs) {return !(lhs == rhs);}
         iterator begin()                                             {return iterator(arr);}
         iterator end()                                               {return iterator(arr + sz);}
         const_iterator cbegin() const                                {return const_iterator(arr);}
@@ -85,15 +84,6 @@ namespace ft {
             for (size_t i = 0; i < sz; ++i)
                 this->alloc.construct(arr + i, x[i]);
             return *this;
-        }
-
-        friend bool operator==(const vector& lhs, const vector& rhs) {
-            size_type size = lhs.size();
-            if (size != rhs.size()) return false;
-            for (size_t i = 0; i < size; i++)
-                if (lhs[i] != rhs[i])
-                    return false;
-            return true;
         }
 
         iterator erase(iterator pos) {
@@ -265,13 +255,6 @@ namespace ft {
             return result;
         }
 
-    // template <class... Args>
-    // iterator emplace (const_iterator position, Args&&... args) {
-    //     if (sz + 1 > cp)
-    //         std::cout << "Need to reallocate\n";
-    // }
-
-
     private:
         pointer arr;
         allocator_type alloc;
@@ -290,6 +273,7 @@ namespace ft {
             cp = new_cap;
         }
         
+        //TODO delete this method
         void memory_reserve_for_insert(iterator pos, size_type new_cap, size_type n) {
             pointer new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
             size_type j = 0;
@@ -312,4 +296,34 @@ namespace ft {
             cp = new_cap;
         }
     };
+
+    template <typename T, typename Alloc>
+    bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+        size_t size = lhs.size();
+        if (size != rhs.size()) return false;
+        for (size_t i = 0; i < size; i++)
+            if (lhs[i] != rhs[i])
+                return false;
+        return true;
+    }
+
+    template <class T, class Alloc>
+    bool operator<(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {
+        return ft::lexicographical_compare(l.cbegin(), l.cend(), r.cbegin(), r.cend());
+    }
+
+    template <class T, class Alloc>
+    bool operator<=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {
+        return l == r ? true : l < r;
+    }
+
+    template <typename T, typename Alloc>
+    bool operator!=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(l == r);}
+
+    template <class T, class Alloc>
+    bool operator>(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(l < r);}
+
+    template <class T, class Alloc>
+    bool operator>=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(l <= r);}
+
 };
