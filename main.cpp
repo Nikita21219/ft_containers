@@ -639,9 +639,8 @@ int main() {
     }
     {
         ft::vector<int> v1(10, 5);
-        v1.pop_back();
         v1.push_back(10);
-        // std::cout << "Distance: " << std::distance(v1.begin(), v1.end()) << std::endl;
+        std::cout << "Distance: " << std::distance(v1.begin(), v1.end()) << std::endl;
     }
 
     // ---------------------------------------------------------------------------------------------------------

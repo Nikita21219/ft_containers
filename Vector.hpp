@@ -43,17 +43,18 @@ namespace ft {
                 this->alloc.construct(arr + i, x[i]);
         }
 
-        template <class Iter>
-        vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
-        alloc(alloc), cp(0), sz(0)
-        {
-            memory_reserve(distance(first, last));
-            size_type i = 0;
-            while (first != last) {
-                this->alloc(arr + i++, *first++);
-                sz++;
-            }
-        }
+        // template <class Iter>
+        // vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
+        // alloc(alloc), cp(0), sz(0)
+        // {
+        //     memory_reserve(std::distance(first, last));
+        //     size_type i = 0;
+        //     while (first != last) {
+        //         this->alloc(arr + i++, *first);
+        //         first++;
+        //         sz++;
+        //     }
+        // }
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
@@ -100,7 +101,7 @@ namespace ft {
 
         iterator erase(iterator first, iterator last) {
             std::move(last, end(), first);
-            sz -= ft::distance(first, last);
+            sz -= std::distance(first, last);
             return first;
         }
 
@@ -165,7 +166,7 @@ namespace ft {
 
         template <class Iter>
         void assign (Iter first, Iter last) {
-            memory_reserve(distance(first, last));
+            memory_reserve(std::distance(first, last));
             size_type i = 0;
             while (first != last) {
                 alloc.construct(arr + i++, *first++);
@@ -254,7 +255,7 @@ namespace ft {
 
         template <class Iter>
         iterator insert(iterator position, Iter first, Iter last) {
-            difference_type dist = distance(first, last);
+            difference_type dist = std::distance(first, last);
             size_type new_capacity = sz + dist > cp ? cp * 2 : cp;
             if (sz + dist >= cp * 2)
                 new_capacity = sz + dist;

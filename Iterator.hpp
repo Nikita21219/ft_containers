@@ -17,7 +17,7 @@ namespace ft {
 
     template <typename T>
     struct iterator_traits<T*> {
-        typedef random_access_iterator_tag iterator_category;
+        typedef std::random_access_iterator_tag iterator_category;
         typedef T                          value_type;
         typedef ptrdiff_t                  difference_type;
         typedef T*                         pointer;
@@ -26,7 +26,7 @@ namespace ft {
 
     template<typename T>
     struct iterator_traits<const T*> {
-        typedef random_access_iterator_tag iterator_category;
+        typedef std::random_access_iterator_tag iterator_category;
         typedef ptrdiff_t                  difference_type;
         typedef const T                    value_type;
         typedef const T*                   pointer;
@@ -53,12 +53,12 @@ namespace ft {
     //TODO const_iter = iter
     //TODO iter = const_iter
     public:
-        typedef typename ft::iterator<ft::random_access_iterator_tag, T> iterator;
-        typedef typename iterator_traits<T*>::value_type                 value_type;
-        typedef typename iterator_traits<T*>::iterator_category          iterator_category;
-        typedef typename iterator_traits<T*>::difference_type            difference_type;
-        typedef typename iterator_traits<T*>::pointer                    pointer;
-        typedef typename iterator_traits<T*>::reference                  reference;
+        typedef typename ft::iterator<std::random_access_iterator_tag, T> iterator;
+        typedef typename iterator::value_type                 value_type;
+        typedef typename iterator::iterator_category          iterator_category;
+        typedef typename iterator::difference_type            difference_type;
+        typedef typename iterator::pointer                    pointer;
+        typedef typename iterator::reference                  reference;
 
         RandAccessIt()                                                       {};
         RandAccessIt(pointer ptr): ptr(ptr)                                  {};
@@ -191,23 +191,23 @@ namespace ft {
         iterator_type iter;
     };
 
-    template<class It>
-    typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::random_access_iterator_tag) {
-        return last - first;
-    }
+    // template<class It>
+    // typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::random_access_iterator_tag) {
+    //     return last - first;
+    // }
 
-    template<class It>
-    typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::input_iterator_tag) {
-        typename ft::iterator_traits<It>::difference_type count = 0;
-        while (first++ != last++)
-            count++;
-        return count;
-    }
+    // template<class It>
+    // typename ft::iterator_traits<It>::difference_type distance_helper(It first, It last, ft::input_iterator_tag) {
+    //     typename ft::iterator_traits<It>::difference_type count = 0;
+    //     while (first++ != last++)
+    //         count++;
+    //     return count;
+    // }
 
-    template<class It>
-    typename ft::iterator_traits<It>::difference_type distance(It first, It last) {
-        return distance_helper(first, last, typename ft::iterator_traits<It>::iterator_category());
-    }
+    // template<class It>
+    // typename ft::iterator_traits<It>::difference_type distance(It first, It last) {
+    //     return distance_helper(first, last, typename ft::iterator_traits<It>::iterator_category());
+    // }
 
     template<class InputIt1, class InputIt2>
     bool lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2)
