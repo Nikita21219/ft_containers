@@ -81,6 +81,11 @@
         "list": "cpp",
         "__functional_03": "cpp",
         "version": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "__tree": "cpp",
+        "csignal": "cpp",
+        "fstream": "cpp",
+        "map": "cpp",
+        "set": "cpp"
     }
 }

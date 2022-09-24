@@ -5,16 +5,6 @@
 #include <iostream>
 #include <iomanip>
 
-// template <typename T>
-// void print_info(std::vector<T> &v) {
-//     std::cout << "size = " << v.size() << std::endl;
-//     std::cout << "cap = " << v.capacity() << std::endl;
-//     std::cout << "vector: ";
-//     for (size_t i = 0; i < v.size(); i++)
-//         std::cout << v[i] << " ";
-//     std::cout << std::endl << std::endl;
-// } //TODO delene func
-
 template <typename vector_type>
 void print_info(vector_type &v) {
     std::cout << "size = " << v.size() << std::endl;
@@ -35,24 +25,16 @@ public:
     ~Test() {std::cout << "Destructor called\n";}
 // private:
     T el;
-};
-
+}; //TODO delene class
 
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
 {
     os << dt.el;
     return os;
-}
+} //TODO delene func
 
 int main() {
-
-    // Test<int> t(10);
-    // Test<int> *test = &t;
-    // test->~Test();
-
-    // exit(0);
-
     // ---------------------------------------------------------------------------------------------------------
     // // Constructor and copy constructor
     // {
@@ -616,7 +598,31 @@ int main() {
     // }
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
-    
+    {
+        std::vector<int> v1(2, 999);
+        std::cout << v1.capacity() << std::endl;
+        v1.resize(10);
+        std::cout << v1.capacity() << std::endl;
+        std::vector<int> v2(2, 999);
+        std::cout << v1.capacity() << std::endl;
+        v1.resize(10);
+        std::cout << v1.capacity() << std::endl;
+        print_info(v1);
+        print_info(v2);
+    }
+    std::cout << "\n";
+    {
+        ft::vector<int> v1(2, 999);
+        std::cout << v1.capacity() << std::endl;
+        v1.resize(10);
+        std::cout << v1.capacity() << std::endl;
+        ft::vector<int> v2(2, 999);
+        std::cout << v1.capacity() << std::endl;
+        v1.resize(10);
+        std::cout << v1.capacity() << std::endl;
+        print_info(v1);
+        print_info(v2);
+    }
     // ---------------------------------------------------------------------------------------------------------
     return 0;
 }
