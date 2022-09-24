@@ -598,30 +598,17 @@ int main() {
     // }
     // ---------------------------------------------------------------------------------------------------------
     // ---------------------------------------------------------------------------------------------------------
+    std::cout << "STL:\n";
     {
         std::vector<int> v1(2, 999);
-        std::cout << v1.capacity() << std::endl;
         v1.resize(10);
-        std::cout << v1.capacity() << std::endl;
-        std::vector<int> v2(2, 999);
-        std::cout << v1.capacity() << std::endl;
-        v1.resize(10);
-        std::cout << v1.capacity() << std::endl;
         print_info(v1);
-        print_info(v2);
     }
-    std::cout << "\n";
+    std::cout << "FT:\n";
     {
         ft::vector<int> v1(2, 999);
-        std::cout << v1.capacity() << std::endl;
         v1.resize(10);
-        std::cout << v1.capacity() << std::endl;
-        ft::vector<int> v2(2, 999);
-        std::cout << v1.capacity() << std::endl;
-        v1.resize(10);
-        std::cout << v1.capacity() << std::endl;
         print_info(v1);
-        print_info(v2);
     }
     // ---------------------------------------------------------------------------------------------------------
     return 0;

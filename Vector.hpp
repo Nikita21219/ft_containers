@@ -170,12 +170,12 @@ namespace ft {
         }
 
         void resize(size_type n, value_type val = value_type()) {
+            (void) val; //TODO delete
             if (cp == n) return;
-            if (cp < n) reserve(cp * 2);
-            for (size_t i = 0; i < sz; i++)
+            reserve(n);
+            for (size_t i = sz; i < sz + n; i++)
                 alloc.construct(arr + i, val);
             sz = n;
-            cp = n;
         }
 
         iterator insert(iterator pos, const value_type& val) {
