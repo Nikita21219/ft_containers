@@ -615,32 +615,35 @@ int main() {
     //     print_info(v1);
     // }
 
-    std::cout << "STL:\n";
-    {
-        std::vector<int> v1;
-        for (int i = 1; i <= 5; i++) v1.push_back(i);
-        v1.resize(10, 999);
-        print_info(v1);
-    }
-    std::cout << "FT:\n";
-    {
-        ft::vector<int> v1;
-        for (int i = 1; i <= 5; i++) v1.push_back(i);
-        v1.resize(10, 999);
-        print_info(v1);
-    }
+    // std::cout << "STL:\n";
+    // {
+    //     std::vector<int> v1;
+    //     for (int i = 1; i <= 5; i++) v1.push_back(i);
+    //     v1.resize(10, 999);
+    //     print_info(v1);
+    // }
+    // std::cout << "FT:\n";
+    // {
+    //     ft::vector<int> v1;
+    //     for (int i = 1; i <= 5; i++) v1.push_back(i);
+    //     v1.resize(10, 999);
+    //     print_info(v1);
+    // }
     */
 
 
     {
         std::vector<int> v1(10, 5);
-        std::cout << "Distance: " << std::distance(v1.begin(), v1.end()) << std::endl;
-        // std::__1::iterator_traits<ft::RandAccessIt<int> >
+        std::vector<int> v2;
+        v2.assign(v1.begin(), v1.end());
+        print_info(v2);
     }
+
     {
         ft::vector<int> v1(10, 5);
-        v1.push_back(10);
-        std::cout << "Distance: " << std::distance(v1.begin(), v1.end()) << std::endl;
+        ft::vector<int> v2;
+        v2.assign(v1.begin(), v1.end());
+        print_info(v2);
     }
 
     // ---------------------------------------------------------------------------------------------------------

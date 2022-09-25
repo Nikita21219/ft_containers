@@ -22,31 +22,27 @@ namespace ft {
         typedef ft::ReverseRandAccessIt<const_iterator>              const_reverse_iterator;
 
         explicit vector(const allocator_type& alloc = allocator_type()):
-        alloc(alloc), cp(0), sz(0)
-        {
+        alloc(alloc), cp(0), sz(0) {
             arr = this->alloc.allocate(cp);
         }
 
         explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()):
-        alloc(alloc), cp(n), sz(n)
-        {
+        alloc(alloc), cp(n), sz(n) {
             arr = this->alloc.allocate(sizeof(value_type) * n);
             for (size_t i = 0; i < sz; ++i)
                 this->alloc.construct(arr + i, val);
         }
 
         vector(const vector& x):
-        alloc(x.alloc), cp(x.capacity()), sz(x.size())
-        {
+        alloc(x.alloc), cp(x.capacity()), sz(x.size()) {
             arr = this->alloc.allocate(sizeof(value_type) * cp);
             for (size_t i = 0; i < cp; ++i)
                 this->alloc.construct(arr + i, x[i]);
         }
 
         // template <typename Iter>
-        // vector(Iter first, Iter last, const allocator_type& alloc = allocator_type()):
-        // alloc(alloc), cp(0), sz(0)
-        // {
+        // vector(Iter first, Iter last, const allocator_type &alloc = allocator_type()):
+        // alloc(alloc), cp(0), sz(0) {
         //     assign(first, last);
         // }
 
@@ -56,25 +52,27 @@ namespace ft {
             this->alloc.deallocate(arr, cp);
         }
 
-        reference operator[] (size_type n) const                     {return *(arr + n);}
-        size_type capacity() const                                   {return cp;}
-        size_type size() const                                       {return sz;}
-        bool empty() const                                           {return sz == 0;}
-        reference front()                                            {return arr[0];}
-        const_reference front() const                                {return arr[0];}
-        reference back()                                             {return arr[sz - 1];}
-        const_reference back() const                                 {return arr[sz - 1];}
-        allocator_type get_allocator() const                         {return alloc;}
-        iterator begin()                                             {return iterator(arr);}
-        iterator end()                                               {return iterator(arr + sz);}
-        const_iterator cbegin() const                                {return const_iterator(arr);}
-        const_iterator cend() const                                  {return const_iterator(arr + sz);}
-        reverse_iterator rbegin()                                    {return reverse_iterator(--end());}
-        reverse_iterator rend()                                      {return reverse_iterator(--begin());}
-        const_reverse_iterator crbegin() const                       {return const_reverse_iterator(--cend());}
-        const_reverse_iterator crend() const                         {return const_reverse_iterator(--cbegin());}
-        value_type* data()                                           {return &this->arr.front();}
-        const value_type* data() const                               {return &this->arr.front();}
+        reference operator[] (size_type n) const       {return *(arr + n);}
+        size_type capacity() const                     {return cp;}
+        size_type size() const                         {return sz;}
+        bool empty() const                             {return sz == 0;}
+        reference front()                              {return arr[0];}
+        const_reference front() const                  {return arr[0];}
+        reference back()                               {return arr[sz - 1];}
+        const_reference back() const                   {return arr[sz - 1];}
+        allocator_type get_allocator() const           {return alloc;}
+        iterator begin()                               {return iterator(arr);}
+        iterator end()                                 {return iterator(arr + sz);}
+        const_iterator cbegin() const                  {return const_iterator(arr);}
+        const_iterator cend() const                    {return const_iterator(arr + sz);}
+        reverse_iterator rbegin()                      {return reverse_iterator(--end());}
+        reverse_iterator rend()                        {return reverse_iterator(--begin());}
+        const_reverse_iterator crbegin() const         {return const_reverse_iterator(--cend());}
+        const_reverse_iterator crend() const           {return const_reverse_iterator(--cbegin());}
+        value_type* data()                             {return &this->arr.front();}
+        const value_type* data() const                 {return &this->arr.front();}
+        void pop_back()                                {alloc.destroy(arr + (sz-- - 1));}
+        void clear()                                   {erase(begin(), end());}
 
         vector& operator= (const vector& x) {
             sz = x.size();
@@ -124,15 +122,8 @@ namespace ft {
                     memory_reserve(cp * 2);
             }
             alloc.construct(arr + sz, val);
-            sz += 1;
+            sz++;
         }
-
-        void pop_back() {
-            alloc.destroy(arr + (sz - 1));
-            sz -= 1;
-        }
-
-        void clear() {erase(begin(), end());}
 
         void swap (vector& x) {
             size_type tmp_sz = x.size();
