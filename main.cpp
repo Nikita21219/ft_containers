@@ -632,25 +632,25 @@ int main() {
     */
 
 
-    {
-        std::vector<int> v1(10, 5);
-        std::vector<int> v2;
-        v2.assign(v1.begin(), v1.end());
-        print_info(v2);
-    }
+    // {
+    //     std::vector<int> v1(10, 5);
+    //     std::vector<int> v2;
+    //     v2.assign(v1.begin(), v1.end());
+    //     // print_info(v2);
+    //     std::vector<int> v3(v1.begin(), v1.end());
+    //     print_info(v3);
+    // }
 
-    {
-        ft::vector<int> v1(10, 5);
-        ft::vector<int> v2;
-        v2.assign(v1.begin(), v1.end());
-        print_info(v2);
-    }
+    // {
+    //     ft::vector<int> v1(10, 5);
+    //     ft::vector<int> v2;
+    //     v2.assign(v1.begin(), v1.end());
+    //     // print_info(v2);
+    // }
 
     // ---------------------------------------------------------------------------------------------------------
     return 0;
 }
-
-
 
  // {
     //     std::vector<int>::iterator iter;

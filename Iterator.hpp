@@ -203,4 +203,12 @@ namespace ft {
         return (first1 == last1) && (first2 != last2);
     }
 
+    template <bool Cond, class T>
+    struct enable_if {};
+
+    template <typename T>
+    struct enable_if<true, T> {
+        typedef T type;
+    };
+
 }

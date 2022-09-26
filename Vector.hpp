@@ -42,7 +42,7 @@ namespace ft {
 
         // template <typename Iter>
         // vector(Iter first, Iter last, const allocator_type &alloc = allocator_type()):
-        // alloc(alloc), cp(0), sz(0) {
+        // alloc(alloc) {
         //     assign(first, last);
         // }
 
