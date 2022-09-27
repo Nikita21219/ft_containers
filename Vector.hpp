@@ -40,11 +40,12 @@ namespace ft {
                 this->alloc.construct(arr + i, x[i]);
         }
 
-        // template <typename Iter>
-        // vector(Iter first, Iter last, const allocator_type &alloc = allocator_type()):
-        // alloc(alloc) {
-        //     assign(first, last);
-        // }
+        template <typename Iter>
+        vector(Iter first, Iter last, const allocator_type &alloc = allocator_type()):
+        alloc(alloc), cp(0), sz(0) {
+            arr = this->alloc.allocate(cp);
+            assign(first, last);
+        }
 
         ~vector() {
             for (size_t i = 0; i < sz; ++i)
