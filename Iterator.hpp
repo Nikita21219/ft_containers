@@ -203,7 +203,7 @@ namespace ft {
         return (first1 == last1) && (first2 != last2);
     }
 
-    template <bool Cond, class T>
+    template <bool Cond, typename T>
     struct enable_if {};
 
     template <typename T>
@@ -211,4 +211,35 @@ namespace ft {
         typedef T type;
     };
 
+    template <typename>
+    struct is_integral_base : std::false_type {};
+
+    template <>
+    struct is_integral_base<bool> : std::true_type {};
+
+    template <>
+    struct is_integral_base<int> : std::true_type {};
+
+    template <>
+    struct is_integral_base<char> : std::true_type {};
+    
+    template <>
+    struct is_integral_base<long> : std::true_type {};
+    
+    template <>
+    struct is_integral_base<long long> : std::true_type {};
+    
+    //TODO need to add other integral types!
+
+    template<typename T>
+    struct is_integral : is_integral_base<typename std::remove_cv<T>::type> {};
+
+
+    // template <typename T>
+    // struct is_integral {};
+
+    // template <typename T>
+    // struct is_integral {
+    //     typedef typename std::numeric_limits<T>::is_integer value;
+    // };
 }

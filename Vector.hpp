@@ -2,8 +2,6 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-
-
 namespace ft {
     template <typename T, typename Alloc = std::allocator<T> >
     class vector {
@@ -41,7 +39,7 @@ namespace ft {
         }
 
         template <typename Iter>
-        vector(Iter first, Iter last, const allocator_type &alloc = allocator_type()):
+        vector(Iter first, Iter last, typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = NULL, const allocator_type &alloc = allocator_type()):
         alloc(alloc), cp(0), sz(0) {
             arr = this->alloc.allocate(cp);
             assign(first, last);

@@ -650,6 +650,8 @@ int main() {
 
     ft::vector<int> a(10, 5);
     ft::vector<int> b(a.begin(), a.end());
+    // std::is_integral
+    // std::cout << (std::numeric_limits<bool>::is_integer) << std::endl;
 
     // ---------------------------------------------------------------------------------------------------------
     return 0;
