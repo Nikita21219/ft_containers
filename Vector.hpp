@@ -74,9 +74,8 @@ namespace ft {
         void clear()                                   {erase(begin(), end());}
 
         vector& operator= (const vector& x) {
+            memory_reserve(x.capacity());
             sz = x.size();
-            cp = x.capacity();
-            arr = this->alloc.allocate(sizeof(value_type) * cp);
             for (size_t i = 0; i < sz; ++i)
                 this->alloc.construct(arr + i, x[i]);
             return *this;
@@ -238,7 +237,7 @@ namespace ft {
         }
 
         template <class Iter>
-        iterator insert(iterator position, Iter first, Iter last) {
+        iterator insert(iterator position, Iter first, Iter last, typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = NULL) {
             difference_type dist = std::distance(first, last);
             size_type new_capacity = sz + dist > cp ? cp * 2 : cp;
             if (sz + dist >= cp * 2)
@@ -282,29 +281,7 @@ namespace ft {
             arr = new_arr;
             cp = new_cap;
         }
-        
-        //TODO delete this method
-        void memory_reserve_for_insert(iterator pos, size_type new_cap, size_type n) {
-            pointer new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
-            size_type j = 0;
-            size_type i = -1;
-            size_type tmp_n = n;
-            iterator it = begin();
-            while (++i < sz) {
-                if (it == pos) {
-                    while (tmp_n--)
-                        j++;
-                    continue;
-                }
-                this->alloc.construct(new_arr + j, arr[i]);
-                this->alloc.destroy(arr + i);
-                j++;
-                it++;
-            }
-            this->alloc.deallocate(arr, cp);
-            arr = new_arr;
-            cp = new_cap;
-        }
+
     };
 
     template <typename T, typename Alloc>
