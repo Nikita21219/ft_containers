@@ -148,8 +148,8 @@ namespace ft {
             }
         }
 
-        template <class Iter>
-        void assign(Iter first, Iter last) {
+        template <typename Iter>
+        void assign(Iter first, Iter last, typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = NULL) {
             memory_reserve(std::distance(first, last));
             size_type i = 0;
             while (first != last) {

@@ -34,7 +34,20 @@ std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
     return os;
 } //TODO delene func
 
+
+template <typename T>
+std::vector<int> empty_test(ft::vector<T> vector) {
+    std::vector<int> v;
+    vector.assign(1000, 1);
+    v.push_back(vector.empty());
+    return v;
+}
+
 int main() {
+
+    ft::vector<int> v;
+    empty_test<int>(v);
+
     /*
     // ---------------------------------------------------------------------------------------------------------
     // // Constructor and copy constructor
@@ -648,8 +661,7 @@ int main() {
     //     // print_info(v2);
     // }
 
-    ft::vector<int> a(10, 5);
-    ft::vector<int> b(a.begin(), a.end());
+
     // std::is_integral
     // std::cout << (std::numeric_limits<bool>::is_integer) << std::endl;
 
