@@ -229,17 +229,18 @@ namespace ft {
     template <>
     struct is_integral_base<long long> : std::true_type {};
     
-    //TODO need to add other integral types!
-
+    template <>
+    struct is_integral_base<char16_t> : std::true_type {};
+    
+    template <>
+    struct is_integral_base<char32_t> : std::true_type {};
+    
+    template <>
+    struct is_integral_base<wchar_t> : std::true_type {};
+    
+    template <>
+    struct is_integral_base<short> : std::true_type {};
+    
     template<typename T>
     struct is_integral : is_integral_base<typename std::remove_cv<T>::type> {};
-
-
-    // template <typename T>
-    // struct is_integral {};
-
-    // template <typename T>
-    // struct is_integral {
-    //     typedef typename std::numeric_limits<T>::is_integer value;
-    // };
 }
