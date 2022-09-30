@@ -1,7 +1,7 @@
 NAME = containers
 CC = c++
 
-CPPFLAGS = -g -Wall -Wextra -Werror -Wshadow -Wno-shadow -Wunused-command-line-argument #-fsanitize=address -std=c++98
+CPPFLAGS = -g -Wall -Wextra -Werror -Wshadow -Wno-shadow -Wunused-command-line-argument -fsanitize=address -std=c++98
 
 OBJDIR = ./objs
 VPATH = .

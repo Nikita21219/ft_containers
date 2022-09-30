@@ -34,53 +34,52 @@ std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
     return os;
 } //TODO delene func
 
-
 template <typename T>
-std::vector<int> resize_test(std::vector<T> vector) {
+std::vector<int> assign_test(std::vector<T> vector) {
     std::vector<int> v;
-    vector.assign(9900 * 1000, 1);
-    vector.resize(5000 * 1000);
-    vector.reserve(5000 * 1000);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
-    vector.resize(7000 * 1000);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
-    vector.resize(15300 * 1000, T());
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
-    v.push_back(vector[65]);
+    std::vector<int> tmp, tmp2;
+    // vector.assign(3, 3);
+    tmp.assign(20, 1);
+    tmp2.assign(4, 1);
+    vector.assign(tmp.begin(), tmp.end());
+    // v.push_back(vector[1]);
+    // v.push_back(vector.size());
+    // v.push_back(vector.capacity());
+    vector.assign(tmp2.begin(), tmp2.end()); // TODO
+    print_info(vector);
+    // v.push_back(vector[444]);
+    // v.push_back(vector.size());
+    // v.push_back(vector.capacity());
     return v;
 }
 
 template <typename T>
-std::vector<int> resize_test(ft::vector<T> vector) {
+std::vector<int> assign_test(ft::vector<T> vector) {
     std::vector<int> v;
-    vector.assign(9900 * 1000, 1);
-    vector.resize(5000 * 1000);
-    vector.reserve(5000 * 1000);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
-    vector.resize(7000 * 1000);
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
-    vector.resize(15300 * 1000, T());
-    v.push_back(vector.size());
-    v.push_back(vector.capacity());
-    v.push_back(vector[65]);
+    ft::vector<int> tmp, tmp2;
+    // vector.assign(3, 3);
+    tmp.assign(20, 1);
+    tmp2.assign(4, 1);
+    vector.assign(tmp.begin(), tmp.end());
+    // v.push_back(vector[1]);
+    // v.push_back(vector.size());
+    // v.push_back(vector.capacity());
+    vector.assign(tmp2.begin(), tmp2.end()); // TODO
+    print_info(vector);
+    // v.push_back(vector[444]);
+    // v.push_back(vector.size());
+    // v.push_back(vector.capacity());
     return v;
 }
 
 int main() {
     {
         std::vector<int> v;
-        std::vector<int> res = resize_test<int>(v);
-        print_info(res);
+        assign_test(v);
     }
     {
         ft::vector<int> v;
-        std::vector<int> res = resize_test<int>(v);
-        print_info(res);
+        assign_test(v);
     }
     return 0;
 }

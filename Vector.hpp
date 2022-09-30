@@ -150,12 +150,11 @@ namespace ft {
 
         template <typename Iter>
         void assign(Iter first, Iter last, typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = NULL) {
-            memory_reserve(std::distance(first, last));
-            size_type i = 0;
-            while (first != last) {
-                alloc.construct(arr + i++, *first++);
-                sz++;
-            }
+            if (cp < static_cast<size_type>(std::distance(first, last)))
+                memory_reserve(std::distance(first, last));
+            sz = 0;
+            while (first != last)
+                alloc.construct(arr + sz++, *first++);
         }
 
         void resize(size_type n, value_type val = value_type()) {
@@ -273,12 +272,12 @@ namespace ft {
 
         void memory_reserve(size_type new_cap) {
             if (new_cap > alloc.max_size()) throw std::bad_alloc();
-            pointer new_arr = this->alloc.allocate(sizeof(value_type) * new_cap);
+            pointer new_arr = alloc.allocate(sizeof(value_type) * new_cap);
             for (size_type i = 0; i < sz; ++i) {
-                this->alloc.construct(new_arr + i, arr[i]);
-                this->alloc.destroy(arr + i);
+                alloc.construct(new_arr + i, arr[i]);
+                alloc.destroy(arr + i);
             }
-            this->alloc.deallocate(arr, cp);
+            alloc.deallocate(arr, cp);
             arr = new_arr;
             cp = new_cap;
         }
