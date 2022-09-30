@@ -72,7 +72,7 @@ namespace ft {
         const value_type* data() const                 {return &this->arr.front();}
         void pop_back()                                {alloc.destroy(arr + (sz-- - 1));}
         void clear()                                   {erase(begin(), end());}
-        size_type max_size() const                     {return std::numeric_limits<difference_type>::max();}
+        size_type max_size() const                     {return std::numeric_limits<difference_type>::max();} //TODO may be alloc.max_size()
 
         vector& operator= (const vector& x) {
             memory_reserve(x.capacity());
@@ -281,7 +281,8 @@ namespace ft {
             size_type new_capacity = sz + dist > cp ? cp * 2 : cp;
             if (sz + dist >= cp * 2)
                 new_capacity = sz + dist;
-            pointer new_arr = this->alloc.allocate(sizeof(value_type) * (new_capacity));
+            if (new_capacity > alloc.max_size()) throw std::bad_alloc();
+            pointer new_arr = alloc.allocate(sizeof(value_type) * (new_capacity));
             iterator it = begin();
             size_type i = 0;
             iterator result;
