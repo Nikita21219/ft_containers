@@ -34,71 +34,59 @@ std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
     return os;
 } //TODO delene func
 
+
 template <typename T>
-std::vector<int> assign_test(std::vector<T> vector) {
+std::vector<int> insert_test_1(std::vector<T> vector) {
     std::vector<int> v;
-    std::vector<int> tmp, tmp2;
-    // vector.assign(3, 3);
-    tmp.assign(20, 1);
-    tmp2.assign(4, 1);
-    vector.assign(tmp.begin(), tmp.end());
-    // v.push_back(vector[1]);
-    // v.push_back(vector.size());
-    // v.push_back(vector.capacity());
-    vector.assign(tmp2.begin(), tmp2.end()); // TODO
+    vector.assign(26, 1);
+    vector.insert(vector.end() - 1, 44);
     print_info(vector);
-    // v.push_back(vector[444]);
-    // v.push_back(vector.size());
-    // v.push_back(vector.capacity());
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+
     return v;
 }
 
 template <typename T>
-std::vector<int> assign_test(ft::vector<T> vector) {
+std::vector<int> insert_test_1(ft::vector<T> vector) {
     std::vector<int> v;
-    ft::vector<int> tmp, tmp2;
-    // vector.assign(3, 3);
-    tmp.assign(20, 1);
-    tmp2.assign(4, 1);
-    vector.assign(tmp.begin(), tmp.end());
-    // v.push_back(vector[1]);
-    // v.push_back(vector.size());
-    // v.push_back(vector.capacity());
-    vector.assign(tmp2.begin(), tmp2.end()); // TODO
+    vector.assign(26, 1);
+    vector.insert(vector.end() - 1, 44);
     print_info(vector);
-    // v.push_back(vector[444]);
-    // v.push_back(vector.size());
-    // v.push_back(vector.capacity());
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+
     return v;
 }
 
 int main() {
     {
         std::vector<int> v;
-        assign_test(v);
+        std::vector<int> v2 = insert_test_1<int>(v);
     }
     {
         ft::vector<int> v;
-        assign_test(v);
+        std::vector<int> v2 = insert_test_1<int>(v);
     }
     return 0;
 }
 
- // {
-    //     std::vector<int>::iterator iter;
-    //     std::vector<int>::const_iterator const_iter;
-    //     //должно работать
-    //     const_iter.operator=(iter);
-    //     const_iter = iter;
-    //     //не должно работать
-    //     // iter = const_iter;
+/*
+{
+    std::vector<int>::iterator iter;
+    std::vector<int>::const_iterator const_iter;
+    //должно работать
+    const_iter.operator=(iter);
+    const_iter = iter;
+    //не должно работать
+    // iter = const_iter;
 
-    //     // std::vector<int>::reverse_iterator::
+    // std::vector<int>::reverse_iterator::
 
-    // }
-    // {
-    //     ft::vector<int>::iterator iter;
-    //     ft::vector<int>::const_iterator const_iter;
-    //     // const_iter = iter;
-    // }
-
+}
+{
+    ft::vector<int>::iterator iter;
+    ft::vector<int>::const_iterator const_iter;
+    // const_iter = iter;
+}
+*/

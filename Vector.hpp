@@ -179,35 +179,70 @@ namespace ft {
         }
 
         iterator insert(iterator pos, const value_type& val) {
-            if (sz == cp)
-                memory_reserve(cp + 1);
-            iterator it = begin();
-            iterator it_end = end();
-            iterator result;
-            if (pos == it_end) {
-                *it_end = val;
-                sz++;
-                return it;
-            }
+            iterator result = NULL;
             value_type tmp_val;
-            while (it != it_end) {
-                if (it == pos) {
-                    tmp_val = *it;
-                    *it = val;
-                    result = it;
+            value_type tmp_val2;
+            if (sz < cp) {
+                iterator it = begin();
+                iterator it_end = end();
+                if (pos == it_end) {
+                    *it_end = val;
                     sz++;
-                    break;
+                    return it;
+                }
+                while (it != it_end) {
+                    if (it == pos) {
+                        tmp_val = *it;
+                        *it = val;
+                        result = it;
+                        sz++;
+                        break;
+                    }
+                    it++;
                 }
                 it++;
+                tmp_val2 = *it;
+                while (it != it_end) {
+                    tmp_val2 = tmp_val;
+                    tmp_val = *it;
+                    *it++ = tmp_val2;
+                }
+                *it = tmp_val;
+            } else if (sz == cp) {
+                pointer copy_arr = get_copy_arr(cp * 2);
+                iterator copy_it = iterator(copy_arr);
+                if (pos == end()) {
+                    result = iterator(copy_it + sz);
+                    *result = val;
+                    return result;
+                }
+                iterator it = begin();
+                while (it != end()) {
+                    if (it == pos) {
+                        tmp_val = *copy_it;
+                        *copy_it = val;
+                        result = copy_it;
+                        sz++;
+                        break;
+                    }
+                    it++;
+                    copy_it++;
+                }
+                it++;
+                copy_it++;
+                tmp_val2 = *copy_it;
+                while (copy_it != iterator(copy_arr + sz)) {
+                    tmp_val2 = tmp_val;
+                    tmp_val = *copy_it;
+                    *copy_it++ = tmp_val2;
+                }
+                *copy_it = tmp_val;
+                for (size_type i = 0; i < sz - 1; ++i)
+                    alloc.destroy(arr + i);
+                alloc.deallocate(arr, cp);
+                cp *= 2;
+                arr = copy_arr;
             }
-            it++;
-            value_type tmp_val2 = *it;
-            while (it != it_end) {
-                tmp_val2 = tmp_val;
-                tmp_val = *it;
-                *it++ = tmp_val2;
-            }
-            *it = tmp_val;
             return result;
         }
 
@@ -280,6 +315,14 @@ namespace ft {
             alloc.deallocate(arr, cp);
             arr = new_arr;
             cp = new_cap;
+        }
+
+        pointer get_copy_arr(size_type new_cap) {
+            if (new_cap > alloc.max_size()) throw std::bad_alloc();
+            pointer new_arr = alloc.allocate(sizeof(value_type) * new_cap);
+            for (size_type i = 0; i < sz; ++i)
+                alloc.construct(new_arr + i, arr[i]);
+            return new_arr;
         }
 
     };

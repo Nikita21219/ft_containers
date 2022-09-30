@@ -155,12 +155,12 @@ namespace ft {
         ReverseRandAccessIt<iterator_type>& operator+(int n) {
             iter -= n;
             return *this;
-        };
+        }; //TODO fix error! return new ReverseRandAccessIt(iter - n)
         
         ReverseRandAccessIt<iterator_type>& operator-(int n) {
             iter += n;
             return *this;
-        };
+        }; //TODO fix error! return new ReverseRandAccessIt(iter - n)
 
         ReverseRandAccessIt<iterator_type>& operator++(int) {
             ReverseRandAccessIt<iterator_type>& it = *this;
