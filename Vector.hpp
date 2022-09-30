@@ -247,7 +247,11 @@ namespace ft {
         }
 
         iterator insert(iterator position, size_type n, const value_type& val) {
-            size_type new_capacity = sz + n > cp ? cp * 2 : cp;
+            size_type new_capacity = cp;
+            while (new_capacity < cp + n) {
+                new_capacity += sz + n > cp ? cp * 2 : cp;
+                if (new_capacity > alloc.max_size()) throw std::bad_alloc();
+            }
             pointer new_arr = this->alloc.allocate(sizeof(value_type) * (new_capacity));
             iterator it = begin();
             size_type i = 0;

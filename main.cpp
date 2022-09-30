@@ -34,39 +34,38 @@ std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
     return os;
 } //TODO delene func
 
-
 template <typename T>
-std::vector<int> insert_test_1(std::vector<T> vector) {
+std::vector<int> insert_test_2(std::vector<T> vector) {
     std::vector<int> v;
-    vector.assign(26, 1);
-    vector.insert(vector.end() - 1, 44);
-    print_info(vector);
+    vector.assign(1000, 1);
+    vector.insert(vector.end() - 50, 4200 * 1000, 2);
+    std::cout << "Cap: " << vector.capacity() << "\n";
+    v.push_back(vector[2121]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());
-
     return v;
 }
 
 template <typename T>
-std::vector<int> insert_test_1(ft::vector<T> vector) {
+std::vector<int> insert_test_2(ft::vector<T> vector) {
     std::vector<int> v;
-    vector.assign(26, 1);
-    vector.insert(vector.end() - 1, 44);
-    print_info(vector);
+    vector.assign(1000, 1);
+    vector.insert(vector.end() - 50, 4200 * 1000, 2);
+    std::cout << "Cap: " << vector.capacity() << "\n";
+    v.push_back(vector[2121]);
     v.push_back(vector.size());
     v.push_back(vector.capacity());
-
     return v;
 }
 
 int main() {
     {
         std::vector<int> v;
-        std::vector<int> v2 = insert_test_1<int>(v);
+        std::vector<int> v2 = insert_test_2<int>(v);
     }
     {
         ft::vector<int> v;
-        std::vector<int> v2 = insert_test_1<int>(v);
+        std::vector<int> v2 = insert_test_2<int>(v);
     }
     return 0;
 }
