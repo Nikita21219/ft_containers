@@ -161,8 +161,8 @@ namespace ft {
         void resize(size_type n, value_type val = value_type()) {
             if (cp == n) return;
             if (sz > n) {
-                size_type end = sz + n;
-                for (size_type i = sz + 1; i < end; i++) {
+                size_type end = sz + (sz - n);
+                for (size_type i = sz; i < end; i++) {
                     alloc.destroy(arr + i);
                     sz--;
                 }

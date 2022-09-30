@@ -34,8 +34,54 @@ std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
     return os;
 } //TODO delene func
 
-int main() {
 
+template <typename T>
+std::vector<int> resize_test(std::vector<T> vector) {
+    std::vector<int> v;
+    vector.assign(9900 * 1000, 1);
+    vector.resize(5000 * 1000);
+    vector.reserve(5000 * 1000);
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+    vector.resize(7000 * 1000);
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+    vector.resize(15300 * 1000, T());
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+    v.push_back(vector[65]);
+    return v;
+}
+
+template <typename T>
+std::vector<int> resize_test(ft::vector<T> vector) {
+    std::vector<int> v;
+    vector.assign(9900 * 1000, 1);
+    vector.resize(5000 * 1000);
+    vector.reserve(5000 * 1000);
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+    vector.resize(7000 * 1000);
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+    vector.resize(15300 * 1000, T());
+    v.push_back(vector.size());
+    v.push_back(vector.capacity());
+    v.push_back(vector[65]);
+    return v;
+}
+
+int main() {
+    {
+        std::vector<int> v;
+        std::vector<int> res = resize_test<int>(v);
+        print_info(res);
+    }
+    {
+        ft::vector<int> v;
+        std::vector<int> res = resize_test<int>(v);
+        print_info(res);
+    }
     return 0;
 }
 
