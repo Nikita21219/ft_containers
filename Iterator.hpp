@@ -60,64 +60,53 @@ namespace ft {
         typedef typename iterator::pointer                    pointer;
         typedef typename iterator::reference                  reference;
 
-        RandAccessIt()                                                       {};
-        RandAccessIt(pointer ptr): ptr(ptr)                                  {};
-        reference operator*()                                              {return *ptr;};
-        pointer operator->() const                                       {return ptr;}
-        reference operator[](int idx)                                      {return *(ptr + idx);}
-        bool operator==(const RandAccessIt &other) const                     {return ptr == other.ptr;}
-        bool operator!=(const RandAccessIt &other) const                     {return !(*this == other);}
+        RandAccessIt()                                                           {};
+        RandAccessIt(pointer ptr): ptr(ptr)                                      {};
+        reference operator*()                                                    {return *ptr;}
+        pointer operator->() const                                               {return ptr;}
+        reference operator[](int idx)                                            {return *(ptr + idx);}
+        bool operator==(const RandAccessIt &other) const                         {return ptr == other.ptr;}
+        bool operator!=(const RandAccessIt &other) const                         {return !(*this == other);}
         friend bool operator>(const RandAccessIt& lhs, const RandAccessIt& rhs)  {return lhs.ptr > rhs.ptr;}
         friend bool operator<(const RandAccessIt& lhs, const RandAccessIt& rhs)  {return lhs.ptr < rhs.ptr;}
         friend bool operator>=(const RandAccessIt& lhs, const RandAccessIt& rhs) {return lhs.ptr >= rhs.ptr;}
         friend bool operator<=(const RandAccessIt& lhs, const RandAccessIt& rhs) {return lhs.ptr <= rhs.ptr;}
-        const pointer& base() const {return ptr;}
+        const pointer& base() const                                              {return ptr;}
+        difference_type operator-(RandAccessIt it)                               {return ptr - it.ptr;}
+        RandAccessIt operator+(int n)                                            {return RandAccessIt(ptr + n);}
+        RandAccessIt operator-(int n)                                            {return RandAccessIt(ptr - n);}
 
         RandAccessIt operator++() {
             ptr++;
             return *this;
-        };
+        }
 
         RandAccessIt operator+=(int n) {
             ptr += n;
             return *this;
-        };
+        }
 
         RandAccessIt operator-=(int n) {
             ptr -= n;
             return *this;
-        };
-        
-        RandAccessIt operator+(int n) {
-            ptr += n;
-            return *this;
-        };
-        
-        RandAccessIt operator-(int n) {
-            ptr -= n;
-            return *this;
-        };
-        
-        difference_type operator-(RandAccessIt it) {
-            return ptr - it.ptr;
-        };
+        }
 
         RandAccessIt operator++(int) {
             RandAccessIt it = *this;
             ++(*this);
             return it;
-        };
+        }
         
         RandAccessIt operator--() {
             ptr--;
             return *this;
-        };
+        }
 
         RandAccessIt operator--(int) {
             RandAccessIt it = *this;
             --(*this);
             return it;
-        };
+        }
 
     private:
         pointer ptr;

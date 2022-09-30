@@ -72,6 +72,7 @@ namespace ft {
         const value_type* data() const                 {return &this->arr.front();}
         void pop_back()                                {alloc.destroy(arr + (sz-- - 1));}
         void clear()                                   {erase(begin(), end());}
+        size_type max_size() const                     {return std::numeric_limits<difference_type>::max();}
 
         vector& operator= (const vector& x) {
             memory_reserve(x.capacity());
