@@ -78,17 +78,31 @@ namespace ft {
             memory_reserve(x.capacity());
             sz = x.size();
             for (size_t i = 0; i < sz; ++i)
-                this->alloc.construct(arr + i, x[i]);
+                alloc.construct(arr + i, x[i]);
             return *this;
         }
 
         iterator erase(iterator pos) {
-            iterator it_end = end();
-            it_end--;
-            std::move(pos, end(), pos - 1);
-            sz--;
+            size_type idx = 0;
+            for (iterator i = begin(); i != end(); i++) {
+                if (i == pos) {
+                    alloc.destroy(arr + idx;);
+                    sz--;
+                    for (iterator j = idx; j < sz; j++) {
+                        alloc.construct(arr + j, arr + j + 1);
+                    }
+                    break;
+                }
+                idx++;
+            }
             return pos;
         }
+
+        // iterator erase(iterator pos) {
+        //     std::move(pos, end(), pos - 1);
+        //     sz--;
+        //     return pos;
+        // }
 
         iterator erase(iterator first, iterator last) {
             std::move(last, end(), first);
