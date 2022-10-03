@@ -286,11 +286,21 @@ namespace ft {
             iterator it = begin();
             size_type i = 0;
             iterator result;
+            iterator ptr;
             while (i <= sz + dist) {
                 if (it == position) {
                     result = iterator(new_arr + i);
-                    while (first != last)
-                        alloc.construct(new_arr + i++, *first++);
+                    while (first != last) {
+                        try {
+                            alloc.construct(new_arr + i++, *first++);
+                        }
+                        catch (...) {
+                            for (size_t idx = 0; idx < i; idx++)
+                                alloc.destroy(new_arr + idx);
+                            alloc.deallocate(new_arr, new_capacity);
+                            throw std::exception();
+                        }
+                    }
                 }
                 alloc.construct(new_arr + i, *it++);
                 i++;

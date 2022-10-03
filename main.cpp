@@ -15,32 +15,6 @@ void print_info(vector_type &v) {
     std::cout << std::endl << std::endl;
 } //TODO delene func
 
-
-template<typename T>
-class Test {
-public:
-    // typedef typename std::conditional<isConst, const T*, T*>::type conditional_ptr;
-
-    Test(T i) {el = i;}
-    ~Test() {std::cout << "Destructor called\n";}
-// private:
-    T el;
-}; //TODO delene class
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const Test<T>& dt)
-{
-    os << dt.el;
-    return os;
-} //TODO delene func
-
-
-
-
-
-
-
-
 class B {
 public:
     char *l;
@@ -95,7 +69,7 @@ std::vector<int> insert_test_3(std::vector<T> vector) {
         v.push_back(vv.size());
         v.push_back(vv.capacity());
     }
-
+    print_info(v);
     return v;
 }
 
@@ -124,25 +98,19 @@ std::vector<int> insert_test_3(ft::vector<T> vector) {
         v.push_back(vv.size());
         v.push_back(vv.capacity());
     }
-
+    print_info(v);
     return v;
 }
 
-
-
-
-
-
-
-
 int main() {
-
     {
         ft::vector<int> v;
         insert_test_3(v);
-
     }
-
+    {
+        std::vector<int> v;
+        insert_test_3(v);
+    }
     return 0;
 }
 
