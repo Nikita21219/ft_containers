@@ -88,21 +88,14 @@ namespace ft {
                 if (i == pos) {
                     alloc.destroy(arr + idx);
                     sz--;
-                    for (size_type j = idx; j < sz; j++) {
+                    for (size_type j = idx; j < sz; j++)
                         alloc.construct(arr + j, *(arr + j + 1));
-                    }
                     break;
                 }
                 idx++;
             }
             return pos;
         }
-
-        // iterator erase(iterator pos) {
-        //     std::move(pos, end(), pos - 1);
-        //     sz--;
-        //     return pos;
-        // }
 
         iterator erase(iterator first, iterator last) {
             std::move(last, end(), first);
