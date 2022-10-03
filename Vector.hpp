@@ -85,7 +85,7 @@ namespace ft {
         iterator erase(iterator pos) {
             iterator it_end = end();
             it_end--;
-            std::move(pos + 1, end(), pos - 1);
+            std::move(pos, end(), pos - 1);
             sz--;
             return pos;
         }
