@@ -86,10 +86,10 @@ namespace ft {
             size_type idx = 0;
             for (iterator i = begin(); i != end(); i++) {
                 if (i == pos) {
-                    alloc.destroy(arr + idx;);
+                    alloc.destroy(arr + idx);
                     sz--;
-                    for (iterator j = idx; j < sz; j++) {
-                        alloc.construct(arr + j, arr + j + 1);
+                    for (size_type j = idx; j < sz; j++) {
+                        alloc.construct(arr + j, *(arr + j + 1));
                     }
                     break;
                 }
