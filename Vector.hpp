@@ -1,4 +1,5 @@
 #include "containers.h"
+
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
@@ -68,8 +69,8 @@ namespace ft {
         reverse_iterator rend()                        {return reverse_iterator(--begin());}
         const_reverse_iterator crbegin() const         {return const_reverse_iterator(--cend());}
         const_reverse_iterator crend() const           {return const_reverse_iterator(--cbegin());}
-        value_type* data()                             {return &this->arr.front();}
-        const value_type* data() const                 {return &this->arr.front();}
+        value_type* data()                             {return &front();}
+        const value_type* data() const                 {return &front();}
         void pop_back()                                {alloc.destroy(arr + (sz-- - 1));}
         void clear()                                   {erase(begin(), end());}
         size_type max_size() const                     {return std::numeric_limits<difference_type>::max();} //TODO may be alloc.max_size()
