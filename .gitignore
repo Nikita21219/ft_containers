@@ -1,3 +1,6 @@
+containers
+test*
+
 # Prerequisites
 *.d
 
