@@ -29,11 +29,15 @@ int main() {
 		tree.treeInsert(ft::pair<int, int>(20, 99));
 		tree.treeInsert(ft::pair<int, int>(3, 99));
 		tree.treeInsert(ft::pair<int, int>(13, 99));
+		tree.treeInsert(ft::pair<int, int>(13, 99));
+		tree.treeInsert(ft::pair<int, int>(13, 99));
+		tree.treeInsert(ft::pair<int, int>(13, 99));
+		tree.treeInsert(ft::pair<int, int>(13, 99));
+		tree.treeInsert(ft::pair<int, int>(13, 99));
 
-		// tree.printTree();
 		std::cout << "\n\n\n";
-		tree.treeErase(10);
-		tree.printTree();
+		std::cout << "erased: " << tree.treeErase(13) << std::endl;
+		// tree.printTree();
 	
 		// ft::RBTree<int, int>::TreeNode *root = tree.getRoot();
 		// std::cout << root->left->left->right->pair.first << std::endl;

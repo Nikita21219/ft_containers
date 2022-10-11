@@ -71,10 +71,7 @@ namespace ft
         typedef ft::ReverseInputIt<iterator> reverse_iterator;
         typedef ft::ReverseInputIt<const_iterator> const_reverse_iterator;
 
-        RBTree()
-        {
-            // nil = getNewNode(ft::pair<Key, T>());
-            // root = nil;
+        RBTree() {
             root = NULL;
         }
 
@@ -82,34 +79,7 @@ namespace ft
 
         RBTree(const RBTree &other); // TODO implement
 
-        // void treeInsertFixUp(TreeNode *valNode, TreeNode *y) {
-        //     while (valNode->parent->isRed) {
-        //         if (valNode && valNode->parent && \
-        //         valNode->parent->parent && valNode->parent \
-        //         == valNode->parent->parent->left) {
-        //             y = valNode->parent->parent->right;
-        //             if (y->isRed) {
-        //                 valNode->parent->isRed = false;
-        //                 y->isRed = false;
-        //                 valNode->parent->parent->isRed = true;
-        //                 valNode = valNode->parent->parent;
-        //             } else if (valNode == valNode->parent->right) {
-        //                 valNode = valNode->parent;
-        //                 leftRotate(valNode);
-        //                 valNode->parent->isRed = false;
-        //                 valNode->parent->parent->isRed = true;
-        //                 rightRotate(valNode->parent->parent);
-        //             } else {
-        //                 valNode = valNode->parent;
-        //                 rightRotate(valNode);
-        //                 valNode->parent->isRed = false;
-        //                 valNode->parent->parent->isRed = true;
-        //                 leftRotate(valNode->parent->parent);
-        //             }
-        //         }
-        //     }
-        //     root->isRed = false;
-        // }
+        iterator begin() {return iterator(root);}
 
         ft::pair<iterator, bool> treeInsert(const value_type &value)
         {
@@ -118,7 +88,7 @@ namespace ft
             TreeNode *x = root;
             while (x != NULL) {
                 y = x;
-                if (node->pair.first < x->pair.first)
+                if (comp(node->pair.first, x->pair.first))
                     x = x->left;
                 else
                     x = x->right;
@@ -126,42 +96,17 @@ namespace ft
             node->p = y;
             if (y == NULL)
                 root = node;
-            else if (node->pair.first < y->pair.first)
+            else if (comp(node->pair.first, y->pair.first))
                 y->left = node;
             else
                 y->right = node;
             return ft::pair<iterator, bool>(iterator(node), false);
         }
 
-        void treeErase(const Key &value) {
-            if (root == NULL)
-                return;
-            TreeNode *node = root;
-            while (node && node->pair.first != value) {
-                if (value > node->pair.first) {
-                    node = node->right;
-                } else if (value < node->pair.first) {
-                    node = node->left;
-                }
-            }
-            if (node == NULL)
-                return;
-            if (node->left == NULL) {
-                transplant(node, node->right);
-            } else if (node->right == NULL) {
-                transplant(node, node->left);
-            } else {
-                TreeNode *y = getMin(node->right);
-                if (y->p != node) {
-                    transplant(y, y->right);
-                    y->right = node->right;
-                    y->right->p = y;
-                }
-                transplant(node, y);
-                y->left = node->left;
-                y->left->p = y;
-            }
-            delete node;
+        size_t treeErase(const Key &value) {
+            size_t counter = 0;
+            treeEraseRecursion(value, &counter);
+            return counter;
         }
 
         void printTree() { printBT("", root, false); }
@@ -169,6 +114,7 @@ namespace ft
 
     private:
         TreeNode *root;
+        Compare comp;
 
         TreeNode *getMin(TreeNode *node) {
             if (node == NULL)
@@ -225,6 +171,39 @@ namespace ft
                     std::cout <<"\033[0;31m"<< nodeV->pair.first << "\033[0m"<<std::endl;
                 printBT( prefix + (isLeft ? "│   " : "    "), nodeV->left, true);
                 printBT( prefix + (isLeft ? "│   " : "    "), nodeV->right, false);
+        }
+
+        void treeEraseRecursion(const Key &value, size_t *counter) {
+            if (root == NULL)
+                return;
+            TreeNode *node = root;
+            while (node && node->pair.first != value) {
+                if (comp(value, node->pair.first) == false) {
+                    node = node->right;
+                } else if (comp(value, node->pair.first)) {
+                    node = node->left;
+                }
+            }
+            if (node == NULL)
+                return;
+            if (node->left == NULL) {
+                transplant(node, node->right);
+            } else if (node->right == NULL) {
+                transplant(node, node->left);
+            } else {
+                TreeNode *y = getMin(node->right);
+                if (y->p != node) {
+                    transplant(y, y->right);
+                    y->right = node->right;
+                    y->right->p = y;
+                }
+                transplant(node, y);
+                y->left = node->left;
+                y->left->p = y;
+            }
+            delete node;
+            (*counter)++;
+            treeEraseRecursion(value, counter); // TODO fix recursion
         }
 
     public:                                  // TODO delete this line
