@@ -347,7 +347,6 @@ namespace ft {
                 alloc.construct(new_arr + i, arr[i]);
             return new_arr;
         }
-
     };
 
     template <typename T, typename Alloc>

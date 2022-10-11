@@ -1,10 +1,6 @@
 #include "containers.h"
 
 namespace ft {
-
-    struct input_iterator_tag {};
-    struct random_access_iterator_tag {};
-
     template <typename iterator>
     struct iterator_traits {
     typedef typename iterator::iterator_category iterator_category;
@@ -12,7 +8,6 @@ namespace ft {
     typedef typename iterator::difference_type   difference_type;
     typedef typename iterator::pointer           pointer;
     typedef typename iterator::reference         reference;
-    // typedef          difference_type             distance_type;
     };
 
     template <typename T>
@@ -49,9 +44,107 @@ namespace ft {
     };
 
     template<typename T>
+    class InputIt {
+    public:
+        typedef typename ft::iterator<std::input_iterator_tag, T>   iterator;
+        typedef typename iterator::value_type                       value_type;
+        typedef typename iterator::iterator_category                iterator_category;
+        typedef typename iterator::difference_type                  difference_type;
+        typedef typename iterator::pointer                          pointer;
+        typedef typename iterator::reference                        reference;
+
+        InputIt()                                                           {};
+        InputIt(pointer ptr): ptr(ptr)                                      {};
+        reference operator*()                                               {return *ptr;}
+        pointer operator->() const                                          {return ptr;}
+        reference operator[](int idx)                                       {return *(ptr + idx);}
+        bool operator==(const InputIt &other) const                         {return ptr == other.ptr;}
+        bool operator!=(const InputIt &other) const                         {return !(*this == other);}
+        friend bool operator>(const InputIt& lhs, const InputIt& rhs)       {return lhs.ptr > rhs.ptr;}
+        friend bool operator<(const InputIt& lhs, const InputIt& rhs)       {return lhs.ptr < rhs.ptr;}
+        friend bool operator>=(const InputIt& lhs, const InputIt& rhs)      {return lhs.ptr >= rhs.ptr;}
+        friend bool operator<=(const InputIt& lhs, const InputIt& rhs)      {return lhs.ptr <= rhs.ptr;}
+        const pointer& base() const                                         {return ptr;}
+
+        InputIt operator++() {
+            ptr++;
+            return *this;
+        }
+
+        InputIt operator++(int) {
+            InputIt it = *this;
+            ++(*this);
+            return it;
+        }
+        
+        InputIt operator--() {
+            ptr--;
+            return *this;
+        }
+
+        InputIt operator--(int) {
+            InputIt it = *this;
+            --(*this);
+            return it;
+        }
+
+    private:
+        pointer ptr;
+    };
+
+    template <typename Iter> // TODO inheritance typedefs from general iterator
+    class ReverseInputIt {
+    public:
+        typedef Iter iterator_type;
+        typedef typename iterator_type::reference reference;
+        typedef typename iterator_type::pointer pointer;
+        typedef typename iterator_type::difference_type difference_type;
+
+        ReverseInputIt(Iter iter): iter(iter)                                    {}
+        iterator_type base() const                                               {return iter;}
+        iterator_type operator->() const                                         {return iter;}
+        reference operator*()                                                    {return *iter;}
+        reference operator[](int idx)                                            {return *(iter + idx);}
+        bool operator!=(const ReverseInputIt &other) const                       {return !(*this == other);}
+        bool operator==(const ReverseInputIt &other) const                       {return iter == other.iter;}
+        friend bool operator>(const ReverseInputIt& l, const ReverseInputIt& r)  {return l.ptr > r.ptr;}
+        friend bool operator<(const ReverseInputIt& l, const ReverseInputIt& r)  {return l.ptr < r.ptr;}
+        friend bool operator>=(const ReverseInputIt& l, const ReverseInputIt& r) {return l.ptr >= r.ptr;}
+        friend bool operator<=(const ReverseInputIt& l, const ReverseInputIt& r) {return l.ptr <= r.ptr;}
+
+        ReverseInputIt<iterator_type>& operator++() {
+            iter--;
+            return *this;
+        }
+
+        ReverseInputIt<iterator_type>& operator--() {
+            iter++;
+            return *this;
+        }
+
+        ReverseInputIt<iterator_type>& operator++(int) {
+            ReverseInputIt<iterator_type>& it = *this;
+            iter--;
+            return it;
+        };
+
+        ReverseInputIt<iterator_type>& operator--(int) {
+            ReverseInputIt<iterator_type>& it = *this;
+            iter++;
+            return it;
+        };
+
+        //TODO need to realize operator-(iterator). reverse_iter1 - reverse_iter2
+
+    private:
+        iterator_type iter;
+    };
+
+    template<typename T>
     class RandAccessIt {
     //TODO const_iter = iter
     //TODO iter = const_iter
+    //TODO NEED TO FIX!!!!!!!!!!!!!!!
     public:
         typedef typename ft::iterator<std::random_access_iterator_tag, T> iterator;
         typedef typename iterator::value_type                 value_type;
