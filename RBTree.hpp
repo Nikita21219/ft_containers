@@ -5,27 +5,12 @@
 
 namespace ft
 {
-
-    template <class T1, class T2>
-    struct pair
-    {
-        typedef T1 first_type;
-        typedef T2 second_type;
-
-        pair() {};
-
-        pair(const T1 &x, const T2 &y): first(x), second(y) {}
-
-        template <class U1, class U2>
-        pair(const pair<U1, U2> &p): first(p.first), second(p.second) {}
-
-        first_type first;
-        second_type second;
-    };
-
     template <typename keyT, typename valT>
     struct RBTreeNode
     {
+        typedef keyT Key;
+        typedef valT Val;
+
         RBTreeNode()
         {
             isRed = false;
@@ -57,20 +42,20 @@ namespace ft
         typedef value_type* pointer;
         typedef typename allocator_type::const_pointer const_pointer;
         typedef typename allocator_type::size_type size_type;
-        typedef ft::BidirIter<value_type> iterator;
-        typedef ft::BidirIter<const value_type> const_iterator;
+        typedef ft::BidirIter<TreeNode> iterator;
+        typedef ft::BidirIter<const TreeNode> const_iterator;
         typedef typename iterator::difference_type difference_type;
         typedef ft::ReverseBidirIter<iterator> reverse_iterator;
         typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
 
         RBTree(): root(NULL), count(0) {}
 
-        ~RBTree() {}
+        ~RBTree() {} // TODO implement
 
         RBTree(const RBTree &other); // TODO implement
 
-        iterator begin() {return iterator(&(getMin(root)->pair));}
-        iterator end() {return iterator(NULL);}
+        iterator begin() {return iterator(getMin(root));}
+        // iterator end() {return iterator(NULL);}
 
         void treeWalk(TreeNode *x) {
             if (x != NULL) {
@@ -100,7 +85,7 @@ namespace ft
             else
                 y->right = node;
             count++;
-            return ft::pair<iterator, bool>(iterator(&node->pair), false);
+            return ft::pair<iterator, bool>(iterator(node), false);
         }
 
         size_t treeErase(const Key &value) {

@@ -1,6 +1,24 @@
 #include "containers.h"
 
 namespace ft {
+
+    template <class T1, class T2>
+    struct pair
+    {
+        typedef T1 first_type;
+        typedef T2 second_type;
+
+        pair() {};
+
+        pair(const T1 &x, const T2 &y): first(x), second(y) {}
+
+        template <class U1, class U2>
+        pair(const pair<U1, U2> &p): first(p.first), second(p.second) {}
+
+        first_type first;
+        second_type second;
+    };
+
     template <typename iterator>
     struct iterator_traits {
     typedef typename iterator::iterator_category iterator_category;
@@ -52,10 +70,12 @@ namespace ft {
         typedef typename iterator::difference_type                        difference_type;
         typedef typename iterator::pointer                                pointer;
         typedef typename iterator::reference                              reference;
+        typedef typename value_type::Key                                  key_type;
+        typedef typename value_type::Val                                  val_type;
+        typedef typename ft::pair<key_type, val_type>                     pair_type;
 
         BidirIter()                                                           {};
         BidirIter(pointer ptr): ptr(ptr)                                      {};
-        reference operator*()                                                 {return *ptr;}
         pointer operator->() const                                            {return ptr;}
         reference operator[](int idx)                                         {return *(ptr + idx);}
         bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
@@ -65,6 +85,7 @@ namespace ft {
         friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr >= rhs.ptr;}
         friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr <= rhs.ptr;}
         const pointer& base() const                                           {return ptr;}
+        pair_type operator*()                                                 {return ptr->pair;}
 
         BidirIter operator++() {
             ptr++;
