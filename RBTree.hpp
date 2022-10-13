@@ -12,20 +12,12 @@ namespace ft
         typedef T1 first_type;
         typedef T2 second_type;
 
-        pair(){};
+        pair() {};
 
-        pair(const T1 &x, const T2 &y)
-        {
-            first = x;
-            second = y;
-        };
+        pair(const T1 &x, const T2 &y): first(x), second(y) {}
 
         template <class U1, class U2>
-        pair(const pair<U1, U2> &p)
-        {
-            first = p.first;
-            second = p.second;
-        };
+        pair(const pair<U1, U2> &p): first(p.first), second(p.second) {}
 
         first_type first;
         second_type second;
@@ -62,24 +54,31 @@ namespace ft
         typedef struct ft::pair<Key, T> value_type;
         typedef RBTreeNode<Key, T> TreeNode;
         typedef Alloc allocator_type;
-        typedef value_type *pointer;
+        typedef value_type* pointer;
         typedef typename allocator_type::const_pointer const_pointer;
         typedef typename allocator_type::size_type size_type;
-        typedef ft::InputIt<TreeNode> iterator;
-        typedef ft::InputIt<const TreeNode> const_iterator;
+        typedef ft::BidirIter<value_type> iterator;
+        typedef ft::BidirIter<const value_type> const_iterator;
         typedef typename iterator::difference_type difference_type;
-        typedef ft::ReverseInputIt<iterator> reverse_iterator;
-        typedef ft::ReverseInputIt<const_iterator> const_reverse_iterator;
+        typedef ft::ReverseBidirIter<iterator> reverse_iterator;
+        typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
 
-        RBTree() {
-            root = NULL;
-        }
+        RBTree(): root(NULL), count(0) {}
 
         ~RBTree() {}
 
         RBTree(const RBTree &other); // TODO implement
 
-        iterator begin() {return iterator(root);}
+        iterator begin() {return iterator(&(getMin(root)->pair));}
+        iterator end() {return iterator(NULL);}
+
+        void treeWalk(TreeNode *x) {
+            if (x != NULL) {
+                treeWalk(x->left);
+                std::cout << x->pair.first << " ";
+                treeWalk(x->right);
+            }
+        }
 
         ft::pair<iterator, bool> treeInsert(const value_type &value)
         {
@@ -100,7 +99,8 @@ namespace ft
                 y->left = node;
             else
                 y->right = node;
-            return ft::pair<iterator, bool>(iterator(node), false);
+            count++;
+            return ft::pair<iterator, bool>(iterator(&node->pair), false);
         }
 
         size_t treeErase(const Key &value) {
@@ -114,7 +114,9 @@ namespace ft
 
     private:
         TreeNode *root;
+        TreeNode **sortArr;
         Compare comp;
+        size_t count;
 
         TreeNode *getMin(TreeNode *node) {
             if (node == NULL)

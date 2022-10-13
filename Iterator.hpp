@@ -44,46 +44,46 @@ namespace ft {
     };
 
     template<typename T>
-    class InputIt {
+    class BidirIter {
     public:
-        typedef typename ft::iterator<std::input_iterator_tag, T>   iterator;
-        typedef typename iterator::value_type                       value_type;
-        typedef typename iterator::iterator_category                iterator_category;
-        typedef typename iterator::difference_type                  difference_type;
-        typedef typename iterator::pointer                          pointer;
-        typedef typename iterator::reference                        reference;
+        typedef typename ft::iterator<std::bidirectional_iterator_tag, T> iterator;
+        typedef typename iterator::value_type                             value_type;
+        typedef typename iterator::iterator_category                      iterator_category;
+        typedef typename iterator::difference_type                        difference_type;
+        typedef typename iterator::pointer                                pointer;
+        typedef typename iterator::reference                              reference;
 
-        InputIt()                                                           {};
-        InputIt(pointer ptr): ptr(ptr)                                      {};
-        reference operator*()                                               {return *ptr;}
-        pointer operator->() const                                          {return ptr;}
-        reference operator[](int idx)                                       {return *(ptr + idx);}
-        bool operator==(const InputIt &other) const                         {return ptr == other.ptr;}
-        bool operator!=(const InputIt &other) const                         {return !(*this == other);}
-        friend bool operator>(const InputIt& lhs, const InputIt& rhs)       {return lhs.ptr > rhs.ptr;}
-        friend bool operator<(const InputIt& lhs, const InputIt& rhs)       {return lhs.ptr < rhs.ptr;}
-        friend bool operator>=(const InputIt& lhs, const InputIt& rhs)      {return lhs.ptr >= rhs.ptr;}
-        friend bool operator<=(const InputIt& lhs, const InputIt& rhs)      {return lhs.ptr <= rhs.ptr;}
-        const pointer& base() const                                         {return ptr;}
+        BidirIter()                                                           {};
+        BidirIter(pointer ptr): ptr(ptr)                                      {};
+        reference operator*()                                                 {return *ptr;}
+        pointer operator->() const                                            {return ptr;}
+        reference operator[](int idx)                                         {return *(ptr + idx);}
+        bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
+        bool operator!=(const BidirIter &other) const                         {return !(*this == other);}
+        friend bool operator>(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr > rhs.ptr;}
+        friend bool operator<(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr < rhs.ptr;}
+        friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr >= rhs.ptr;}
+        friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr <= rhs.ptr;}
+        const pointer& base() const                                           {return ptr;}
 
-        InputIt operator++() {
+        BidirIter operator++() {
             ptr++;
             return *this;
         }
 
-        InputIt operator++(int) {
-            InputIt it = *this;
+        BidirIter operator++(int) {
+            BidirIter it = *this;
             ++(*this);
             return it;
         }
         
-        InputIt operator--() {
+        BidirIter operator--() {
             ptr--;
             return *this;
         }
 
-        InputIt operator--(int) {
-            InputIt it = *this;
+        BidirIter operator--(int) {
+            BidirIter it = *this;
             --(*this);
             return it;
         }
@@ -93,43 +93,43 @@ namespace ft {
     };
 
     template <typename Iter> // TODO inheritance typedefs from general iterator
-    class ReverseInputIt {
+    class ReverseBidirIter {
     public:
         typedef Iter iterator_type;
         typedef typename iterator_type::reference reference;
         typedef typename iterator_type::pointer pointer;
         typedef typename iterator_type::difference_type difference_type;
 
-        ReverseInputIt(Iter iter): iter(iter)                                    {}
+        ReverseBidirIter(Iter iter): iter(iter)                                    {}
         iterator_type base() const                                               {return iter;}
         iterator_type operator->() const                                         {return iter;}
         reference operator*()                                                    {return *iter;}
         reference operator[](int idx)                                            {return *(iter + idx);}
-        bool operator!=(const ReverseInputIt &other) const                       {return !(*this == other);}
-        bool operator==(const ReverseInputIt &other) const                       {return iter == other.iter;}
-        friend bool operator>(const ReverseInputIt& l, const ReverseInputIt& r)  {return l.ptr > r.ptr;}
-        friend bool operator<(const ReverseInputIt& l, const ReverseInputIt& r)  {return l.ptr < r.ptr;}
-        friend bool operator>=(const ReverseInputIt& l, const ReverseInputIt& r) {return l.ptr >= r.ptr;}
-        friend bool operator<=(const ReverseInputIt& l, const ReverseInputIt& r) {return l.ptr <= r.ptr;}
+        bool operator!=(const ReverseBidirIter &other) const                       {return !(*this == other);}
+        bool operator==(const ReverseBidirIter &other) const                       {return iter == other.iter;}
+        friend bool operator>(const ReverseBidirIter& l, const ReverseBidirIter& r)  {return l.ptr > r.ptr;}
+        friend bool operator<(const ReverseBidirIter& l, const ReverseBidirIter& r)  {return l.ptr < r.ptr;}
+        friend bool operator>=(const ReverseBidirIter& l, const ReverseBidirIter& r) {return l.ptr >= r.ptr;}
+        friend bool operator<=(const ReverseBidirIter& l, const ReverseBidirIter& r) {return l.ptr <= r.ptr;}
 
-        ReverseInputIt<iterator_type>& operator++() {
+        ReverseBidirIter<iterator_type>& operator++() {
             iter--;
             return *this;
         }
 
-        ReverseInputIt<iterator_type>& operator--() {
+        ReverseBidirIter<iterator_type>& operator--() {
             iter++;
             return *this;
         }
 
-        ReverseInputIt<iterator_type>& operator++(int) {
-            ReverseInputIt<iterator_type>& it = *this;
+        ReverseBidirIter<iterator_type>& operator++(int) {
+            ReverseBidirIter<iterator_type>& it = *this;
             iter--;
             return it;
         };
 
-        ReverseInputIt<iterator_type>& operator--(int) {
-            ReverseInputIt<iterator_type>& it = *this;
+        ReverseBidirIter<iterator_type>& operator--(int) {
+            ReverseBidirIter<iterator_type>& it = *this;
             iter++;
             return it;
         };

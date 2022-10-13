@@ -35,10 +35,9 @@ int main() {
 		tree.treeInsert(ft::pair<int, int>(13, 99));
 		tree.treeInsert(ft::pair<int, int>(13, 99));
 
-		std::cout << "\n\n\n";
-		std::cout << "erased: " << tree.treeErase(13) << std::endl;
-		// tree.printTree();
-	
+		ft::RBTree<int, int>::iterator it = tree.begin();
+		(void) it;
+		std::cout << (*it).first << "\n";
 		// ft::RBTree<int, int>::TreeNode *root = tree.getRoot();
 		// std::cout << root->left->left->right->pair.first << std::endl;
 	}
