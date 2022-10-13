@@ -96,20 +96,18 @@ namespace ft {
         typedef typename value_type::Key                                  key_type;
         typedef typename value_type::Val                                  val_type;
         typedef typename ft::pair<key_type, val_type>                     pair_type;
-        typedef typename ft::RBTreeNode<key_type, val_type>               node_type;
 
         BidirIter()                                                           {}
         BidirIter(pointer ptr): ptr(ptr)                                      {}
-        pair_type *operator->() const    {return &ptr->pair;}
-        pair_type operator*()            {return ptr->pair;}
+        pair_type *operator->() const                                         {return &ptr->pair;}
+        pair_type operator*()                                                 {return ptr->pair;}
         bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                         {return !(*this == other);}
-        // friend bool operator>(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr > rhs.ptr;}
-        // friend bool operator<(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr < rhs.ptr;}
-        // friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr >= rhs.ptr;}
-        // friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr <= rhs.ptr;}
-        // TODO implement lexicographically compares
         const pointer& base() const                                           {return ptr;}
+        friend bool operator>(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
+        friend bool operator<(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
+        friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
+        friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
 
         BidirIter operator++() {
             if (ptr->right) {
@@ -167,13 +165,13 @@ namespace ft {
         typedef typename iterator_type::pointer pointer;
         typedef typename iterator_type::difference_type difference_type;
 
-        ReverseBidirIter(Iter iter): iter(iter)                                    {}
-        iterator_type base() const                                               {return iter;}
-        iterator_type operator->() const                                         {return iter;}
-        reference operator*()                                                    {return *iter;}
-        reference operator[](int idx)                                            {return *(iter + idx);}
-        bool operator!=(const ReverseBidirIter &other) const                       {return !(*this == other);}
-        bool operator==(const ReverseBidirIter &other) const                       {return iter == other.iter;}
+        ReverseBidirIter(Iter iter): iter(iter)                                      {}
+        iterator_type base() const                                                   {return iter;}
+        iterator_type operator->() const                                             {return iter;}
+        reference operator*()                                                        {return *iter;}
+        reference operator[](int idx)                                                {return *(iter + idx);}
+        bool operator!=(const ReverseBidirIter &other) const                         {return !(*this == other);}
+        bool operator==(const ReverseBidirIter &other) const                         {return iter == other.iter;}
         friend bool operator>(const ReverseBidirIter& l, const ReverseBidirIter& r)  {return l.ptr > r.ptr;}
         friend bool operator<(const ReverseBidirIter& l, const ReverseBidirIter& r)  {return l.ptr < r.ptr;}
         friend bool operator>=(const ReverseBidirIter& l, const ReverseBidirIter& r) {return l.ptr >= r.ptr;}
