@@ -28,18 +28,21 @@ int main() {
 		tree.treeInsert(ft::pair<int, int>(7, 99));
 		tree.treeInsert(ft::pair<int, int>(20, 99));
 		tree.treeInsert(ft::pair<int, int>(3, 99));
-		tree.treeInsert(ft::pair<int, int>(13, 99));
-		tree.treeInsert(ft::pair<int, int>(13, 99));
-		tree.treeInsert(ft::pair<int, int>(13, 99));
-		tree.treeInsert(ft::pair<int, int>(13, 99));
-		tree.treeInsert(ft::pair<int, int>(13, 99));
-		tree.treeInsert(ft::pair<int, int>(13, 99));
+
+		tree.treeWalk(tree.getRoot());
+		std::cout << "\n";
 
 		ft::RBTree<int, int>::iterator it = tree.begin();
-		// (void) *it;
-		std::cout << (*it).first << "\n";
-		// ft::RBTree<int, int>::TreeNode *root = tree.getRoot();
-		// std::cout << root->left->left->right->pair.first << std::endl;
+		it++;
+		it++;
+		it++;
+		std::cout << (*it).first << " ";
+		it--;
+		std::cout << (*it).first << " ";
+
+		for (ft::RBTree<int, int>::iterator it = tree.begin(); it != tree.end(); it++)
+			std::cout << it->first << " ";
+		std::cout << "\n";
 	}
 
 	// std::map<int, int> m;
@@ -48,8 +51,9 @@ int main() {
 	// m.insert(std::pair<int, int>(10, 10));
 	// m.insert(std::pair<int, int>(15, 10));
 	// m.erase(10);
+	// // std::map<int, int>::iterator i = m.begin();
 	// for (std::map<int, int>::iterator i = m.begin(); i != m.end(); i++) {
-	// 	std::cout << (*i).first << std::endl;
+	// 	std::cout << i->first << std::endl;
 	// }
 	
 	

@@ -19,6 +19,29 @@ namespace ft {
         second_type second;
     };
 
+    template <typename keyT, typename valT>
+    struct RBTreeNode
+    {
+        typedef keyT Key;
+        typedef valT Val;
+
+        RBTreeNode()
+        {
+            isRed = false;
+            left = NULL;
+            right = NULL;
+            p = NULL;
+        }
+
+        ~RBTreeNode() {}
+
+        bool isRed;
+        ft::pair<keyT, valT> pair;
+        struct RBTreeNode *left;
+        struct RBTreeNode *right;
+        struct RBTreeNode *p;
+    };
+
     template <typename iterator>
     struct iterator_traits {
     typedef typename iterator::iterator_category iterator_category;
@@ -73,22 +96,34 @@ namespace ft {
         typedef typename value_type::Key                                  key_type;
         typedef typename value_type::Val                                  val_type;
         typedef typename ft::pair<key_type, val_type>                     pair_type;
+        typedef typename ft::RBTreeNode<key_type, val_type>               node_type;
 
-        BidirIter()                                                           {};
-        BidirIter(pointer ptr): ptr(ptr)                                      {};
-        pointer operator->() const                                            {return ptr;}
-        reference operator[](int idx)                                         {return *(ptr + idx);}
+        BidirIter()                                                           {}
+        BidirIter(pointer ptr): ptr(ptr)                                      {}
+        pair_type *operator->() const    {return &ptr->pair;}
+        pair_type operator*()            {return ptr->pair;}
         bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                         {return !(*this == other);}
-        friend bool operator>(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr > rhs.ptr;}
-        friend bool operator<(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr < rhs.ptr;}
-        friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr >= rhs.ptr;}
-        friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr <= rhs.ptr;}
+        // friend bool operator>(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr > rhs.ptr;}
+        // friend bool operator<(const BidirIter& lhs, const BidirIter& rhs)     {return lhs.ptr < rhs.ptr;}
+        // friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr >= rhs.ptr;}
+        // friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs)    {return lhs.ptr <= rhs.ptr;}
+        // TODO implement lexicographically compares
         const pointer& base() const                                           {return ptr;}
-        pair_type operator*()                                                 {return ptr->pair;}
 
         BidirIter operator++() {
-            ptr++;
+            if (ptr->right) {
+                ptr = ptr->right;
+                while (ptr->left)
+                    ptr = ptr->left;
+            } else {
+                pointer tmp = ptr->p;
+                while (tmp && ptr == tmp->right) {
+                    ptr = tmp;
+                    tmp = tmp->p;
+                }
+                ptr = tmp;
+            }
             return *this;
         }
 
@@ -97,9 +132,20 @@ namespace ft {
             ++(*this);
             return it;
         }
-        
+    
         BidirIter operator--() {
-            ptr--;
+            if (ptr->left) {
+                ptr = ptr->left;
+                while (ptr->right)
+                    ptr = ptr->right;
+            } else {
+                pointer tmp = ptr->p;
+                while (tmp && ptr == tmp->left) {
+                    ptr = tmp;
+                    tmp = tmp->p;
+                }
+                ptr = tmp;
+            }
             return *this;
         }
 
@@ -147,13 +193,13 @@ namespace ft {
             ReverseBidirIter<iterator_type>& it = *this;
             iter--;
             return it;
-        };
+        }
 
         ReverseBidirIter<iterator_type>& operator--(int) {
             ReverseBidirIter<iterator_type>& it = *this;
             iter++;
             return it;
-        };
+        }
 
         //TODO need to realize operator-(iterator). reverse_iter1 - reverse_iter2
 

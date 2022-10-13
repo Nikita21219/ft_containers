@@ -5,29 +5,6 @@
 
 namespace ft
 {
-    template <typename keyT, typename valT>
-    struct RBTreeNode
-    {
-        typedef keyT Key;
-        typedef valT Val;
-
-        RBTreeNode()
-        {
-            isRed = false;
-            left = NULL;
-            right = NULL;
-            p = NULL;
-        }
-
-        ~RBTreeNode() {}
-
-        bool isRed;
-        ft::pair<keyT, valT> pair;
-        struct RBTreeNode *left;
-        struct RBTreeNode *right;
-        struct RBTreeNode *p;
-    };
-
     template <
         class Key,
         class T,
@@ -55,7 +32,7 @@ namespace ft
         RBTree(const RBTree &other); // TODO implement
 
         iterator begin() {return iterator(getMin(root));}
-        // iterator end() {return iterator(NULL);}
+        iterator end() {return iterator(NULL);}
 
         void treeWalk(TreeNode *x) {
             if (x != NULL) {
