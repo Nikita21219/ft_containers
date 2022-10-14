@@ -608,3 +608,27 @@
     //     v2.assign(v1.begin(), v1.end());
     //     // print_info(v2);
     // }
+
+
+    // // FT::MAP!
+	// {
+	// 	ft::map<int, int> m1;
+	// 	m1.insert(ft::pair<int, int>(15, 999));
+	// 	m1.insert(ft::pair<int, int>(20, 999));
+	// 	m1.insert(ft::pair<int, int>(25, 999));
+	// 	ft::map<int, int> m(m1.begin(), m1.end());
+	// 	ft::map<int, int>::iterator it = m.begin();
+	// 	it->second = 150;
+	// 	std::cout << m1.begin()->second << "\n";
+	// }
+	// {
+	// 	std::map<int, int> m1;
+	// 	m1.insert(std::pair<int, int>(15, 999));
+	// 	m1.insert(std::pair<int, int>(20, 999));
+	// 	m1.insert(std::pair<int, int>(25, 999));
+	// 	std::map<int, int> m(m1.begin(), m1.end());
+	// 	std::map<int, int>::iterator it = m.begin();
+	// 	it->second = 150;
+	// 	std::cout << m1.begin()->second << "\n";
+	// }
+

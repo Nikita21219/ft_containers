@@ -21,12 +21,24 @@ int main() {
 	std::cout << "\n";
 	{
 		ft::map<int, int> m1;
-		m1.insert(ft::pair<int, int>(5, 5));
-		// ft::map<int, int> m1;
-		// m1.insert();
-		// ft::map<int, int> m(m1.begin(), m1.end());
+		m1.insert(ft::pair<int, int>(15, 999));
+		m1.insert(ft::pair<int, int>(20, 999));
+		m1.insert(ft::pair<int, int>(25, 999));
+		ft::map<int, int> m(m1.begin(), m1.end());
+		ft::map<int, int>::const_iterator it = m.cbegin();
+		(void) it;
+		// it->second = 150;
+		// std::cout << m1.begin()->second << "\n";
 	}
 
+
+	// {
+	// 	ft::BTree<ft::pair<int, int> > tree;
+	// 	tree.treeInsert(ft::pair<int, int>(10, 5));
+	// 	tree.treeInsert(ft::pair<int, int>(11, 6));
+	// 	ft::BTree<ft::pair<int, int> >::const_iterator it = tree.begin();
+	// 	(void) it;
+	// }
 
 	// std::map<int, int> m;
 	// m.insert(std::pair<int, int>(11, 10));
@@ -38,7 +50,7 @@ int main() {
 	// for (std::map<int, int>::iterator i = m.begin(); i != m.end(); i++) {
 	// 	std::cout << i->first << std::endl;
 	// }
-	
-	
+
+
     return 0;
 }

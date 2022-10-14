@@ -21,7 +21,7 @@ namespace ft
         // typedef typename allocator_type::const_pointer const_pointer;
         // typedef typename allocator_type::size_type size_type;
         typedef ft::BidirIter<Node, false> iterator;
-        typedef ft::BidirIter<const Node, true> const_iterator;
+        typedef ft::BidirIter<Node, true> const_iterator;
         typedef ft::ReverseBidirIter<iterator> reverse_iterator;
         typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
         typedef typename iterator::difference_type difference_type;
@@ -34,7 +34,7 @@ namespace ft
 
         iterator begin() {return iterator(getMin(root));}
         iterator end() {return iterator(NULL);}
-        const_iterator cbegin() {return const_iterator(getMin(root));}
+        const_iterator cbegin() const {return const_iterator(getMin(root));}
         const_iterator cend() {return const_iterator(NULL);}
         reverse_iterator rbegin() {return reverse_iterator(getMax(root));}
         reverse_iterator rend() {return reverse_iterator(NULL);}
@@ -84,7 +84,7 @@ namespace ft
 
 
     private:
-        Node *getMin(Node *node) {
+        Node *getMin(Node *node) const {
             if (node == NULL)
                 return NULL;
             while (node->left)
