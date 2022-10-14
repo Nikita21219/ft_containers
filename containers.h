@@ -6,6 +6,7 @@
 #include <stack>
 #include <unistd.h>
 
+#include "Utils.hpp"
 #include "Iterator.hpp"
 #include "Vector.hpp"
 #include "Stack.hpp"
