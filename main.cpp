@@ -33,8 +33,8 @@ int main() {
 		// // std::cout << "\n";
 
 		for (ft::BTree<ft::pair<int, int> >::iterator it = tree.begin(); it != tree.end(); it++) {
-			// it->first = 10;
 			std::cout << it->first << " ";
+			it->first = 10;
 		}
 		std::cout << "\n";
 	}

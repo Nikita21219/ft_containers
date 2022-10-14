@@ -7,7 +7,7 @@ namespace ft
 {
     template <
         class T,
-        class Compare = std::less<T>,
+        class Compare = std::less<typename T::first_type>,
         class Alloc = std::allocator<T>,
         class Node = ft::BTreeNode<T> >
     class BTree
@@ -55,8 +55,7 @@ namespace ft
             Node *x = root;
             while (x != NULL) {
                 y = x;
-                // if (comp(node->data.first, x->data.first))
-                if (node->data.first < x->data.first) //TODO tmp line
+                if (comp(node->data.first, x->data.first))
                     x = x->left;
                 else
                     x = x->right;
@@ -64,8 +63,7 @@ namespace ft
             node->p = y;
             if (y == NULL)
                 root = node;
-            // else if (comp(node->data.first, y->data.first))
-            else if (node->data.first < y->data.first) //TODO tmp line
+            else if (comp(node->data.first, y->data.first))
                 y->left = node;
             else
                 y->right = node;
