@@ -20,23 +20,11 @@ void print_info(vector_type &v) {
 int main() {
 	std::cout << "\n";
 	{
-		ft::BTree<ft::pair<int, int> > tree;
-		tree.treeInsert(ft::pair<int, int>(15, 99));
-		tree.treeInsert(ft::pair<int, int>(10, 99));
-		tree.treeInsert(ft::pair<int, int>(5, 99));
-		tree.treeInsert(ft::pair<int, int>(2, 99));
-		tree.treeInsert(ft::pair<int, int>(7, 99));
-		tree.treeInsert(ft::pair<int, int>(20, 99));
-		tree.treeInsert(ft::pair<int, int>(3, 99));
-
-		// tree.treeWalk(tree.getRoot());
-		// // std::cout << "\n";
-
-		for (ft::BTree<ft::pair<int, int> >::iterator it = tree.begin(); it != tree.end(); it++) {
-			std::cout << it->first << " ";
-			it->first = 10;
-		}
-		std::cout << "\n";
+		ft::map<int, int> m1;
+		m1.insert(ft::pair<int, int>(5, 5));
+		// ft::map<int, int> m1;
+		// m1.insert();
+		// ft::map<int, int> m(m1.begin(), m1.end());
 	}
 
 

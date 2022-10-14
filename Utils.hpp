@@ -32,8 +32,7 @@ namespace ft {
     struct is_integral : is_integral_base<typename std::remove_cv<T>::type> {};
 
     template <class T1, class T2>
-    struct pair
-    {
+    struct pair {
         typedef T1 first_type;
         typedef T2 second_type;
 
@@ -49,13 +48,11 @@ namespace ft {
     };
 
     template <typename T>
-    struct BTreeNode
-    {
+    struct BTreeNode {
         typedef typename T::first_type  Key;
         typedef typename T::second_type Val;
 
-        BTreeNode()
-        {
+        BTreeNode(const T &pair): data(pair) {
             isRed = false;
             left = NULL;
             right = NULL;

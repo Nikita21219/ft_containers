@@ -16,9 +16,10 @@ namespace ft
         typedef Alloc allocator_type;
         typedef T  value_type;
         typedef T* pointer;
-        typedef typename value_type::first_type Key;
-        typedef typename allocator_type::const_pointer const_pointer;
-        typedef typename allocator_type::size_type size_type;
+        typedef typename T::first_type Key;
+        // typedef typename T::second_type Val;
+        // typedef typename allocator_type::const_pointer const_pointer;
+        // typedef typename allocator_type::size_type size_type;
         typedef ft::BidirIter<Node, false> iterator;
         typedef ft::BidirIter<const Node, true> const_iterator;
         typedef ft::ReverseBidirIter<iterator> reverse_iterator;
@@ -50,7 +51,7 @@ namespace ft
 
         ft::pair<iterator, bool> treeInsert(const value_type &value)
         {
-            Node *node = getNewNode(value);
+            Node *node = new Node(value);
             Node *y = NULL;
             Node *x = root;
             while (x != NULL) {
@@ -110,15 +111,11 @@ namespace ft
                 v->p = u->p;
         }
 
-        Node *getNewNode(const value_type pair)
-        {
-            Node *node = new Node();
-            node->data = pair;
-            node->left = NULL;
-            node->right = NULL;
-            node->p = NULL;
-            return node;
-        }
+        // Node *getNewNode(const value_type &pair)
+        // {
+        //     Node *node = new Node(pair);
+        //     return node;
+        // }
 
         // void printBT (
         //     const std::string& prefix,
