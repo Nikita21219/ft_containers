@@ -19,11 +19,11 @@ namespace ft
         typedef value_type* pointer;
         typedef typename allocator_type::const_pointer const_pointer;
         typedef typename allocator_type::size_type size_type;
-        typedef ft::BidirIter<TreeNode> iterator;
-        typedef ft::BidirIter<const TreeNode> const_iterator;
-        typedef typename iterator::difference_type difference_type;
+        typedef ft::BidirIter<TreeNode, false> iterator;
+        typedef ft::BidirIter<const TreeNode, true> const_iterator;
         typedef ft::ReverseBidirIter<iterator> reverse_iterator;
         typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
+        typedef typename iterator::difference_type difference_type;
 
         RBTree(): root(NULL), count(0) {}
 
@@ -33,6 +33,12 @@ namespace ft
 
         iterator begin() {return iterator(getMin(root));}
         iterator end() {return iterator(NULL);}
+        const_iterator cbegin() {return const_iterator(getMin(root));}
+        const_iterator cend() {return const_iterator(NULL);}
+        reverse_iterator rbegin() {return reverse_iterator(getMax(root));}
+        reverse_iterator rend() {return reverse_iterator(NULL);}
+        const_reverse_iterator crbegin() {return const_reverse_iterator(getMax(root));}
+        const_reverse_iterator crend() {return const_reverse_iterator(NULL);}
 
         void treeWalk(TreeNode *x) {
             if (x != NULL) {

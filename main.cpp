@@ -32,16 +32,9 @@ int main() {
 		tree.treeWalk(tree.getRoot());
 		std::cout << "\n";
 
-		ft::RBTree<int, int>::iterator it = tree.begin();
-		it++;
-		it++;
-		it++;
-		std::cout << (*it).first << " ";
-		it--;
-		std::cout << (*it).first << " ";
-
-		for (ft::RBTree<int, int>::iterator it = tree.begin(); it != tree.end(); it++)
+		for (ft::RBTree<int, int>::const_reverse_iterator it = tree.crbegin(); it != tree.crend(); it++) {
 			std::cout << it->first << " ";
+		}
 		std::cout << "\n";
 	}
 
