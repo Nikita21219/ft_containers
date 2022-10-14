@@ -20,8 +20,8 @@ namespace ft
         // typedef typename T::second_type Val;
         // typedef typename allocator_type::const_pointer const_pointer;
         // typedef typename allocator_type::size_type size_type;
-        typedef ft::BidirIter<Node, false> iterator;
-        typedef ft::BidirIter<Node, true> const_iterator;
+        typedef ft::BidirIter<Node> iterator;
+        typedef ft::BidirIter<const Node> const_iterator;
         typedef ft::ReverseBidirIter<iterator> reverse_iterator;
         typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
         typedef typename iterator::difference_type difference_type;

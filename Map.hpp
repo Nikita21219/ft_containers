@@ -24,8 +24,10 @@ namespace ft {
         typedef value_type&                                 reference;
         typedef const value_type&                           const_reference;
         typedef BTreeNode<value_type>                       TreeNode;
-        typedef BidirIter<TreeNode, false>                  iterator;
-        typedef BidirIter<TreeNode, true>                   const_iterator;
+        typedef BidirIter<TreeNode>                         iterator;
+        typedef BidirIter<const TreeNode>                   const_iterator;
+        // typedef BidirIter<TreeNode, false>                  iterator;
+        // typedef BidirIter<TreeNode, true>                   const_iterator;
         typedef ReverseBidirIter<iterator>                  reverse_iterator;
         typedef ReverseBidirIter<const_iterator>            const_reverse_iterator;
 

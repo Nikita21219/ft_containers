@@ -46,7 +46,7 @@ namespace ft {
         typedef Reference   reference;
     };
 
-    template<typename T, bool isConst>
+    template<typename T>
     class BidirIter {
     public:
         typedef typename ft::iterator<std::bidirectional_iterator_tag, T> iterator;
@@ -59,11 +59,11 @@ namespace ft {
         typedef typename value_type::Key                                  key_type;
         typedef typename value_type::Val                                  val_type;
         typedef typename ft::pair<key_type, val_type>                     pair_type;
-        typedef typename std::conditional<isConst, const pair_type, pair_type>::type cond_pair_type;
+        // typedef typename std::conditional<isConst, const pair_type, pair_type>::type cond_pair_type;
 
         BidirIter()                                                           {}
         BidirIter(pointer ptr): ptr(ptr)                                      {}
-        cond_pair_type *operator->() const                                    {return &ptr->data;}
+        pair_type *operator->() const                                    {return &ptr->data;}
         pair_type operator*()                                                 {return ptr->data;}
         bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                         {return !(*this == other);}

@@ -40,16 +40,16 @@ int main() {
 	// 	(void) it;
 	// }
 
-	// std::map<int, int> m;
-	// m.insert(std::pair<int, int>(11, 10));
-	// m.insert(std::pair<int, int>(10, 10));
-	// m.insert(std::pair<int, int>(10, 10));
-	// m.insert(std::pair<int, int>(15, 10));
-	// m.erase(10);
-	// // std::map<int, int>::iterator i = m.begin();
-	// for (std::map<int, int>::iterator i = m.begin(); i != m.end(); i++) {
-	// 	std::cout << i->first << std::endl;
-	// }
+	std::map<int, int> m;
+	m.insert(std::pair<int, int>(11, 10));
+	m.insert(std::pair<int, int>(10, 10));
+	m.insert(std::pair<int, int>(10, 10));
+	m.insert(std::pair<int, int>(15, 10));
+	m.erase(10);
+	// std::map<int, int>::iterator i = m.begin();
+	for (std::map<int, int>::const_iterator i = m.begin(); i != m.end(); i++) {
+		std::cout << i->first << std::endl;
+	}
 
 
     return 0;
