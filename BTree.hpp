@@ -1,7 +1,7 @@
 #include "containers.h"
 
-#ifndef RBTREE_HPP
-#define RBTREE_HPP
+#ifndef BTREE_HPP
+#define BTREE_HPP
 
 namespace ft
 {
@@ -10,11 +10,11 @@ namespace ft
         class T,
         class Compare = std::less<Key>,
         class Alloc = std::allocator<ft::pair<const Key, T> > >
-    class RBTree
+    class BTree
     {
     public:
         typedef struct ft::pair<Key, T> value_type;
-        typedef RBTreeNode<Key, T> TreeNode;
+        typedef BTreeNode<Key, T> TreeNode;
         typedef Alloc allocator_type;
         typedef value_type* pointer;
         typedef typename allocator_type::const_pointer const_pointer;
@@ -25,11 +25,11 @@ namespace ft
         typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
         typedef typename iterator::difference_type difference_type;
 
-        RBTree(): root(NULL), count(0) {}
+        BTree(): root(NULL), count(0) {}
 
-        ~RBTree() {} // TODO implement
+        ~BTree() {} // TODO implement
 
-        RBTree(const RBTree &other); // TODO implement
+        BTree(const BTree &other); // TODO implement
 
         iterator begin() {return iterator(getMin(root));}
         iterator end() {return iterator(NULL);}
@@ -78,14 +78,11 @@ namespace ft
         }
 
         void printTree() { printBT("", root, false); }
+        
+        TreeNode *getRoot() { return root; } // TODO tmp func
 
 
     private:
-        TreeNode *root;
-        TreeNode **sortArr;
-        Compare comp;
-        size_t count;
-
         TreeNode *getMin(TreeNode *node) {
             if (node == NULL)
                 return NULL;
@@ -115,7 +112,7 @@ namespace ft
 
         TreeNode *getNewNode(const value_type pair)
         {
-            RBTreeNode<Key, T> *node = new RBTreeNode<Key, T>();
+            BTreeNode<Key, T> *node = new BTreeNode<Key, T>();
             node->pair = pair;
             node->left = NULL;
             node->right = NULL;
@@ -125,7 +122,7 @@ namespace ft
 
         void printBT (
             const std::string& prefix,
-            const RBTreeNode<Key, T>* nodeV,
+            const BTreeNode<Key, T>* nodeV,
             bool isLeft
             ) const {
                 std::cout << prefix;
@@ -176,8 +173,11 @@ namespace ft
             treeEraseRecursion(value, counter); // TODO fix recursion
         }
 
-    public:                                  // TODO delete this line
-        TreeNode *getRoot() { return root; } // TODO tmp func
+
+        TreeNode *root;
+        TreeNode **sortArr;
+        Compare comp;
+        size_t count;
     };
 }
 

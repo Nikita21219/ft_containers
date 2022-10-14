@@ -10,7 +10,7 @@
 #include "Iterator.hpp"
 #include "Vector.hpp"
 #include "Stack.hpp"
-#include "RBTree.hpp"
+#include "BTree.hpp"
 #include "Map.hpp"
 
 #endif

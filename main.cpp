@@ -20,7 +20,7 @@ void print_info(vector_type &v) {
 int main() {
 	std::cout << "\n";
 	{
-		ft::RBTree<int, int> tree;
+		ft::BTree<int, int> tree;
 		tree.treeInsert(ft::pair<int, int>(15, 99));
 		tree.treeInsert(ft::pair<int, int>(10, 99));
 		tree.treeInsert(ft::pair<int, int>(5, 99));
@@ -29,11 +29,31 @@ int main() {
 		tree.treeInsert(ft::pair<int, int>(20, 99));
 		tree.treeInsert(ft::pair<int, int>(3, 99));
 
-		tree.treeWalk(tree.getRoot());
-		std::cout << "\n";
+		// tree.treeWalk(tree.getRoot());
+		// std::cout << "\n";
 
-		for (ft::RBTree<int, int>::const_reverse_iterator it = tree.crbegin(); it != tree.crend(); it++) {
+		for (ft::BTree<int, int>::iterator it = tree.begin(); it != tree.end(); it++) {
 			std::cout << it->first << " ";
+			it->first = 99;
+		}
+		std::cout << "\n";
+	}
+	{
+		std::map<int, int> tree;
+		tree.insert(std::pair<int, int>(15, 99));
+		tree.insert(std::pair<int, int>(10, 99));
+		tree.insert(std::pair<int, int>(5, 99));
+		tree.insert(std::pair<int, int>(2, 99));
+		tree.insert(std::pair<int, int>(7, 99));
+		tree.insert(std::pair<int, int>(20, 99));
+		tree.insert(std::pair<int, int>(3, 99));
+
+		// tree.treeWalk(tree.getRoot());
+		// std::cout << "\n";
+
+		for (std::map<int, int>::iterator it = tree.begin(); it != tree.end(); it++) {
+			std::cout << it->first << " ";
+			it->second = 99;
 		}
 		std::cout << "\n";
 	}

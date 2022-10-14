@@ -75,13 +75,13 @@ namespace ft {
     };
 
     template <typename keyT, typename valT>
-    struct RBTreeNode
+    struct BTreeNode
     {
         typedef keyT Key;
         typedef valT Val;
         typedef ft::pair<keyT, valT> pair_type;
 
-        RBTreeNode()
+        BTreeNode()
         {
             isRed = false;
             left = NULL;
@@ -89,13 +89,13 @@ namespace ft {
             p = NULL;
         }
 
-        ~RBTreeNode() {}
+        ~BTreeNode() {}
 
         bool isRed;
         ft::pair<keyT, valT> pair;
-        struct RBTreeNode *left;
-        struct RBTreeNode *right;
-        struct RBTreeNode *p;
+        struct BTreeNode *left;
+        struct BTreeNode *right;
+        struct BTreeNode *p;
     };
 
 }
