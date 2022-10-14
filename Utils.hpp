@@ -16,48 +16,22 @@ namespace ft {
         return (first1 == last1) && (first2 != last2);
     }
 
-    template <bool Cond, typename T>
-    struct enable_if {};
-
-    template <typename T>
-    struct enable_if<true, T> {
-        typedef T type;
-    };
-
-    template <typename>
-    struct is_integral_base : std::false_type {};
-
-    template <>
-    struct is_integral_base<bool> : std::true_type {};
-
-    template <>
-    struct is_integral_base<int> : std::true_type {};
-
-    template <>
-    struct is_integral_base<char> : std::true_type {};
-    
-    template <>
-    struct is_integral_base<long> : std::true_type {};
-    
-    template <>
-    struct is_integral_base<long long> : std::true_type {};
-    
-    template <>
-    struct is_integral_base<char16_t> : std::true_type {};
-    
-    template <>
-    struct is_integral_base<char32_t> : std::true_type {};
-    
-    template <>
-    struct is_integral_base<wchar_t> : std::true_type {};
-    
-    template <>
-    struct is_integral_base<short> : std::true_type {};
-    
+    template <bool Cond, typename T> struct enable_if {};
+    template <typename T> struct enable_if<true, T> {typedef T type;};
+    template <typename> struct is_integral_base : std::false_type {};
+    template <> struct is_integral_base<bool> : std::true_type {};
+    template <> struct is_integral_base<int> : std::true_type {};
+    template <> struct is_integral_base<char> : std::true_type {};
+    template <> struct is_integral_base<long> : std::true_type {};
+    template <> struct is_integral_base<long long> : std::true_type {};
+    template <> struct is_integral_base<char16_t> : std::true_type {};
+    template <> struct is_integral_base<char32_t> : std::true_type {};
+    template <> struct is_integral_base<wchar_t> : std::true_type {};
+    template <> struct is_integral_base<short> : std::true_type {};
     template<typename T>
     struct is_integral : is_integral_base<typename std::remove_cv<T>::type> {};
 
-        template <class T1, class T2>
+    template <class T1, class T2>
     struct pair
     {
         typedef T1 first_type;
@@ -74,12 +48,11 @@ namespace ft {
         second_type second;
     };
 
-    template <typename keyT, typename valT>
+    template <typename T>
     struct BTreeNode
     {
-        typedef keyT Key;
-        typedef valT Val;
-        typedef ft::pair<keyT, valT> pair_type;
+        typedef typename T::first_type  Key;
+        typedef typename T::second_type Val;
 
         BTreeNode()
         {
@@ -92,7 +65,7 @@ namespace ft {
         ~BTreeNode() {}
 
         bool isRed;
-        ft::pair<keyT, valT> pair;
+        T data;
         struct BTreeNode *left;
         struct BTreeNode *right;
         struct BTreeNode *p;

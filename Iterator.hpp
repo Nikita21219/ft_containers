@@ -62,8 +62,8 @@ namespace ft {
 
         BidirIter()                                                           {}
         BidirIter(pointer ptr): ptr(ptr)                                      {}
-        cond_pair_type *operator->() const                                    {return &ptr->pair;}
-        pair_type operator*()                                                 {return ptr->pair;}
+        cond_pair_type *operator->() const                                    {return &ptr->data;}
+        pair_type operator*()                                                 {return ptr->data;}
         bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                         {return !(*this == other);}
         const pointer& base() const                                           {return ptr;}
