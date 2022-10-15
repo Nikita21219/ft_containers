@@ -17,15 +17,38 @@ void print_info(vector_type &v) {
 } //TODO delene func
 
 
+class Test {
+public:
+	Test() {}
+	int *test1() {
+		int *a = new int(1);
+		std::cout << "int\n";
+		return a;
+	}
+
+	const int *test1() const {
+		const int *a = new int(1);
+		std::cout << "const int\n";
+		return a;
+	}
+};
+
+
 int main() {
+	// const Test t = Test();
+	// const int *a = t.test1();
+	// (void) a;
+
+
+
 	std::cout << "\n";
 	{
 		ft::map<int, int> m1;
 		m1.insert(ft::pair<int, int>(15, 999));
 		m1.insert(ft::pair<int, int>(20, 999));
 		m1.insert(ft::pair<int, int>(25, 999));
-		ft::map<int, int> m(m1.begin(), m1.end());
-		ft::map<int, int>::const_iterator it = m.cbegin();
+		// ft::map<int, int> m(m1.begin(), m1.end());
+		ft::map<int, int>::const_iterator it = m1.begin();
 		(void) it;
 		// it->second = 150;
 		// std::cout << m1.begin()->second << "\n";
@@ -47,9 +70,12 @@ int main() {
 	m.insert(std::pair<int, int>(15, 10));
 	m.erase(10);
 	// std::map<int, int>::iterator i = m.begin();
-	for (std::map<int, int>::const_iterator i = m.begin(); i != m.end(); i++) {
-		std::cout << i->first << std::endl;
-	}
+	// for (std::map<int, int>::const_iterator i = m.begin(); i != m.end(); i++) {
+	// 	std::cout << i->first << std::endl;
+	// }
+
+
+
 
 
     return 0;

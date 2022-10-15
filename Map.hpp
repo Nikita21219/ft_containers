@@ -26,8 +26,6 @@ namespace ft {
         typedef BTreeNode<value_type>                       TreeNode;
         typedef BidirIter<TreeNode>                         iterator;
         typedef BidirIter<const TreeNode>                   const_iterator;
-        // typedef BidirIter<TreeNode, false>                  iterator;
-        // typedef BidirIter<TreeNode, true>                   const_iterator;
         typedef ReverseBidirIter<iterator>                  reverse_iterator;
         typedef ReverseBidirIter<const_iterator>            const_reverse_iterator;
 
@@ -48,8 +46,9 @@ namespace ft {
             return tree.treeInsert(val);
         }
 
-        iterator begin() {return tree.begin();}
-        const_iterator cbegin() const {return tree.cbegin();}
+        // iterator begin()             {return tree.begin();}
+        const_iterator begin() const {return tree.cbegin();}
+
         iterator end() {return tree.end();}
         const_iterator end() const {return tree.end();}
 

@@ -51,6 +51,7 @@ namespace ft {
     struct BTreeNode {
         typedef typename T::first_type  Key;
         typedef typename T::second_type Val;
+        typedef T pair_type;
 
         BTreeNode(const T &pair): data(pair) {
             isRed = false;

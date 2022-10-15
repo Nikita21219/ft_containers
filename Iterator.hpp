@@ -53,21 +53,21 @@ namespace ft {
         typedef typename iterator::value_type                             value_type;
         typedef typename iterator::iterator_category                      iterator_category;
         typedef typename iterator::difference_type                        difference_type;
-        // typedef typename std::conditional<isConst, const T, T> pointer;
         typedef typename iterator::pointer                                pointer;
         typedef typename iterator::reference                              reference;
-        typedef typename value_type::Key                                  key_type;
-        typedef typename value_type::Val                                  val_type;
-        typedef typename ft::pair<key_type, val_type>                     pair_type;
+        typedef typename value_type::pair_type                            pair_type;
+        // typedef typename value_type::Key                                  key_type;
+        // typedef typename value_type::Val                                  val_type;
         // typedef typename std::conditional<isConst, const pair_type, pair_type>::type cond_pair_type;
 
         BidirIter()                                                           {}
         BidirIter(pointer ptr): ptr(ptr)                                      {}
-        pair_type *operator->() const                                    {return &ptr->data;}
+        pair_type *operator->() const                                         {return &ptr->data;}
         pair_type operator*()                                                 {return ptr->data;}
         bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                         {return !(*this == other);}
         const pointer& base() const                                           {return ptr;}
+
         friend bool operator>(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
         friend bool operator<(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
         friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
