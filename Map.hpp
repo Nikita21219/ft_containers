@@ -18,16 +18,18 @@ namespace ft {
         typedef const Key                                   key_type;
         typedef T                                           mapped_type;
         typedef typename ft::pair<key_type, mapped_type>    value_type;
-        typedef ft::BTree<value_type, Compare, Alloc>       Tree;
+        typedef BTreeNode<value_type>                       TreeNode;
+        typedef BTree<value_type, Compare, Alloc>           Tree;
         typedef typename std::size_t                        size_type;
         typedef typename std::ptrdiff_t                     difference_type;
         typedef value_type&                                 reference;
         typedef const value_type&                           const_reference;
-        typedef BTreeNode<value_type>                       TreeNode;
-        typedef BidirIter<TreeNode>                         iterator;
-        typedef BidirIter<const TreeNode>                   const_iterator;
-        typedef ReverseBidirIter<iterator>                  reverse_iterator;
-        typedef ReverseBidirIter<const_iterator>            const_reverse_iterator;
+        typedef typename Tree::iterator                     iterator;
+        typedef typename Tree::const_iterator               const_iterator;
+        // typedef BidirIter<TreeNode>                         iterator;
+        // typedef BidirIter<const TreeNode>                   const_iterator;
+        // typedef ReverseBidirIter<iterator>                  reverse_iterator;
+        // typedef ReverseBidirIter<const_iterator>            const_reverse_iterator;
 
         explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): alloc(alloc), comp(comp), tree() {}
 
@@ -46,7 +48,7 @@ namespace ft {
             return tree.treeInsert(val);
         }
 
-        // iterator begin()             {return tree.begin();}
+        iterator begin()             {return tree.begin();}
         const_iterator begin() const {return tree.cbegin();}
 
         iterator end() {return tree.end();}

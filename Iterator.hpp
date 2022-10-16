@@ -56,17 +56,15 @@ namespace ft {
         typedef typename iterator::pointer                                pointer;
         typedef typename iterator::reference                              reference;
         typedef typename value_type::pair_type                            pair_type;
-        // typedef typename value_type::Key                                  key_type;
-        // typedef typename value_type::Val                                  val_type;
-        // typedef typename std::conditional<isConst, const pair_type, pair_type>::type cond_pair_type;
 
-        BidirIter()                                                           {}
-        BidirIter(pointer ptr): ptr(ptr)                                      {}
-        pair_type *operator->() const                                         {return &ptr->data;}
-        pair_type operator*()                                                 {return ptr->data;}
-        bool operator==(const BidirIter &other) const                         {return ptr == other.ptr;}
-        bool operator!=(const BidirIter &other) const                         {return !(*this == other);}
-        const pointer& base() const                                           {return ptr;}
+        BidirIter()                                                       {}
+        BidirIter(pointer ptr): ptr(ptr)                                  {}
+        BidirIter(const BidirIter &other): ptr(other.ptr)                 {}
+        pair_type *operator->() const                                     {return &ptr->data;}
+        pair_type operator*()                                             {return ptr->data;}
+        bool operator==(const BidirIter &other) const                     {return ptr == other.ptr;}
+        bool operator!=(const BidirIter &other) const                     {return !(*this == other);}
+        const pointer& base() const                                       {return ptr;}
 
         friend bool operator>(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
         friend bool operator<(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
@@ -117,9 +115,85 @@ namespace ft {
             return it;
         }
 
+        pointer ptr; //TODO move to private section
+    private:
+    };
+
+
+    template<typename T>
+    class ConstBidirIter {
+    public:
+        typedef typename ft::iterator<std::bidirectional_iterator_tag, T> iterator;
+        typedef typename iterator::value_type                             value_type;
+        typedef typename iterator::iterator_category                      iterator_category;
+        typedef typename iterator::difference_type                        difference_type;
+        typedef typename iterator::pointer                                pointer;
+        typedef typename iterator::reference                              reference;
+        typedef const typename value_type::pair_type                      pair_type;
+
+        ConstBidirIter()                                                       {}
+        ConstBidirIter(pointer ptr): ptr(ptr)                                  {}
+        ConstBidirIter(const ConstBidirIter &other): ptr(other.ptr)            {}
+        ConstBidirIter(const BidirIter<value_type> &other): ptr(other.ptr)     {}
+        pair_type *operator->() const                                     {return &ptr->data;}
+        pair_type operator*()                                             {return ptr->data;}
+        bool operator==(const ConstBidirIter &other) const                     {return ptr == other.ptr;}
+        bool operator!=(const ConstBidirIter &other) const                     {return !(*this == other);}
+        const pointer& base() const                                       {return ptr;}
+
+        friend bool operator>(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
+        friend bool operator<(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
+        friend bool operator>=(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
+        friend bool operator<=(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
+
+        ConstBidirIter operator++() {
+            if (ptr->right) {
+                ptr = ptr->right;
+                while (ptr->left)
+                    ptr = ptr->left;
+            } else {
+                pointer tmp = ptr->p;
+                while (tmp && ptr == tmp->right) {
+                    ptr = tmp;
+                    tmp = tmp->p;
+                }
+                ptr = tmp;
+            }
+            return *this;
+        }
+
+        ConstBidirIter operator++(int) {
+            ConstBidirIter it = *this;
+            ++(*this);
+            return it;
+        }
+    
+        ConstBidirIter operator--() {
+            if (ptr->left) {
+                ptr = ptr->left;
+                while (ptr->right)
+                    ptr = ptr->right;
+            } else {
+                pointer tmp = ptr->p;
+                while (tmp && ptr == tmp->left) {
+                    ptr = tmp;
+                    tmp = tmp->p;
+                }
+                ptr = tmp;
+            }
+            return *this;
+        }
+
+        ConstBidirIter operator--(int) {
+            ConstBidirIter it = *this;
+            --(*this);
+            return it;
+        }
+
     private:
         pointer ptr;
     };
+
 
     template <typename Iter> // TODO inheritance typedefs from general iterator
     class ReverseBidirIter {

@@ -21,17 +21,15 @@ namespace ft
         // typedef typename allocator_type::const_pointer const_pointer;
         // typedef typename allocator_type::size_type size_type;
         typedef ft::BidirIter<Node> iterator;
-        typedef ft::BidirIter<const Node> const_iterator;
+        // typedef ft::BidirIter<const Node> const_iterator;
+        typedef ft::ConstBidirIter<Node> const_iterator;
         typedef ft::ReverseBidirIter<iterator> reverse_iterator;
         typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
         typedef typename iterator::difference_type difference_type;
 
         BTree(): root(NULL), count(0) {}
-
         ~BTree() {} // TODO implement
-
         BTree(const BTree &other); // TODO implement
-
         iterator begin() {return iterator(getMin(root));}
         iterator end() {return iterator(NULL);}
         const_iterator cbegin() const {return const_iterator(getMin(root));}
@@ -49,8 +47,7 @@ namespace ft
             }
         }
 
-        ft::pair<iterator, bool> treeInsert(const value_type &value)
-        {
+        ft::pair<iterator, bool> treeInsert(const value_type &value) {
             Node *node = new Node(value);
             Node *y = NULL;
             Node *x = root;
@@ -111,12 +108,6 @@ namespace ft
                 v->p = u->p;
         }
 
-        // Node *getNewNode(const value_type &pair)
-        // {
-        //     Node *node = new Node(pair);
-        //     return node;
-        // }
-
         // void printBT (
         //     const std::string& prefix,
         //     const Node<value_type>* nodeV,
@@ -142,11 +133,10 @@ namespace ft
                 return;
             Node *node = root;
             while (node && node->data.first != value) {
-                if (comp(value, node->data.first) == false) {
+                if (comp(value, node->data.first) == false)
                     node = node->right;
-                } else if (comp(value, node->data.first)) {
+                else if (comp(value, node->data.first))
                     node = node->left;
-                }
             }
             if (node == NULL)
                 return;
