@@ -41,6 +41,7 @@ namespace ft {
             while (first != last)
                 tree.treeInsert(*first++);
         }
+        // map(const map& x):tree(x.tree)//TODO implement
 
         ft::pair<iterator, bool> insert(const value_type& val) {
             return tree.treeInsert(val);

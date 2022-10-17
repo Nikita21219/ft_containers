@@ -14,21 +14,29 @@ namespace ft
     {
     public:
         typedef Alloc allocator_type;
+        typedef typename allocator_type::template rebind<Node>::other NodeAlloc;
         typedef T  value_type;
         typedef T* pointer;
         typedef typename T::first_type Key;
-        // typedef typename T::second_type Val;
-        // typedef typename allocator_type::const_pointer const_pointer;
-        // typedef typename allocator_type::size_type size_type;
+        typedef typename allocator_type::const_pointer const_pointer;
+        typedef typename allocator_type::size_type size_type;
         typedef BidirIter<Node>                         iterator;
         typedef ConstBidirIter<Node>                    const_iterator;
         typedef ReverseBidirIter<iterator>              reverse_iterator;
         typedef ReverseBidirIter<const_iterator>        const_reverse_iterator;
-        // typedef typename iterator::difference_type      difference_type;
+        typedef typename iterator::difference_type      difference_type;
 
-        BTree(): root(NULL), count(0) {}
+        BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
+        root(NULL), comp(comp), alloc(alloc) {}
+
         ~BTree() {} // TODO implement
-        BTree(const BTree &other); // TODO implement
+    
+        // BTree(const BTree &other) {
+        //     for (iterator i = other.begin(); i != other.end(); i++) {
+
+        //     }
+        // } // TODO implement
+
         iterator begin() {return iterator(getMin(root));}
         const_iterator cbegin() const {return const_iterator(getMin(root));}
         reverse_iterator rbegin() {return reverse_iterator(getMax(root));}
@@ -47,17 +55,24 @@ namespace ft
             }
         }
 
+        // iterator insert(iterator position, const value_type &val) {
+        //     return treeInsert(position->data)->first;
+        // }
+
         ft::pair<iterator, bool> treeInsert(const value_type &value) {
-            Node *node = new Node(value);
             Node *y = NULL;
             Node *x = root;
             while (x != NULL) {
                 y = x;
-                if (comp(node->data.first, x->data.first))
+                if (value.first == x->data.first)
+                    return ft::pair<iterator, bool>(iterator(x), false);
+                else if (comp(value.first, x->data.first))
                     x = x->left;
                 else
                     x = x->right;
             }
+            Node *node = alloc.allocate(sizeof(Node));
+            alloc.construct(node, value);
             node->p = y;
             if (y == NULL)
                 root = node;
@@ -65,8 +80,7 @@ namespace ft
                 y->left = node;
             else
                 y->right = node;
-            count++;
-            return ft::pair<iterator, bool>(iterator(node), false);
+            return ft::pair<iterator, bool>(iterator(node), true);
         }
 
         size_t treeErase(const Key &value) {
@@ -162,9 +176,8 @@ namespace ft
 
 
         Node *root;
-        Node **sortArr;
         Compare comp;
-        size_t count;
+        NodeAlloc alloc;
     };
 }
 
