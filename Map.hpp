@@ -18,7 +18,6 @@ namespace ft {
         typedef const Key                                   key_type;
         typedef T                                           mapped_type;
         typedef typename ft::pair<key_type, mapped_type>    value_type;
-        typedef BTreeNode<value_type>                       TreeNode;
         typedef BTree<value_type, Compare, Alloc>           Tree;
         typedef typename std::size_t                        size_type;
         typedef typename std::ptrdiff_t                     difference_type;
@@ -28,6 +27,7 @@ namespace ft {
         typedef typename Tree::const_iterator               const_iterator;
         typedef typename Tree::reverse_iterator             reverse_iterator;
         typedef typename Tree::const_reverse_iterator       const_reverse_iterator;
+        typedef typename Tree::node_type                    node_type;
 
         explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): alloc(alloc), comp(comp), tree() {}
 
@@ -39,12 +39,17 @@ namespace ft {
             const allocator_type& alloc = allocator_type()
             ): alloc(alloc), comp(comp), tree() {
             while (first != last)
-                tree.treeInsert(*first++);
+                tree.treeInsert(*first++, tree.getRoot());
         }
         // map(const map& x):tree(x.tree)//TODO implement
 
         ft::pair<iterator, bool> insert(const value_type& val) {
-            return tree.treeInsert(val);
+            return tree.treeInsert(val, tree.getRoot());
+        }
+        iterator insert(iterator position, const value_type &val) {
+            (void) position;
+            return tree.treeInsert(val, tree.getRoot()).first;
+            // return tree.treeInsert(val, position.getPtr()).first;
         }
 
         iterator begin()                        {return tree.begin();}

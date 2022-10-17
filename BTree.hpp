@@ -20,6 +20,7 @@ namespace ft
         typedef typename T::first_type Key;
         typedef typename allocator_type::const_pointer const_pointer;
         typedef typename allocator_type::size_type size_type;
+        typedef Node                                    node_type;
         typedef BidirIter<Node>                         iterator;
         typedef ConstBidirIter<Node>                    const_iterator;
         typedef ReverseBidirIter<iterator>              reverse_iterator;
@@ -59,9 +60,9 @@ namespace ft
         //     return treeInsert(position->data)->first;
         // }
 
-        ft::pair<iterator, bool> treeInsert(const value_type &value) {
+        ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             Node *y = NULL;
-            Node *x = root;
+            Node *x = start;
             while (x != NULL) {
                 y = x;
                 if (value.first == x->data.first)
