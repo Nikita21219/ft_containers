@@ -64,12 +64,15 @@ namespace ft {
         pair_type operator*()                                             {return ptr->data;}
         bool operator==(const BidirIter &other) const                     {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                     {return !(*this == other);}
-        const pointer& base() const                                       {return ptr;}
 
         friend bool operator>(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
         friend bool operator<(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
         friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
         friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
+        BidirIter& operator= (const BidirIter &other) {
+            ptr = other.ptr;
+            return *this;
+        }
 
         BidirIter operator++() {
             if (ptr->right) {
@@ -115,10 +118,11 @@ namespace ft {
             return it;
         }
 
-        pointer ptr; //TODO move to private section
-    private:
-    };
+        pointer getPtr() const {return ptr;}
 
+    private:
+        pointer ptr;
+    };
 
     template<typename T>
     class ConstBidirIter {
@@ -131,14 +135,15 @@ namespace ft {
         typedef typename iterator::reference                              reference;
         typedef const typename value_type::pair_type                      pair_type;
 
-        ConstBidirIter()                                                       {}
-        ConstBidirIter(pointer ptr): ptr(ptr)                                  {}
-        ConstBidirIter(const ConstBidirIter &other): ptr(other.ptr)            {}
-        ConstBidirIter(const BidirIter<value_type> &other): ptr(other.ptr)     {}
+        ConstBidirIter()                                                            {}
+        ConstBidirIter(pointer ptr): ptr(ptr)                                       {}
+        ConstBidirIter(const ConstBidirIter &other): ptr(other.ptr)                 {}
+        ConstBidirIter(const BidirIter<value_type> &other): ptr(other.getPtr())     {}
+        // TODO implement operator =
         pair_type *operator->() const                                     {return &ptr->data;}
         pair_type operator*()                                             {return ptr->data;}
-        bool operator==(const ConstBidirIter &other) const                     {return ptr == other.ptr;}
-        bool operator!=(const ConstBidirIter &other) const                     {return !(*this == other);}
+        bool operator==(const ConstBidirIter &other) const                {return ptr == other.ptr;}
+        bool operator!=(const ConstBidirIter &other) const                {return !(*this == other);}
         const pointer& base() const                                       {return ptr;}
 
         friend bool operator>(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
@@ -203,6 +208,8 @@ namespace ft {
         typedef typename iterator_type::pointer pointer;
         typedef typename iterator_type::difference_type difference_type;
 
+        template <class IterT>
+        ReverseBidirIter(const ReverseBidirIter<IterT>& it): iter(it.base())         {}
         ReverseBidirIter(Iter iter): iter(iter)                                      {}
         iterator_type base() const                                                   {return iter;}
         iterator_type operator->() const                                             {return iter;}
@@ -233,6 +240,59 @@ namespace ft {
 
         ReverseBidirIter<iterator_type>& operator--(int) {
             ReverseBidirIter<iterator_type>& it = *this;
+            iter++;
+            return it;
+        }
+
+        //TODO need to realize operator-(iterator). reverse_iter1 - reverse_iter2
+
+    private:
+        iterator_type iter;
+    };
+
+    template <typename Iter> // TODO inheritance typedefs from general iterator
+    class ConstReverseBidirIter {
+    public:
+        typedef Iter iterator_type;
+        typedef typename iterator_type::reference reference;
+        typedef typename iterator_type::pointer pointer;
+        typedef typename iterator_type::difference_type difference_type;
+
+        ConstReverseBidirIter(Iter iter): iter(iter)              {}
+        iterator_type base() const                                {return iter;}
+        iterator_type operator->() const                          {return iter;}
+        reference operator*()                                     {return *iter;}
+        reference operator[](int idx)                             {return *(iter + idx);}
+        bool operator!=(const ConstReverseBidirIter &other) const {return !(*this == other);}
+        bool operator==(const ConstReverseBidirIter &other) const {return iter == other.iter;}
+        friend bool operator>(const ConstReverseBidirIter& l, const ConstReverseBidirIter& r)
+        {return l.ptr > r.ptr;}
+        friend bool operator<(const ConstReverseBidirIter& l, const ConstReverseBidirIter& r) {return l.ptr < r.ptr;}
+        friend bool operator>=(const ConstReverseBidirIter& l, const ConstReverseBidirIter& r) {
+            return l.ptr >= r.ptr;
+        }
+        friend bool operator<=(const ConstReverseBidirIter& l, const ConstReverseBidirIter& r) {
+            return l.ptr <= r.ptr;
+        }
+
+        ConstReverseBidirIter<iterator_type>& operator++() {
+            iter--;
+            return *this;
+        }
+
+        ConstReverseBidirIter<iterator_type>& operator--() {
+            iter++;
+            return *this;
+        }
+
+        ConstReverseBidirIter<iterator_type>& operator++(int) {
+            ConstReverseBidirIter<iterator_type>& it = *this;
+            iter--;
+            return it;
+        }
+
+        ConstReverseBidirIter<iterator_type>& operator--(int) {
+            ConstReverseBidirIter<iterator_type>& it = *this;
             iter++;
             return it;
         }

@@ -26,10 +26,8 @@ namespace ft {
         typedef const value_type&                           const_reference;
         typedef typename Tree::iterator                     iterator;
         typedef typename Tree::const_iterator               const_iterator;
-        // typedef BidirIter<TreeNode>                         iterator;
-        // typedef BidirIter<const TreeNode>                   const_iterator;
-        // typedef ReverseBidirIter<iterator>                  reverse_iterator;
-        // typedef ReverseBidirIter<const_iterator>            const_reverse_iterator;
+        typedef typename Tree::reverse_iterator             reverse_iterator;
+        typedef typename Tree::const_reverse_iterator       const_reverse_iterator;
 
         explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): alloc(alloc), comp(comp), tree() {}
 
@@ -48,11 +46,14 @@ namespace ft {
             return tree.treeInsert(val);
         }
 
-        iterator begin()             {return tree.begin();}
-        const_iterator begin() const {return tree.cbegin();}
-
-        iterator end() {return tree.end();}
-        const_iterator end() const {return tree.end();}
+        iterator begin()                        {return tree.begin();}
+        const_iterator begin() const            {return tree.cbegin();}
+        reverse_iterator rbegin()               {return tree.rbegin();}
+        const_reverse_iterator rbegin() const   {return tree.crbegin();}
+        iterator end()                          {return tree.end();}
+        const_iterator end() const              {return tree.cend();}
+        reverse_iterator rend()                 {return tree.rend();}
+        const_reverse_iterator rend() const     {return tree.crend();}
 
     private:
         allocator_type alloc;

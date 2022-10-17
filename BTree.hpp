@@ -20,24 +20,24 @@ namespace ft
         // typedef typename T::second_type Val;
         // typedef typename allocator_type::const_pointer const_pointer;
         // typedef typename allocator_type::size_type size_type;
-        typedef ft::BidirIter<Node> iterator;
-        // typedef ft::BidirIter<const Node> const_iterator;
-        typedef ft::ConstBidirIter<Node> const_iterator;
-        typedef ft::ReverseBidirIter<iterator> reverse_iterator;
-        typedef ft::ReverseBidirIter<const_iterator> const_reverse_iterator;
-        typedef typename iterator::difference_type difference_type;
+        typedef BidirIter<Node>                         iterator;
+        typedef ConstBidirIter<Node>                    const_iterator;
+        typedef ReverseBidirIter<iterator>              reverse_iterator;
+        typedef ReverseBidirIter<const_iterator>        const_reverse_iterator;
+        // typedef typename iterator::difference_type      difference_type;
 
         BTree(): root(NULL), count(0) {}
         ~BTree() {} // TODO implement
         BTree(const BTree &other); // TODO implement
         iterator begin() {return iterator(getMin(root));}
-        iterator end() {return iterator(NULL);}
         const_iterator cbegin() const {return const_iterator(getMin(root));}
-        const_iterator cend() {return const_iterator(NULL);}
         reverse_iterator rbegin() {return reverse_iterator(getMax(root));}
+        const_reverse_iterator crbegin() const {return const_reverse_iterator(getMax(root));}
+
+        iterator end() {return iterator(NULL);}
+        const_iterator cend() const {return const_iterator(NULL);}
         reverse_iterator rend() {return reverse_iterator(NULL);}
-        const_reverse_iterator crbegin() {return const_reverse_iterator(getMax(root));}
-        const_reverse_iterator crend() {return const_reverse_iterator(NULL);}
+        const_reverse_iterator crend() const {return const_reverse_iterator(NULL);}
 
         void treeWalk(Node *x) {
             if (x != NULL) {
@@ -89,7 +89,7 @@ namespace ft
             return node;
         }
 
-        Node *getMax(Node *node) {
+        Node *getMax(Node *node) const {
             if (node == NULL)
                 return NULL;
             while (node->right)

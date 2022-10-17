@@ -40,13 +40,21 @@ int main() {
 	std::cout << "\n";
 	{
 		ft::map<int, int> m1;
-		m1.insert(ft::pair<int, int>(15, 999));
-		m1.insert(ft::pair<int, int>(20, 999));
-		m1.insert(ft::pair<int, int>(25, 999));
-		// ft::map<int, int> m(m1.begin(), m1.end());
-		ft::map<int, int>::iterator it = m1.begin();
-		(void) it;
-		it->second = 150;
+		m1.insert(ft::pair<int, int>(15, 99));
+		m1.insert(ft::pair<int, int>(10, 99));
+		m1.insert(ft::pair<int, int>(5, 99));
+		m1.insert(ft::pair<int, int>(2, 99));
+		m1.insert(ft::pair<int, int>(7, 99));
+		m1.insert(ft::pair<int, int>(20, 99));
+		m1.insert(ft::pair<int, int>(3, 99));
+		// ft::map<int, int>::reverse_iterator it = m1.rbegin();
+		// (void) it;
+
+		for (ft::map<int, int>::reverse_iterator it = m1.rbegin(); it != m1.rend(); it++) {
+			// it->second = 5;
+			std::cout << it->first << " ";
+		}
+		std::cout << "\n";
 		// std::cout << m1.begin()->second << "\n";
 	}
 
