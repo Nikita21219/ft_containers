@@ -8,7 +8,7 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "/Users/bclarind/Downloads/ft_containers/containers",
+            "program": "/Users/bclarind/Downloads/ft_containers/./containers",
             "args": [],
             "cwd": "${workspaceFolder}"
         }

@@ -30,23 +30,21 @@ namespace ft
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
         root(NULL), comp(comp), alloc(alloc) {}
 
-        ~BTree() {} // TODO implement
-    
-        // BTree(const BTree &other) {
-        //     for (iterator i = other.begin(); i != other.end(); i++) {
+        ~BTree() {}
 
-        //     }
-        // } // TODO implement
+        BTree(const BTree &other) {
+            for (const_iterator i = other.cbegin(); i != other.cend(); i++)
+                treeInsert(i.getPtr()->data, getRoot());
+        }
 
-        iterator begin() {return iterator(getMin(root));}
-        const_iterator cbegin() const {return const_iterator(getMin(root));}
-        reverse_iterator rbegin() {return reverse_iterator(getMax(root));}
+        iterator begin()                       {return iterator(getMin(root));}
+        const_iterator cbegin() const          {return const_iterator(getMin(root));}
+        reverse_iterator rbegin()              {return reverse_iterator(getMax(root));}
         const_reverse_iterator crbegin() const {return const_reverse_iterator(getMax(root));}
-
-        iterator end() {return iterator(NULL);}
-        const_iterator cend() const {return const_iterator(NULL);}
-        reverse_iterator rend() {return reverse_iterator(NULL);}
-        const_reverse_iterator crend() const {return const_reverse_iterator(NULL);}
+        iterator end()                         {return iterator(NULL);}
+        const_iterator cend() const            {return const_iterator(NULL);}
+        reverse_iterator rend()                {return reverse_iterator(NULL);}
+        const_reverse_iterator crend() const   {return const_reverse_iterator(NULL);}
 
         void treeWalk(Node *x) {
             if (x != NULL) {
@@ -56,9 +54,12 @@ namespace ft
             }
         }
 
-        // iterator insert(iterator position, const value_type &val) {
-        //     return treeInsert(position->data)->first;
-        // }
+        bool valueInTree(const value_type &value) {
+            for (iterator i = begin(); i != end(); i++)
+                if (i->first == value.first)
+                    return true;
+            return false;
+        }
 
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             Node *y = NULL;
@@ -72,6 +73,8 @@ namespace ft
                 else
                     x = x->right;
             }
+            if (root != start && (comp(y->data.first, value.first) || valueInTree(value)))
+                return ft::pair<iterator, bool>(iterator(x), false);
             Node *node = alloc.allocate(sizeof(Node));
             alloc.construct(node, value);
             node->p = y;

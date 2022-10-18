@@ -54,6 +54,7 @@ namespace ft {
         typedef typename iterator::iterator_category                      iterator_category;
         typedef typename iterator::difference_type                        difference_type;
         typedef typename iterator::pointer                                pointer;
+        typedef const pointer                                             const_pointer;
         typedef typename iterator::reference                              reference;
         typedef typename value_type::pair_type                            pair_type;
 
@@ -118,7 +119,7 @@ namespace ft {
             return it;
         }
 
-        pointer getPtr() const {return ptr;}
+        const_pointer getPtr() const {return ptr;}
 
     private:
         pointer ptr;
@@ -132,6 +133,7 @@ namespace ft {
         typedef typename iterator::iterator_category                      iterator_category;
         typedef typename iterator::difference_type                        difference_type;
         typedef typename iterator::pointer                                pointer;
+        typedef const pointer                                             const_pointer;
         typedef typename iterator::reference                              reference;
         typedef const typename value_type::pair_type                      pair_type;
 
@@ -194,6 +196,8 @@ namespace ft {
             --(*this);
             return it;
         }
+
+        const_pointer getPtr() const {return ptr;}
 
     private:
         pointer ptr;

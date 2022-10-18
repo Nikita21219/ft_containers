@@ -41,15 +41,16 @@ namespace ft {
             while (first != last)
                 tree.treeInsert(*first++, tree.getRoot());
         }
-        // map(const map& x):tree(x.tree)//TODO implement
+        map(const map& x): tree(x.tree) {}
 
         ft::pair<iterator, bool> insert(const value_type& val) {
             return tree.treeInsert(val, tree.getRoot());
         }
         iterator insert(iterator position, const value_type &val) {
-            (void) position;
-            return tree.treeInsert(val, tree.getRoot()).first;
-            // return tree.treeInsert(val, position.getPtr()).first;
+            ft::pair<iterator, bool> p = tree.treeInsert(val, position.getPtr());
+            if (p.second)
+                return p.first;
+            return tree.treeInsert(val, position.getPtr()).first;
         }
 
         iterator begin()                        {return tree.begin();}
@@ -60,6 +61,10 @@ namespace ft {
         const_iterator end() const              {return tree.cend();}
         reverse_iterator rend()                 {return tree.rend();}
         const_reverse_iterator rend() const     {return tree.crend();}
+
+        size_type erase (const key_type& k) {
+            return tree.treeErase(k);
+        }
 
     private:
         allocator_type alloc;
