@@ -30,7 +30,7 @@ namespace ft
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
         root(NULL), comp(comp), alloc(alloc) {}
 
-        ~BTree() {}
+        ~BTree() {treeEraseRange(begin(), end());}
 
         BTree(const BTree &other) {
             for (const_iterator i = other.cbegin(); i != other.cend(); i++)
@@ -91,6 +91,19 @@ namespace ft
             size_t counter = 0;
             treeEraseRecursion(value, &counter);
             return counter;
+        }
+
+        void treeEraseRange(iterator first, iterator last) {
+            iterator tmp_it;
+            while (first != last) {
+                Key tmp = first->first;
+                first++;
+                treeErase(tmp);
+            }
+        }
+
+        void treeErasePos(iterator position) {
+            treeErase(position->first);
         }
 
         // void printTree() { printBT("", root, false); }
@@ -173,8 +186,9 @@ namespace ft
                 y->left = node->left;
                 y->left->p = y;
             }
-            delete node;
-            (*counter)++;
+            alloc.destroy(node);
+            alloc.deallocate(node, sizeof(node));
+            *counter = 1;
             treeEraseRecursion(value, counter); // TODO fix recursion
         }
 

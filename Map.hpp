@@ -53,18 +53,17 @@ namespace ft {
             return tree.treeInsert(val, position.getPtr()).first;
         }
 
-        iterator begin()                        {return tree.begin();}
-        const_iterator begin() const            {return tree.cbegin();}
-        reverse_iterator rbegin()               {return tree.rbegin();}
-        const_reverse_iterator rbegin() const   {return tree.crbegin();}
-        iterator end()                          {return tree.end();}
-        const_iterator end() const              {return tree.cend();}
-        reverse_iterator rend()                 {return tree.rend();}
-        const_reverse_iterator rend() const     {return tree.crend();}
-
-        size_type erase (const key_type& k) {
-            return tree.treeErase(k);
-        }
+        iterator begin()                            {return tree.begin();}
+        const_iterator begin() const                {return tree.cbegin();}
+        reverse_iterator rbegin()                   {return tree.rbegin();}
+        const_reverse_iterator rbegin() const       {return tree.crbegin();}
+        iterator end()                              {return tree.end();}
+        const_iterator end() const                  {return tree.cend();}
+        reverse_iterator rend()                     {return tree.rend();}
+        const_reverse_iterator rend() const         {return tree.crend();}
+        size_type erase(const key_type& k)          {return tree.treeErase(k);}
+        void erase(iterator position)               {tree.treeErasePos(position);}
+        void erase(iterator first, iterator last)   {return tree.treeEraseRange(first, last);}
 
     private:
         allocator_type alloc;
