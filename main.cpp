@@ -23,25 +23,13 @@ int main() {
 		m1.insert(std::pair<int, int>(-2, 6));
 		m1.insert(std::pair<int, int>(99, 6));
 		std::map<int, int>::iterator it = m1.begin();
-		std::map<int, int>::iterator it_end = m1.begin();
 		it++;
 		it++;
 		it++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		m1.erase(it, it_end);
+		m1.erase(it);
 		for (std::map<int, int>::iterator i = m1.begin(); i != m1.end(); i++) {
 			std::cout << i->first << " ";
 		}
-		
 		std::cout << "\n";
 	}
 	std::cout << "\n";
@@ -60,28 +48,19 @@ int main() {
 		m1.insert(ft::pair<int, int>(-2, 6));
 		m1.insert(ft::pair<int, int>(99, 6));
 		ft::map<int, int>::iterator it = m1.begin();
-		ft::map<int, int>::iterator it_end = m1.begin();
 		it++;
 		it++;
 		it++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		it_end++;
-		m1.erase(it, it_end);
+
+		// std::cout << it->first << "\n"; //tmp
+		// exit(0);
+
+		m1.erase(it);
 		for (ft::map<int, int>::iterator i = m1.begin(); i != m1.end(); i++) {
 			std::cout << i->first << " ";
 		}
-		
 		std::cout << "\n";
 	}
-
 	std::cout << "\n";
     return 0;
 }

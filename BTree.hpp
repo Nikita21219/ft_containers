@@ -103,7 +103,8 @@ namespace ft
         }
 
         void treeErasePos(iterator position) {
-            treeErase(position->first);
+            Key key = position->first;
+            treeErase(key);
         }
 
         // void printTree() { printBT("", root, false); }
