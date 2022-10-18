@@ -154,17 +154,19 @@ namespace ft {
         friend bool operator<=(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
 
         ConstBidirIter operator++() {
-            if (ptr->right) {
-                ptr = ptr->right;
-                while (ptr->left)
-                    ptr = ptr->left;
-            } else {
-                pointer tmp = ptr->p;
-                while (tmp && ptr == tmp->right) {
+            if (ptr) {
+                if (ptr->right) {
+                    ptr = ptr->right;
+                    while (ptr->left)
+                        ptr = ptr->left;
+                } else {
+                    pointer tmp = ptr->p;
+                    while (tmp && ptr == tmp->right) {
+                        ptr = tmp;
+                        tmp = tmp->p;
+                    }
                     ptr = tmp;
-                    tmp = tmp->p;
                 }
-                ptr = tmp;
             }
             return *this;
         }
