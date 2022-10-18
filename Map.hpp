@@ -46,6 +46,7 @@ namespace ft {
         ft::pair<iterator, bool> insert(const value_type& val) {
             return tree.treeInsert(val, tree.getRoot());
         }
+
         iterator insert(iterator position, const value_type &val) {
             ft::pair<iterator, bool> p = tree.treeInsert(val, position.getPtr());
             if (p.second)
@@ -61,9 +62,10 @@ namespace ft {
         const_iterator end() const                  {return tree.cend();}
         reverse_iterator rend()                     {return tree.rend();}
         const_reverse_iterator rend() const         {return tree.crend();}
-        size_type erase(const key_type& k)          {return tree.treeErase(k);}
-        void erase(iterator position)               {tree.treeErasePos(position);}
-        void erase(iterator first, iterator last)   {return tree.treeEraseRange(first, last);}
+        size_type erase(const key_type& k)          {return tree.treeErase(k) ? 1 : 0;}
+        void erase(iterator position)               {tree.erase(position.getPtr());}
+        void erase(iterator first, iterator last)   {tree.treeEraseRange(first, last);}
+        size_type size() const                      {return tree.size();}
 
     private:
         allocator_type alloc;

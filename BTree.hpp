@@ -28,11 +28,11 @@ namespace ft
         typedef typename iterator::difference_type      difference_type;
 
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
-        root(NULL), comp(comp), alloc(alloc) {}
+        root(NULL), comp(comp), alloc(alloc), sz(0) {}
 
         ~BTree() {treeEraseRange(begin(), end());}
 
-        BTree(const BTree &other) {
+        BTree(const BTree &other): sz(other.size()) {
             for (const_iterator i = other.cbegin(); i != other.cend(); i++)
                 treeInsert(i.getPtr()->data, getRoot());
         }
@@ -45,6 +45,7 @@ namespace ft
         const_iterator cend() const            {return const_iterator(NULL);}
         reverse_iterator rend()                {return reverse_iterator(NULL);}
         const_reverse_iterator crend() const   {return const_reverse_iterator(NULL);}
+        size_type size() const {return sz;}
 
         void treeWalk(Node *x) {
             if (x != NULL) {
@@ -84,33 +85,59 @@ namespace ft
                 y->left = node;
             else
                 y->right = node;
+            sz++;
             return ft::pair<iterator, bool>(iterator(node), true);
         }
 
-        size_t treeErase(const Key &value) {
-            size_t counter = 0;
-            treeEraseRecursion(value, &counter);
-            return counter;
+        bool treeErase(const Key &value) {
+            if (root == NULL)
+                return false;
+            Node *node = root;
+            while (node && node->data.first != value) {
+                if (comp(value, node->data.first) == false)
+                    node = node->right;
+                else if (comp(value, node->data.first))
+                    node = node->left;
+            }
+            return erase(node);
+        }
+
+
+        bool erase(Node *node) {
+            if (node == NULL)
+                return false;
+            if (node->left == NULL) {
+                transplant(node, node->right);
+            } else if (node->right == NULL) {
+                transplant(node, node->left);
+            } else {
+                Node *y = getMin(node->right);
+                if (y->p != node) {
+                    transplant(y, y->right);
+                    y->right = node->right;
+                    y->right->p = y;
+                }
+                transplant(node, y);
+                y->left = node->left;
+                y->left->p = y;
+            }
+            alloc.destroy(node);
+            alloc.deallocate(node, sizeof(node));
+            sz--;
+            return true;
         }
 
         void treeEraseRange(iterator first, iterator last) {
             iterator tmp_it;
             while (first != last) {
-                Key tmp = first->first;
-                first++;
-                treeErase(tmp);
+                tmp_it = first++;
+                erase(tmp_it.getPtr());
             }
         }
 
-        void treeErasePos(iterator position) {
-            Key key = position->first;
-            treeErase(key);
-        }
-
-        // void printTree() { printBT("", root, false); }
-        
         Node *getRoot() { return root; } // TODO tmp func
 
+        // void printTree() { printBT("", root, false); }
 
     private:
         Node *getMin(Node *node) const {
@@ -160,43 +187,10 @@ namespace ft
         //         printBT( prefix + (isLeft ? "│   " : "    "), nodeV->right, false);
         // }
 
-        void treeEraseRecursion(const Key &value, size_t *counter) {
-            if (root == NULL)
-                return;
-            Node *node = root;
-            while (node && node->data.first != value) {
-                if (comp(value, node->data.first) == false)
-                    node = node->right;
-                else if (comp(value, node->data.first))
-                    node = node->left;
-            }
-            if (node == NULL)
-                return;
-            if (node->left == NULL) {
-                transplant(node, node->right);
-            } else if (node->right == NULL) {
-                transplant(node, node->left);
-            } else {
-                Node *y = getMin(node->right);
-                if (y->p != node) {
-                    transplant(y, y->right);
-                    y->right = node->right;
-                    y->right->p = y;
-                }
-                transplant(node, y);
-                y->left = node->left;
-                y->left->p = y;
-            }
-            alloc.destroy(node);
-            alloc.deallocate(node, sizeof(node));
-            *counter = 1;
-            treeEraseRecursion(value, counter); // TODO fix recursion
-        }
-
-
         Node *root;
         Compare comp;
         NodeAlloc alloc;
+        size_t sz;
     };
 }
 

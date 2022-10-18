@@ -9,52 +9,24 @@
 int main() {
 	std::cout << "\n";
 	{
-		std::map<int, int> m1;
-		m1.insert(std::pair<int, int>(15, 1));
-		m1.insert(std::pair<int, int>(10, 2));
-		m1.insert(std::pair<int, int>(17, 2));
-		m1.insert(std::pair<int, int>(7, 2));
-		m1.insert(std::pair<int, int>(5, 3));
-		m1.insert(std::pair<int, int>(2, 4));
-		m1.insert(std::pair<int, int>(1, 4));
-		m1.insert(std::pair<int, int>(7, 5));
-		m1.insert(std::pair<int, int>(6, 5));
-		m1.insert(std::pair<int, int>(3, 6));
-		m1.insert(std::pair<int, int>(-2, 6));
-		m1.insert(std::pair<int, int>(99, 6));
-		std::map<int, int>::iterator it = m1.begin();
-		it++;
-		it++;
-		it++;
-		m1.erase(it);
-		for (std::map<int, int>::iterator i = m1.begin(); i != m1.end(); i++) {
-			std::cout << i->first << " ";
-		}
-		std::cout << "\n";
-	}
-	std::cout << "\n";
-	{
 		ft::map<int, int> m1;
-		m1.insert(ft::pair<int, int>(15, 1));
-		m1.insert(ft::pair<int, int>(10, 2));
-		m1.insert(ft::pair<int, int>(17, 2));
-		m1.insert(ft::pair<int, int>(7, 2));
-		m1.insert(ft::pair<int, int>(5, 3));
-		m1.insert(ft::pair<int, int>(2, 4));
-		m1.insert(ft::pair<int, int>(1, 4));
-		m1.insert(ft::pair<int, int>(7, 5));
-		m1.insert(ft::pair<int, int>(6, 5));
-		m1.insert(ft::pair<int, int>(3, 6));
-		m1.insert(ft::pair<int, int>(-2, 6));
-		m1.insert(ft::pair<int, int>(99, 6));
+		m1.insert(ft::make_pair(15, 1));
+		m1.insert(ft::make_pair(10, 2));
+		m1.insert(ft::make_pair(17, 2));
+		m1.insert(ft::make_pair(7, 2));
+		m1.insert(ft::make_pair(5, 3));
+		m1.insert(ft::make_pair(2, 4));
+		m1.insert(ft::make_pair(1, 4));
+		m1.insert(ft::make_pair(7, 5));
+		m1.insert(ft::make_pair(6, 5));
+		m1.insert(ft::make_pair(3, 6));
+		m1.insert(ft::make_pair(-2, 6));
+		m1.insert(ft::make_pair(99, 6));
 		ft::map<int, int>::iterator it = m1.begin();
 		it++;
 		it++;
 		it++;
-
-		// std::cout << it->first << "\n"; //tmp
-		// exit(0);
-
+		it++;
 		m1.erase(it);
 		for (ft::map<int, int>::iterator i = m1.begin(); i != m1.end(); i++) {
 			std::cout << i->first << " ";
