@@ -6,47 +6,90 @@
 #include <iostream>
 #include <iomanip>
 
+
 template <class T, class V>
-std::vector<int> copy_constructor_test(std::map<T, V> mp) {
-
+std::vector<int> erase_test_1(std::map<T, V> mp) {
     std::vector<int> v;
-
-    for (int i = 0, j = 10; i < 30 * 1000; ++i, ++j) {
+    v.push_back(mp.erase(3));
+    for (int i = 0, j = 0; i < 30; ++i, ++j)
         mp.insert(std::make_pair(i, j));
-    }
-    std::map<int, int> mp2(mp.begin(), mp.end());
-    std::map<int, int>::iterator it = mp2.begin();
-    for (int i = 0; i < 30 * 1000; ++i, it++) {
-        v.push_back(it->first);
-        v.push_back(it->second);
+    typename std::map<T, V>::iterator it = mp.begin();
+    v.push_back(it->first);
+    v.push_back(mp.erase(-5));
+    v.push_back(mp.size());
+    v.push_back(mp.erase(0));
+    v.push_back(mp.size());
+    it = mp.begin();
+    v.push_back(it->first);
+    typename std::map<T, V>::iterator it4 = mp.begin();
+    for (; it4 != mp.end(); it4 = mp.begin())
+        mp.erase(it4->first);
+    v.push_back(mp.erase(30 - 1));
+    v.push_back(mp.size());
+    std::map<int, int> mp2;
+    for (int i = 0, j = 0; i < 10 ; ++i, ++j)
+        mp2.insert(std::make_pair(i, j));
+    mp2.erase(2);
+    mp2.erase(7);
+    typename std::map<T, V>::iterator it3 = mp2.begin();
+    for (; it3 != mp2.end(); ++it3) {
+        v.push_back(it3->first);
+        v.push_back(it3->second);
     }
     return v;
 }
 
 template <class T, class V>
-std::vector<int> copy_constructor_test(ft::map<T, V> mp) {
-
+std::vector<int> erase_test_1(ft::map<T, V> mp) {
     std::vector<int> v;
-
-    for (int i = 0, j = 10; i < 30 * 1000; ++i, ++j) {
+    v.push_back(mp.erase(3));
+    for (int i = 0, j = 0; i < 4; ++i, ++j)
         mp.insert(ft::make_pair(i, j));
-    }
-    ft::map<int, int> mp2(mp.begin(), mp.end());
-    ft::map<int, int>::iterator it = mp2.begin();
-    for (int i = 0; i < 30 * 1000; ++i, it++) {
-        v.push_back(it->first);
-        v.push_back(it->second);
-    }
+    // typename ft::map<T, V>::iterator it = mp.begin();
+    // v.push_back(it->first);
+    // v.push_back(mp.erase(-5));
+    // v.push_back(mp.size());
+    // v.push_back(mp.erase(0));
+    // v.push_back(mp.size());
+    // it = mp.begin();
+    // v.push_back(it->first);
+    typename ft::map<T, V>::iterator it4 = mp.begin();
+	mp.erase(it4->first);
+    // for (; it4 != mp.end(); it4 = mp.begin())
+    //     mp.erase(it4->first);
+    // v.push_back(mp.erase(30 - 1));
+    // v.push_back(mp.size());
+    // ft::map<int, int> mp2;
+    // for (int i = 0, j = 0; i < 10 ; ++i, ++j)
+    //     mp2.insert(ft::make_pair(i, j));
+    // mp2.erase(2);
+    // mp2.erase(7);
+    // typename ft::map<T, V>::iterator it3 = mp2.begin();
+    // for (; it3 != mp2.end(); ++it3) {
+    //     v.push_back(it3->first);
+    //     v.push_back(it3->second);
+    // }
     return v;
 }
 
 int main() {
-	{
-		copy_constructor_test(std::map<int, int>());
-	}
+	// {
+	// 	std::map<int, int> m;
+	// 	std::vector<int> v = erase_test_1(m);
+	// 	for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++) {
+	// 		std::cout << *i << " ";
+	// 	}
+	// 	std::cout << "\n";
+	// }
 	std::cout << "\n";
 	{
-		copy_constructor_test(ft::map<int, int>());
+		ft::map<int, int> m;
+		std::vector<int> v = erase_test_1(m);
+		(void) v;
+		// for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++) {
+		// 	std::cout << *i << " ";
+		// }
+		// std::cout << "\n";
 	}
 	std::cout << "\n";
     return 0;

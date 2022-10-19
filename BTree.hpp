@@ -105,7 +105,8 @@ namespace ft
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             (void)start;
             if (root == NULL) {
-                root = new Node(value);
+                root = alloc.allocate(sizeof(Node));
+                alloc.construct(root, value);
                 root->isRed = false;
                 return ft::pair<iterator, bool>(iterator(root), true);
             }
@@ -122,7 +123,8 @@ namespace ft
                     return ft::pair<iterator, bool>(iterator(NULL), false);
                 }
             }
-            cur = new Node(value);
+            cur = alloc.allocate(sizeof(Node));
+            alloc.construct(cur, value);
             cur->isRed = true;
             if (parent->data.first < value.first) {
                 parent->right = cur;
@@ -219,17 +221,158 @@ namespace ft
             }
         }
 
-        bool treeErase(const Key &value) {
-            if (root == NULL)
-                return false;
-            Node *node = root;
-            while (node && node->data.first != value) {
-                if (comp(value, node->data.first) == false)
-                    node = node->right;
-                else if (comp(value, node->data.first))
-                    node = node->left;
+        bool treeErase(const Key &key) {
+            Node *cur = root;
+            Node *parent = NULL;
+            Node *del = NULL;
+            while (cur) {
+                if (cur->data.first > key)
+                    cur = cur->left;
+                else if (cur->data.first < key)
+                    cur = cur->right;
+                else
+                    break;
             }
-            return erase(node);
+            if (cur == NULL)
+                return false;
+            del = cur;
+            if (cur->left != NULL && cur->right != NULL) {
+                cur = cur->right;
+                while (cur->left)
+                    cur = cur->left;
+                // del->data.first = cur->data.first;
+                // del->data.second = cur->data.second;
+                // del = cur;
+            }
+            parent = cur->p;
+            if (cur->left == NULL) {
+                if (parent == NULL) {
+                    root = cur->right;
+                    if (cur->right) {
+                        root->p = NULL;
+                        root->isRed = false;
+                    }
+                    alloc.destroy(del);
+                    alloc.deallocate(del, sizeof(del));
+                    return true;
+                } else {
+                    if (parent->left == cur)
+                        parent->left = cur->right;
+                    else
+                        parent->right = cur->right;
+                    if (cur->right)
+                        cur->right->p = parent;
+                }
+                cur = del->right;
+            } else {
+                if (parent == NULL) {
+                    root = cur->left;
+                    root->p = NULL;
+                    root->isRed = false;
+                    alloc.destroy(del);
+                    alloc.deallocate(del, sizeof(del));
+                    return true;
+                } else {
+                    if (parent->left == cur)
+                        parent->left = cur->left;
+                    else
+                        parent->right = cur->left;
+                    cur->left->p = parent;
+                }
+                cur = del->left;
+            }
+            if (del->isRed == true) {
+                alloc.destroy(del);
+                alloc.deallocate(del, sizeof(del));
+                return true;
+            }
+            if (del->isRed == false && cur && cur->isRed == true) {
+                cur->isRed = false;
+                alloc.destroy(del);
+                alloc.deallocate(del, sizeof(del));
+                return true;
+            }
+            while (parent) {
+                if (parent->left == cur) {
+                    Node *subR = parent->right;
+                    if (subR->isRed == true) {
+                        RotateL(parent);
+                        subR->isRed = false;
+                        parent->isRed = true;
+                    } else {
+                        Node *subRL = subR->left;
+                        Node *subRR = subR->right;
+                        if ((parent->isRed == false && (subRL == NULL && subRR == NULL)) ||
+                            ((subRL && subRL->isRed == false && subRR && subRR->isRed == false))) {
+                            subR->isRed = true;
+                            cur = parent;
+                            parent = cur->p;
+                        } else {
+                            if (parent->isRed == true) {
+                                if ((subRL == NULL && subRR == NULL) ||
+                                    (subRL && subRL->isRed == false && subRR && subRR->isRed == false)) {
+                                    parent->isRed = false;
+                                    subR->isRed = true;
+                                    break;
+                                }
+                            }
+                            if (subRL->isRed == true) {
+                                RotateR(subR);
+                                subR = subRL;
+                            }
+                            RotateL(parent);
+                            if (parent->isRed == true)         
+                                subR->isRed = true;
+                            else
+                                subR->isRed = false;
+                            parent->isRed = false;
+                            subR->right->isRed = false;
+                            break;
+                        }
+                    }
+                } else {
+                    Node *subL = parent->left;
+                    if (subL->isRed == true) {
+                        RotateR(parent);
+                        parent->isRed = true;
+                        subL->isRed = false;
+                    } else {
+                        Node *subLR = subL->right;
+                        Node *subLL = subL->left;
+                        if ((parent->isRed == false && (subLL == NULL && subLR == NULL)) ||
+                            ((subLL && subLL->isRed == false && subLR && subLR->isRed == false))) {
+                            subL->isRed = true;
+                            cur = parent;
+                            parent = cur->p;
+                        } else {
+                            if (parent->isRed == true) {
+                                if ((subLL == NULL && subLR == NULL) ||
+                                    (subLL && subLL->isRed == false && subLR && subLR->isRed == false)) {
+                                    parent->isRed = false;
+                                    subL->isRed = true;
+                                    break;
+                                }
+                            }
+                            if (subLR->isRed == true) {
+                                RotateL(subL);
+                                subL = subLR;
+                            }
+                            RotateR(parent);
+                            if (parent->isRed == true)
+                                subL->isRed = true;
+                            else
+                                subL->isRed = false;
+                            parent->isRed = false;
+                            subL->left->isRed = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            root->isRed = false;
+            alloc.destroy(del);
+            alloc.deallocate(del, sizeof(del));
+            return true;
         }
 
         template <class InputIt>
