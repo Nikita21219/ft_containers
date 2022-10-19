@@ -48,7 +48,6 @@ namespace ft
         const_iterator find(const Key &k) const     {return const_iterator(getNodeByKey(k));}
         const mapped_type &at(const Key &k) const   {return at(k);}
         key_compare key_comp() const                {return comp;}
-        // value_compare value_comp() const            {}
 
         void clear() {
             treeEraseRange(begin(), end());

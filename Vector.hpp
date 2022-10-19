@@ -360,9 +360,8 @@ namespace ft {
     }
 
     template <class T, class Alloc>
-    bool operator<(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {
-        return ft::lexicographical_compare(l.cbegin(), l.cend(), r.cbegin(), r.cend());
-    }
+    bool operator<(const vector<T, Alloc>& l, const vector<T, Alloc>& r)
+    {return ft::lexicographical_compare(l.cbegin(), l.cend(), r.cbegin(), r.cend());}
 
     template <class T, class Alloc>
     bool operator<=(const vector<T, Alloc>& l, const vector<T, Alloc>& r) {return !(r < l);}

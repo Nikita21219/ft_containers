@@ -123,6 +123,7 @@ namespace ft {
         value_compare value_comp() const                {return value_compare(comp);}
         size_type count(const key_type &k) const        {return tree.count(k);}
         iterator lower_bound(const key_type &k)         {return tree.lower_bound(k);}
+        allocator_type get_allocator() const            {return alloc;}
 
     private:
         allocator_type alloc;
