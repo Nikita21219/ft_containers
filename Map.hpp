@@ -121,7 +121,7 @@ namespace ft {
         const mapped_type &at(const key_type &k) const  {return tree.at(k);}
         key_compare key_comp() const                    {return tree.key_comp();}
         value_compare value_comp() const                {return value_compare(comp);}
-        size_type count(const key_type &k) const        {return tree.count(k);}
+        size_type count(const Key &k) const             {return tree.find(k) != tree.cend() ? 1 : 0;}
         iterator lower_bound(const key_type &k)         {return tree.lower_bound(k);}
         allocator_type get_allocator() const            {return alloc;}
 

@@ -102,19 +102,12 @@ namespace ft
             return false;
         }
 
-        size_type count(const Key &k) const {
-            if (find(k) != cend())
-                return 1;
-            return 0;
-        }
-
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             (void)start;
             if (root == NULL) {
                 root = new Node(value);
                 root->isRed = false;
-                return ft::pair<iterator, bool>(iterator(NULL), false);
-                // return true;
+                return ft::pair<iterator, bool>(iterator(root), true);
             }
             Node *parent = NULL;
             Node *cur = root;
@@ -127,7 +120,6 @@ namespace ft
                     cur = cur->left;
                 } else {
                     return ft::pair<iterator, bool>(iterator(NULL), false);
-                    // return false;
                 }
             }
             cur = new Node(value);
@@ -140,10 +132,10 @@ namespace ft
                 cur->p = parent;
             }
             while (parent && parent->isRed == true) {
-                Node* grand = parent->p;
+                Node *grand = parent->p;
                 if (parent == grand->left)
                 {
-                    Node* uncle = grand->right;
+                    Node *uncle = grand->right;
                     if (uncle && uncle->isRed == true) {
                         parent->isRed = uncle->isRed = false;
                         grand->isRed = true;
@@ -159,7 +151,7 @@ namespace ft
                         grand->isRed = true;
                     }
                 } else {
-                    Node* uncle = grand->left;
+                    Node *uncle = grand->left;
                     if (uncle && uncle->isRed == true)
                     {
                         parent->isRed = false;
