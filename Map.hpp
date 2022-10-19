@@ -29,6 +29,23 @@ namespace ft {
         typedef typename Tree::const_reverse_iterator       const_reverse_iterator;
         typedef typename Tree::node_type                    node_type;
 
+        class value_compare {
+            friend class map;
+
+            public:
+                typedef bool        result_type;
+                typedef value_type  first_argument_type;
+                typedef value_type  second_argument_type;
+
+                bool operator() (const value_type& x, const value_type& y) const {
+                    return comp(x.first, y.first);
+                }
+
+            protected:
+                Compare comp;
+                value_compare(Compare c) : comp(c) {}
+        };
+
         explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): alloc(alloc), comp(comp), tree() {}
 
         template <class InputIt>
@@ -46,7 +63,6 @@ namespace ft {
             return *this;
         }
 
-        map(const map& other) {*this = other;}
 
         ft::pair<iterator, bool> insert(const value_type &val) {
             return tree.treeInsert(val, tree.getRoot());
@@ -65,6 +81,11 @@ namespace ft {
             return tree.treeInsert(val, position.getPtr()).first;
         }
 
+        map(const map& other)                           {*this = other;}
+        void erase(iterator position)                   {tree.erase(position.getPtr());}
+        void erase(iterator first, iterator last)       {tree.treeEraseRange(first, last);}
+        void swap(map &other)                           {tree.swap(other.tree);}
+        void clear()                                    {tree.clear();}
         iterator find(const key_type &k)                {return tree.find(k);}
         const_iterator find(const key_type &k) const    {return tree.find(k);}
         iterator begin()                                {return tree.begin();}
@@ -76,16 +97,14 @@ namespace ft {
         reverse_iterator rend()                         {return tree.rend();}
         const_reverse_iterator rend() const             {return tree.crend();}
         size_type erase(const key_type& k)              {return tree.treeErase(k) ? 1 : 0;}
-        void erase(iterator position)                   {tree.erase(position.getPtr());}
-        void erase(iterator first, iterator last)       {tree.treeEraseRange(first, last);}
         size_type size() const                          {return tree.size();}
         bool empty() const                              {return size();}
         size_type max_size() const                      {return std::numeric_limits<difference_type>::max();}
         mapped_type &operator[](const key_type &k)      {return tree[k];}
         mapped_type &at(const key_type& k)              {return tree.at(k);}
         const mapped_type &at(const key_type &k) const  {return tree.at(k);}
-        void swap(map &other)                           {tree.swap(other.tree);}
-        void clear()                                    {tree.clear();}
+        key_compare key_comp() const                    {return tree.key_comp();}
+        value_compare value_comp() const                {return value_compare(comp);}
 
     private:
         allocator_type alloc;

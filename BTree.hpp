@@ -27,6 +27,7 @@ namespace ft
         typedef ReverseBidirIter<iterator>              reverse_iterator;
         typedef ReverseBidirIter<const_iterator>        const_reverse_iterator;
         typedef typename iterator::difference_type      difference_type;
+        typedef Compare                                 key_compare;
 
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
         root(NULL), comp(comp), alloc(alloc), sz(0) {}
@@ -46,7 +47,9 @@ namespace ft
         iterator find(const Key &k)                 {return iterator(getNodeByKey(k));}
         const_iterator find(const Key &k) const     {return const_iterator(getNodeByKey(k));}
         const mapped_type &at(const Key &k) const   {return at(k);}
-        
+        key_compare key_comp() const                {return comp;}
+        // value_compare value_comp() const            {}
+
         void clear() {
             treeEraseRange(begin(), end());
             sz = 0;
@@ -246,7 +249,7 @@ namespace ft
         // }
 
         Node *root;
-        Compare comp;
+        key_compare comp;
         NodeAlloc alloc;
         size_t sz;
     };

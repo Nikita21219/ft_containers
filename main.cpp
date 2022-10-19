@@ -45,27 +45,32 @@ std::vector<int> copy_constructor_test(ft::map<T, V> mp) {
 int main() {
 	std::cout << "\n";
 	{
-		ft::map<int, int> m;
-		m.insert(ft::make_pair<int, int>(1, 1));
-		m.insert(ft::make_pair<int, int>(413, 1));
-		m.insert(ft::make_pair<int, int>(12, 1));
-		m.insert(ft::make_pair<int, int>(13, 1));
-		m.insert(ft::make_pair<int, int>(19, 1));
-		m.insert(ft::make_pair<int, int>(4, 1));
-		m.insert(ft::make_pair<int, int>(2, 1));
-		std::cout << "Before size: " << m.size() << "\n";
-		std::cout << "Before map: ";
-		for (ft::map<int, int>::iterator i = m.begin(); i != m.end(); i++)
-			std::cout << i->first << " ";
-		std::cout << "\n";
-		std::cout << "Clear\n";
-		m.clear();
-		std::cout << "After size: " << m.size() << "\n";
-		std::cout << "After map: ";
-		for (ft::map<int, int>::iterator i = m.begin(); i != m.end(); i++)
-			std::cout << i->first << " ";
+		std::map<char,int> mymap;
+		mymap['x']=1001;
+		mymap['y']=2002;
+		mymap['z']=3003;
+		std::cout << "mymap contains:\n";
+		std::pair<char,int> highest = *mymap.rbegin();
+		std::map<char,int>::iterator it = mymap.begin();
+		do {
+		std::cout << it->first << " => " << it->second << '\n';
+		} while ( mymap.value_comp()(*it++, highest) );
 	}
-
+	std::cout << "\n";
+	std::cout << "\n";
+	{
+		ft::map<char,int> mymap;
+		mymap['x']=1001;
+		mymap['y']=2002;
+		mymap['z']=3003;
+		std::cout << "mymap contains:\n";
+		ft::pair<char,int> highest = *mymap.rbegin();
+		(void)highest;
+		ft::map<char,int>::iterator it = mymap.begin();
+		do {
+		std::cout << it->first << " => " << it->second << '\n';
+		} while ( mymap.value_comp()(*it++, highest) );
+	}
 	std::cout << "\n";
     return 0;
 }
