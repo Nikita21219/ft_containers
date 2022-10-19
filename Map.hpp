@@ -80,21 +80,23 @@ namespace ft {
             return tree.treeInsert(val, position.getPtr()).first;
         }
 
-        size_type max_size() const  {
-            return std::numeric_limits<difference_type>::max();
-        }
+        size_type max_size() const
+        {return std::numeric_limits<difference_type>::max();}
 
-        const_iterator lower_bound(const key_type &k) const {
-            return tree.lower_bound(k);
-        }
+        const_iterator lower_bound(const key_type &k) const
+        {return tree.lower_bound(k);}
 
-        iterator upper_bound(const key_type &k) {
-            return tree.upper_bound(k);
-        }
+        iterator upper_bound(const key_type &k)
+        {return tree.upper_bound(k);}
 
-        const_iterator upper_bound(const key_type &k) const {
-            return tree.upper_bound(k);
-        }
+        const_iterator upper_bound(const key_type &k) const 
+        {return tree.upper_bound(k);}
+
+        ft::pair<iterator, iterator>
+        equal_range(const Key &k) {return tree.equal_range(k);}
+
+        ft::pair<const_iterator, const_iterator> 
+        equal_range(const Key &k) const {return tree.equal_range(k);}
 
         map(const map& other)                           {*this = other;}
         void erase(iterator position)                   {tree.erase(position.getPtr());}

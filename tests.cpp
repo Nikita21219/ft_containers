@@ -1023,3 +1023,34 @@
 	// 	const ft::map<int, int> m1(m);
 	// 	std::cout << "Upper bound FT: " << m1.upper_bound(k)->first << "\n";
 	// }
+
+
+// EQUAL RANGE
+	// std::cout << "\nSTL:\n";
+	// int k = 10;
+	// {
+	// 	std::map<int, int> m;
+	// 	m.insert(std::make_pair<int, int>(10, 1));
+	// 	m.insert(std::make_pair<int, int>(20, 1));
+	// 	m.insert(std::make_pair<int, int>(30, 1));
+	// 	m.insert(std::make_pair<int, int>(40, 1));
+	// 	m.insert(std::make_pair<int, int>(50, 1));
+	// 	std::pair<std::map<int, int>::iterator, std::map<int, int>::iterator> p = m.equal_range(k);
+	// 	for (std::map<int, int>::iterator it = p.first; it != p.second; it++)
+	// 		std::cout << it->first << " ";
+	// 	std::cout << "\n";
+	// }
+	// std::cout << "\nFT:\n";
+	// {
+	// 	ft::map<int, int> m;
+	// 	m.insert(ft::make_pair<int, int>(10, 1));
+	// 	m.insert(ft::make_pair<int, int>(20, 1));
+	// 	m.insert(ft::make_pair<int, int>(30, 1));
+	// 	m.insert(ft::make_pair<int, int>(40, 1));
+	// 	m.insert(ft::make_pair<int, int>(50, 1));
+	// 	ft::pair<ft::map<int, int>::iterator, ft::map<int, int>::iterator> p = m.equal_range(k);
+	// 	for (ft::map<int, int>::iterator it = p.first; it != p.second; it++)
+	// 		std::cout << it->first << " ";
+	// 	std::cout << "\n";
+	// }
+	// std::cout << "\n";

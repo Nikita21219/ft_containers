@@ -43,8 +43,8 @@ std::vector<int> copy_constructor_test(ft::map<T, V> mp) {
 }
 
 int main() {
-	std::cout << "\n";
-	int k = 20;
+	std::cout << "\nSTL:\n";
+	int k = 10;
 	{
 		std::map<int, int> m;
 		m.insert(std::make_pair<int, int>(10, 1));
@@ -52,9 +52,12 @@ int main() {
 		m.insert(std::make_pair<int, int>(30, 1));
 		m.insert(std::make_pair<int, int>(40, 1));
 		m.insert(std::make_pair<int, int>(50, 1));
-		const std::map<int, int> m1(m);
-		std::cout << "Upper bound STL: " << m.upper_bound(k)->first << "\n";
+		std::pair<std::map<int, int>::iterator, std::map<int, int>::iterator> p = m.equal_range(k);
+		for (std::map<int, int>::iterator it = p.first; it != p.second; it++)
+			std::cout << it->first << " ";
+		std::cout << "\n";
 	}
+	std::cout << "\nFT:\n";
 	{
 		ft::map<int, int> m;
 		m.insert(ft::make_pair<int, int>(10, 1));
@@ -62,8 +65,11 @@ int main() {
 		m.insert(ft::make_pair<int, int>(30, 1));
 		m.insert(ft::make_pair<int, int>(40, 1));
 		m.insert(ft::make_pair<int, int>(50, 1));
-		const ft::map<int, int> m1(m);
-		std::cout << "Upper bound FT: " << m1.upper_bound(k)->first << "\n";
+		ft::pair<ft::map<int, int>::iterator, ft::map<int, int>::iterator> p = m.equal_range(k);
+		for (ft::map<int, int>::iterator it = p.first; it != p.second; it++)
+			std::cout << it->first << " ";
+		std::cout << "\n";
 	}
+	std::cout << "\n";
     return 0;
 }

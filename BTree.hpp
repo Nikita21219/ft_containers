@@ -229,6 +229,33 @@ namespace ft
             return cend();
         }
 
+        ft::pair<iterator, iterator> equal_range(const Key &k) {
+            iterator lb_it = lower_bound(k);
+            iterator ub_it = upper_bound(k);
+            iterator it = begin();
+            while (it != lb_it && it != end())
+                it++;
+            iterator res_it1 = it;
+            it = begin();
+            while (it != ub_it && it != end())
+                it++;
+            iterator res_it2 = it;
+            return ft::pair<iterator, iterator>(res_it1, res_it2);
+        }
+
+        ft::pair<const_iterator, const_iterator> equal_range(const Key &k) const {
+            const_iterator lb_it = lower_bound(k);
+            const_iterator ub_it = upper_bound(k);
+            const_iterator it = cbegin();
+            while (it != lb_it && it != cend())
+                it++;
+            const_iterator res_it1 = it;
+            it = cbegin();
+            while (it != ub_it && it != cend())
+                it++;
+            const_iterator res_it2 = it;
+            return ft::pair<const_iterator, const_iterator>(res_it1, res_it2);
+        }
 
         Node *getRoot() { return root; } // TODO tmp func
 
