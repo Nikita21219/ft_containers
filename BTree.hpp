@@ -222,157 +222,23 @@ namespace ft
         }
 
         bool treeErase(const Key &key) {
-            Node *cur = root;
-            Node *parent = NULL;
-            Node *del = NULL;
-            while (cur) {
-                if (cur->data.first > key)
-                    cur = cur->left;
-                else if (cur->data.first < key)
-                    cur = cur->right;
-                else
-                    break;
-            }
-            if (cur == NULL)
-                return false;
-            del = cur;
-            if (cur->left != NULL && cur->right != NULL) {
-                cur = cur->right;
-                while (cur->left)
-                    cur = cur->left;
-                // del->data.first = cur->data.first;
-                // del->data.second = cur->data.second;
-                // del = cur;
-            }
-            parent = cur->p;
-            if (cur->left == NULL) {
-                if (parent == NULL) {
-                    root = cur->right;
-                    if (cur->right) {
-                        root->p = NULL;
-                        root->isRed = false;
-                    }
-                    alloc.destroy(del);
-                    alloc.deallocate(del, sizeof(del));
-                    return true;
-                } else {
-                    if (parent->left == cur)
-                        parent->left = cur->right;
-                    else
-                        parent->right = cur->right;
-                    if (cur->right)
-                        cur->right->p = parent;
-                }
-                cur = del->right;
-            } else {
-                if (parent == NULL) {
-                    root = cur->left;
-                    root->p = NULL;
-                    root->isRed = false;
-                    alloc.destroy(del);
-                    alloc.deallocate(del, sizeof(del));
-                    return true;
-                } else {
-                    if (parent->left == cur)
-                        parent->left = cur->left;
-                    else
-                        parent->right = cur->left;
-                    cur->left->p = parent;
-                }
-                cur = del->left;
-            }
-            if (del->isRed == true) {
-                alloc.destroy(del);
-                alloc.deallocate(del, sizeof(del));
-                return true;
-            }
-            if (del->isRed == false && cur && cur->isRed == true) {
-                cur->isRed = false;
-                alloc.destroy(del);
-                alloc.deallocate(del, sizeof(del));
-                return true;
-            }
-            while (parent) {
-                if (parent->left == cur) {
-                    Node *subR = parent->right;
-                    if (subR->isRed == true) {
-                        RotateL(parent);
-                        subR->isRed = false;
-                        parent->isRed = true;
-                    } else {
-                        Node *subRL = subR->left;
-                        Node *subRR = subR->right;
-                        if ((parent->isRed == false && (subRL == NULL && subRR == NULL)) ||
-                            ((subRL && subRL->isRed == false && subRR && subRR->isRed == false))) {
-                            subR->isRed = true;
-                            cur = parent;
-                            parent = cur->p;
-                        } else {
-                            if (parent->isRed == true) {
-                                if ((subRL == NULL && subRR == NULL) ||
-                                    (subRL && subRL->isRed == false && subRR && subRR->isRed == false)) {
-                                    parent->isRed = false;
-                                    subR->isRed = true;
-                                    break;
-                                }
-                            }
-                            if (subRL->isRed == true) {
-                                RotateR(subR);
-                                subR = subRL;
-                            }
-                            RotateL(parent);
-                            if (parent->isRed == true)         
-                                subR->isRed = true;
-                            else
-                                subR->isRed = false;
-                            parent->isRed = false;
-                            subR->right->isRed = false;
-                            break;
-                        }
-                    }
-                } else {
-                    Node *subL = parent->left;
-                    if (subL->isRed == true) {
-                        RotateR(parent);
-                        parent->isRed = true;
-                        subL->isRed = false;
-                    } else {
-                        Node *subLR = subL->right;
-                        Node *subLL = subL->left;
-                        if ((parent->isRed == false && (subLL == NULL && subLR == NULL)) ||
-                            ((subLL && subLL->isRed == false && subLR && subLR->isRed == false))) {
-                            subL->isRed = true;
-                            cur = parent;
-                            parent = cur->p;
-                        } else {
-                            if (parent->isRed == true) {
-                                if ((subLL == NULL && subLR == NULL) ||
-                                    (subLL && subLL->isRed == false && subLR && subLR->isRed == false)) {
-                                    parent->isRed = false;
-                                    subL->isRed = true;
-                                    break;
-                                }
-                            }
-                            if (subLR->isRed == true) {
-                                RotateL(subL);
-                                subL = subLR;
-                            }
-                            RotateR(parent);
-                            if (parent->isRed == true)
-                                subL->isRed = true;
-                            else
-                                subL->isRed = false;
-                            parent->isRed = false;
-                            subL->left->isRed = false;
-                            break;
-                        }
-                    }
-                }
-            }
-            root->isRed = false;
-            alloc.destroy(del);
-            alloc.deallocate(del, sizeof(del));
-            return true;
+            if (left[z] = nil[T ] || right[z] = nil[T ])
+            then y z
+            else y Tree-Successor(z)
+            if left[y] 6= nil[T ]
+            then x left[y]
+            else x right[y]
+            p[x] p[y]
+            if p[y] = nil[T ]
+            then root[T ] x
+            else if y = left[p[y]]
+            then left[p[y]] x
+            else right[p[y]] x
+            if y 6= z
+            then key[z] key[y]
+            if color[y] = black
+            then RB-Delete-Fixup(T;x)
+            return y
         }
 
         template <class InputIt>
