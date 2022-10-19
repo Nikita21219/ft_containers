@@ -46,6 +46,11 @@ namespace ft
         iterator find(const Key &k)                 {return iterator(getNodeByKey(k));}
         const_iterator find(const Key &k) const     {return const_iterator(getNodeByKey(k));}
         const mapped_type &at(const Key &k) const   {return at(k);}
+        
+        void clear() {
+            treeEraseRange(begin(), end());
+            sz = 0;
+        }
 
         mapped_type &operator[](const Key &k) {
             iterator it = find(k);
@@ -58,6 +63,12 @@ namespace ft
                 return find(k)->second;
         }
 
+        void swap(BTree &other) {
+            BTree tmp = *this;
+            *this = other;
+            other = tmp;
+        } //TODO not right! need to fix
+
         mapped_type &at(const Key &k) {
             iterator it = find(k);
             if (it != end())
@@ -67,6 +78,8 @@ namespace ft
         }
 
         const BTree &operator=(const BTree &other) {
+            if (size())
+                treeEraseRange(begin(), end());
             treeInsertRange(other.cbegin(), other.cend());
             return *this;
         }

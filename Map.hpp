@@ -84,6 +84,8 @@ namespace ft {
         mapped_type &operator[](const key_type &k)      {return tree[k];}
         mapped_type &at(const key_type& k)              {return tree.at(k);}
         const mapped_type &at(const key_type &k) const  {return tree.at(k);}
+        void swap(map &other)                           {tree.swap(other.tree);}
+        void clear()                                    {tree.clear();}
 
     private:
         allocator_type alloc;

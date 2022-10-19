@@ -884,3 +884,52 @@
 	// 		std::cout << "Not found\n";
 	// }
 
+
+// SWAP
+	// {
+	// 	ft::map<char,int> foo,bar;
+	// 	foo['x']=100;
+	// 	foo['y']=200;
+	// 	bar['a']=11;
+	// 	bar['b']=22;
+	// 	bar['c']=33;
+	// 	ft::map<char,int>::iterator test_it = bar.begin();
+	// 	foo.swap(bar);
+	// 	std::cout << "it = " << test_it->first << test_it->second << "\n";
+	// }
+	// std::cout << "\n";
+	// {
+	// 	std::map<char,int> foo,bar;
+	// 	foo['x']=100;
+	// 	foo['y']=200;
+	// 	bar['a']=11;
+	// 	bar['b']=22;
+	// 	bar['c']=33;
+	// 	std::map<char,int>::iterator test_it = bar.begin();
+	// 	foo.swap(bar);
+	// 	std::cout << "it = " << test_it->first << test_it->second << "\n";
+	// }
+
+// CLEAR
+	// {
+	// 	ft::map<int, int> m;
+	// 	m.insert(ft::make_pair<int, int>(1, 1));
+	// 	m.insert(ft::make_pair<int, int>(413, 1));
+	// 	m.insert(ft::make_pair<int, int>(12, 1));
+	// 	m.insert(ft::make_pair<int, int>(13, 1));
+	// 	m.insert(ft::make_pair<int, int>(19, 1));
+	// 	m.insert(ft::make_pair<int, int>(4, 1));
+	// 	m.insert(ft::make_pair<int, int>(2, 1));
+	// 	std::cout << "Before size: " << m.size() << "\n";
+	// 	std::cout << "Before map: ";
+	// 	for (ft::map<int, int>::iterator i = m.begin(); i != m.end(); i++)
+	// 		std::cout << i->first << " ";
+	// 	std::cout << "\n";
+	// 	std::cout << "Clear\n";
+	// 	m.clear();
+	// 	std::cout << "After size: " << m.size() << "\n";
+	// 	std::cout << "After map: ";
+	// 	for (ft::map<int, int>::iterator i = m.begin(); i != m.end(); i++)
+	// 		std::cout << i->first << " ";
+	// }
+
