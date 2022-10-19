@@ -56,7 +56,6 @@ namespace ft {
         typedef typename iterator::difference_type                        difference_type;
         typedef typename iterator::pointer                                pointer;
         typedef const pointer                                             const_pointer;
-        // typedef typename iterator::reference                              reference;
         typedef typename value_type::pair_type                            pair_type;
 
         BidirIter()                                                       {}

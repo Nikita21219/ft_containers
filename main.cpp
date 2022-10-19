@@ -44,29 +44,26 @@ std::vector<int> copy_constructor_test(ft::map<T, V> mp) {
 
 int main() {
 	std::cout << "\n";
+	int k = 20;
 	{
-		ft::map<char,int> foo,bar;
-		foo['x']=100;
-		foo['y']=200;
-		bar['a']=11;
-		bar['b']=22;
-		bar['c']=33;
-		ft::map<char,int>::iterator test_it = bar.begin();
-		foo.swap(bar);
-		std::cout << "it = " << test_it->first << test_it->second << "\n";
+		std::map<int, int> m;
+		m.insert(std::make_pair<int, int>(10, 1));
+		m.insert(std::make_pair<int, int>(20, 1));
+		m.insert(std::make_pair<int, int>(30, 1));
+		m.insert(std::make_pair<int, int>(40, 1));
+		m.insert(std::make_pair<int, int>(50, 1));
+		const std::map<int, int> m1(m);
+		std::cout << "Upper bound STL: " << m.upper_bound(k)->first << "\n";
 	}
-	std::cout << "\n";
 	{
-		std::map<char,int> foo,bar;
-		foo['x']=100;
-		foo['y']=200;
-		bar['a']=11;
-		bar['b']=22;
-		bar['c']=33;
-		std::map<char,int>::iterator test_it = bar.begin();
-		foo.swap(bar);
-		std::cout << "it = " << test_it->first << test_it->second << "\n";
+		ft::map<int, int> m;
+		m.insert(ft::make_pair<int, int>(10, 1));
+		m.insert(ft::make_pair<int, int>(20, 1));
+		m.insert(ft::make_pair<int, int>(30, 1));
+		m.insert(ft::make_pair<int, int>(40, 1));
+		m.insert(ft::make_pair<int, int>(50, 1));
+		const ft::map<int, int> m1(m);
+		std::cout << "Upper bound FT: " << m1.upper_bound(k)->first << "\n";
 	}
-	std::cout << "\n";
     return 0;
 }

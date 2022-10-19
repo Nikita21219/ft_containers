@@ -103,6 +103,12 @@ namespace ft
             return false;
         }
 
+        size_type count(const Key &k) const {
+            if (find(k) != cend())
+                return 1;
+            return 0;
+        }
+
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             Node *y = NULL;
             Node *x = start;
@@ -183,13 +189,54 @@ namespace ft
             }
         }
 
+        iterator lower_bound(const Key &k) {
+            iterator it = begin();
+            while (it != end()) {
+                if (comp(it->first, k) == false)
+                    return it;
+                it++;
+            }
+            return end();
+        }
+
+        const_iterator lower_bound(const Key &k) const {
+            const_iterator it = cbegin();
+            while (it != cend()) {
+                if (comp(it->first, k) == false)
+                    return it;
+                it++;
+            }
+            return cend();
+        }
+
+        iterator upper_bound(const Key &k) {
+            iterator it = begin();
+            while (it != end()) {
+                if (comp(k, it->first))
+                    return it;
+                it++;
+            }
+            return end();
+        }
+
+        const_iterator upper_bound(const Key &k) const {
+            const_iterator it = cbegin();
+            while (it != cend()) {
+                if (comp(k, it->first))
+                    return it;
+                it++;
+            }
+            return cend();
+        }
+
+
         Node *getRoot() { return root; } // TODO tmp func
 
         // void printTree() { printBT("", root, false); }
 
     private:
 
-        Node *getNodeByKey(const Key &k) {
+        Node *getNodeByKey(const Key &k) const {
             Node *node = root;
             while (node) {
                 if (node->data.first == k)

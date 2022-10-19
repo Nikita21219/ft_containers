@@ -963,3 +963,63 @@
 	// 	} while ( mymap.value_comp()(*it++, highest) );
 	// }
 	// std::cout << "\n";
+
+
+// COUNT
+	// {
+	// 	ft::map<int, int> m;
+	// 	m.insert(ft::make_pair<int, int>(1, 1));
+	// 	m.insert(ft::make_pair<int, int>(413, 1));
+	// 	m.insert(ft::make_pair<int, int>(12, 1));
+	// 	m.insert(ft::make_pair<int, int>(13, 1));
+	// 	m.insert(ft::make_pair<int, int>(19, 1));
+	// 	m.insert(ft::make_pair<int, int>(4, 1));
+	// 	m.insert(ft::make_pair<int, int>(2, 1));
+	// 	std::cout << "count: " << m.count(413) << "\n";
+	// }
+
+// LOWER_BOUND
+	// int k = 11;
+	// {
+	// 	std::map<int, int> m;
+	// 	m.insert(std::make_pair<int, int>(10, 1));
+	// 	m.insert(std::make_pair<int, int>(20, 1));
+	// 	m.insert(std::make_pair<int, int>(30, 1));
+	// 	m.insert(std::make_pair<int, int>(40, 1));
+	// 	m.insert(std::make_pair<int, int>(50, 1));
+	// 	std::cout << "count: " << m.lower_bound(k)->first << "\n";
+	// }
+	// std::cout << "\n";
+	// {
+	// 	ft::map<int, int> m;
+	// 	m.insert(ft::make_pair<int, int>(10, 1));
+	// 	m.insert(ft::make_pair<int, int>(20, 1));
+	// 	m.insert(ft::make_pair<int, int>(30, 1));
+	// 	m.insert(ft::make_pair<int, int>(40, 1));
+	// 	m.insert(ft::make_pair<int, int>(50, 1));
+	// 	std::cout << "count: " << m.lower_bound(k)->first << "\n";
+	// }
+	// std::cout << "\n";
+
+// UPPER_BOUND
+	// int k = 20;
+	// {
+	// 	std::map<int, int> m;
+	// 	m.insert(std::make_pair<int, int>(10, 1));
+	// 	m.insert(std::make_pair<int, int>(20, 1));
+	// 	m.insert(std::make_pair<int, int>(30, 1));
+	// 	m.insert(std::make_pair<int, int>(40, 1));
+	// 	m.insert(std::make_pair<int, int>(50, 1));
+	// 	const std::map<int, int> m1(m);
+	// 	std::cout << "Upper bound STL: " << m.upper_bound(k)->first << "\n";
+	// }
+	// {
+	// 	ft::map<int, int> m;
+	// 	m.insert(ft::make_pair<int, int>(10, 1));
+	// 	m.insert(ft::make_pair<int, int>(20, 1));
+	// 	m.insert(ft::make_pair<int, int>(30, 1));
+	// 	m.insert(ft::make_pair<int, int>(40, 1));
+	// 	m.insert(ft::make_pair<int, int>(50, 1));
+	// 	const ft::map<int, int> m1(m);
+	// 	std::cout << "Upper bound FT: " << m1.upper_bound(k)->first << "\n";
+	// }
