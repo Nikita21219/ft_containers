@@ -67,10 +67,11 @@ namespace ft
         }
 
         void swap(BTree &other) {
-            BTree tmp = *this;
-            *this = other;
-            other = tmp;
-        } //TODO not right! need to fix
+            std::swap(root, other.root);
+            std::swap(sz, other.sz);
+            std::swap(comp, other.comp);
+            std::swap(alloc, other.alloc);
+        }
 
         mapped_type &at(const Key &k) {
             iterator it = find(k);
