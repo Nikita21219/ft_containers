@@ -30,7 +30,7 @@ namespace ft
         typedef Compare                                 key_compare;
 
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
-        nil(initNil()), root(nil), comp(comp), alloc(alloc), sz(0) {}
+        nil(NULL), root(nil), comp(comp), alloc(alloc), sz(0) {}
 
         // ~BTree() {treeEraseRange(begin(), end());}
 
@@ -112,103 +112,122 @@ namespace ft
         }
 
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
-            (void) start;
-            Node *z = alloc.allocate(sizeof(Node));
-            alloc.construct(z, value);
-            Node *x = root;
-            Node *y = x;
-            while (x != nil) {
-                y = x;
-                if (z->data.first < x->data.first)
-                    x = x->left;
-                else
-                    x = x->right;
+            (void)start;
+            if (root == NULL) {
+                root = alloc.allocate(sizeof(Node));
+                alloc.construct(root, value);
+                root->isRed = false;
+                return ft::pair<iterator, bool>(iterator(root), true);
             }
-            z->p = y;
-            if (y == nil)
-                root = z;
-            else if (z->data.first < y->data.first)
-                y->left = z;
-            else
-                y->right = z;
-            z->left = nil;
-            z->right = nil;
-            z->isRed = true;
-            insertFixup(z);
-            return ft::pair<iterator, bool>(iterator(NULL), false);
-        }
-
-        void insertFixup(Node *z) {
-            Node *y;
-            while (z->p->isRed == true) {
-                if (z->p == z->p->p->left) {
-                    y = z->p->p->right;
-                    if (y->isRed == true) {
-                        z->p->isRed = false;
-                        y->isRed = false;
-                        z->p->p->isRed = true;
-                        z = z->p->p;
-                    } else if (z == z->p->right) {
-                        z = z->p;
-                        RotateL(z);
-                    }
-                    z->p->isRed = false;
-                    z->p->p->isRed = true;
-                    RotateR(z->p->p);
+            Node *parent = NULL;
+            Node *cur = root;
+            while (cur) {
+                if (cur->data.first < value.first) {
+                    parent = cur;
+                    cur = cur->right;
+                } else if (cur->data.first > value.first) {
+                    parent = cur;
+                    cur = cur->left;
                 } else {
-                    y = z->p->p->left;
-                    if (y->isRed == true) {
-                        z->p->isRed = false;
-                        y->isRed = false;
-                        z->p->p->isRed = true;
-                        z = z->p->p;
-                    } else if (z == z->p->left) {
-                        z = z->p;
-                        RotateR(z);
+                    return ft::pair<iterator, bool>(iterator(NULL), false);
+                }
+            }
+            cur = alloc.allocate(sizeof(Node));
+            alloc.construct(cur, value);
+            cur->isRed = true;
+            if (parent->data.first < value.first) {
+                parent->right = cur;
+                cur->p = parent;
+            } else {
+                parent->left = cur;
+                cur->p = parent;
+            }
+            while (parent && parent->isRed == true) {
+                Node *grand = parent->p;
+                if (parent == grand->left)
+                {
+                    Node *uncle = grand->right;
+                    if (uncle && uncle->isRed == true) {
+                        parent->isRed = uncle->isRed = false;
+                        grand->isRed = true;
+                        cur = grand;
+                        parent = cur->p;
+                    } else {
+                        if (cur == parent->right) {
+                            RotateL(parent);
+                            std::swap(cur, parent);
+                        }
+                        RotateR(grand);
+                        parent->isRed = false;
+                        grand->isRed = true;
                     }
-                    z->p->isRed = false;
-                    if (z->p->p)
-                        z->p->p->isRed = true;
-                    if (z->p->p)
-                        RotateL(z->p->p);
+                } else {
+                    Node *uncle = grand->left;
+                    if (uncle && uncle->isRed == true)
+                    {
+                        parent->isRed = false;
+                        uncle->isRed = false;
+                        grand->isRed = true;
+
+                        cur = grand;
+                        parent = cur->p;
+                    } else {
+                        if (cur == parent->left) {
+                            RotateR(parent);
+                            std::swap(cur, parent);
+                        }
+                        RotateL(grand);
+                        parent->isRed = false;
+                        grand->isRed = true;
+                    }
                 }
             }
             root->isRed = false;
-            sz++;
+            return ft::pair<iterator, bool>(iterator(NULL), false);
         }
 
-        void RotateR(Node *x) {
-            Node *y = x->left;
-            x->left = y->right;
-            if (y->right != nil)
-                y->right->p = x;
-            y->p = x->p;
-            if (x->p == nil)
-                root = y;
-            else if (x == x->p->right)
-                x->p->right = y;
-            else
-                x->p->left = y;
-            y->right = x;
-            x->p = y;
+        void RotateR(Node *parent) {
+            Node *subL = parent->left;
+            Node *subLR = subL->right;
+            Node *ppNode = parent->p;
+
+            parent->left = subLR;
+            if (subLR)
+                subLR->p = parent;
+            subL->right = parent;
+            parent->p = subL;
+            if (ppNode == NULL) {
+                root = subL;
+                subL->p = NULL;
+            } else {
+                if (ppNode->left == parent)
+                    ppNode->left = subL;
+                else
+                    ppNode->right = subL;
+                subL->p = ppNode;
+            }
         }
 
-        void RotateL(Node *x) {
-            Node *y = x->right;
-            if (y == NULL)
-                return;
-            x->right = y->left;
-            if (y->left != nil)
-                y->left->p = x;
-            y->p = x->p;
-            if (x->p == nil)
-                root = y;
-            else if (x == x->p->left)
-                x->p->left = y;
-            else
-                x->p->right = y;
-            y->left = x;
-            x->p = y;
+        void RotateL(Node *parent) {
+            Node *subR = parent->right;
+            Node *subRL = subR->left;
+            Node *ppNode = parent->p;
+
+            parent->right = subRL;
+            if (subRL)
+                subRL->p = parent;
+            subR->left = parent;
+            parent->p = subR;
+            if (ppNode == NULL) {
+                root = subR;
+                subR->p = NULL;
+            } else {
+                if (ppNode->left == parent)
+                    ppNode->left = subR;
+                else
+                    ppNode->right = subR;
+                subR->p = ppNode;
+            }
         }
 
         bool treeErase(const Key &key) {

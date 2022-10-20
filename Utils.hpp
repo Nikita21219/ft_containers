@@ -57,7 +57,7 @@ namespace ft {
         typedef T pair_type;
 
         BTreeNode(const T &pair):
-        isRed(false), data(pair), left(NULL), right(NULL), p(NULL) {}
+        isRed(true), data(pair), left(NULL), right(NULL), p(NULL) {}
 
         ~BTreeNode() {}
 
