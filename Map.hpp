@@ -125,6 +125,8 @@ namespace ft {
         iterator lower_bound(const key_type &k)         {return tree.lower_bound(k);}
         allocator_type get_allocator() const            {return alloc;}
 
+        void print() {tree.printTree();}//TODO tmp line
+
     private:
         allocator_type alloc;
         key_compare comp;

@@ -30,9 +30,18 @@ namespace ft
         typedef Compare                                 key_compare;
 
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
-        root(NULL), comp(comp), alloc(alloc), sz(0) {}
+        nil(initNil()), root(nil), comp(comp), alloc(alloc), sz(0) {
+            root->right = nil;
+            root->left = nil;
+        }
 
-        ~BTree() {treeEraseRange(begin(), end());}
+        // ~BTree() {treeEraseRange(begin(), end());}
+
+        Node *initNil() {
+            Node *nil = alloc.allocate(sizeof(Node));
+            // alloc.construct(nil, value_type());
+            return nil;
+        }
 
         BTree(const BTree &other)                   {*this = other;}
         iterator begin()                            {return iterator(getMin(root));}
@@ -103,142 +112,189 @@ namespace ft
         }
 
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
-            (void)start;
-            if (root == NULL) {
-                root = alloc.allocate(sizeof(Node));
-                alloc.construct(root, value);
-                root->isRed = false;
-                return ft::pair<iterator, bool>(iterator(root), true);
+            (void) start;
+            Node *z = alloc.allocate(sizeof(Node));
+            alloc.construct(z, value);
+            Node *y = nil;
+            Node *x = root;
+            while (x != nil) {
+                y = x;
+                if (z->data.first < x->data.first)
+                    x = x->left;
+                else
+                    x = x->right;
             }
-            Node *parent = NULL;
-            Node *cur = root;
-            while (cur) {
-                if (cur->data.first < value.first) {
-                    parent = cur;
-                    cur = cur->right;
-                } else if (cur->data.first > value.first) {
-                    parent = cur;
-                    cur = cur->left;
-                } else {
-                    return ft::pair<iterator, bool>(iterator(NULL), false);
-                }
-            }
-            cur = alloc.allocate(sizeof(Node));
-            alloc.construct(cur, value);
-            cur->isRed = true;
-            if (parent->data.first < value.first) {
-                parent->right = cur;
-                cur->p = parent;
-            } else {
-                parent->left = cur;
-                cur->p = parent;
-            }
-            while (parent && parent->isRed == true) {
-                Node *grand = parent->p;
-                if (parent == grand->left)
-                {
-                    Node *uncle = grand->right;
-                    if (uncle && uncle->isRed == true) {
-                        parent->isRed = uncle->isRed = false;
-                        grand->isRed = true;
-                        cur = grand;
-                        parent = cur->p;
-                    } else {
-                        if (cur == parent->right) {
-                            RotateL(parent);
-                            std::swap(cur, parent);
-                        }
-                        RotateR(grand);
-                        parent->isRed = false;
-                        grand->isRed = true;
-                    }
-                } else {
-                    Node *uncle = grand->left;
-                    if (uncle && uncle->isRed == true)
-                    {
-                        parent->isRed = false;
-                        uncle->isRed = false;
-                        grand->isRed = true;
-
-                        cur = grand;
-                        parent = cur->p;
-                    } else {
-                        if (cur == parent->left) {
-                            RotateR(parent);
-                            std::swap(cur, parent);
-                        }
-                        RotateL(grand);
-                        parent->isRed = false;
-                        grand->isRed = true;
-                    }
-                }
-            }
-            root->isRed = false;
+            z->p = y;
+            if (y == nil)
+                root = z;
+            else if (z->data.first < y->data.first)
+                y->left = z;
+            else
+                y->right = z;
+            z->left = nil;
+            z->right = nil;
+            z->isRed = true;
+            insertFixup(z);
             return ft::pair<iterator, bool>(iterator(NULL), false);
         }
 
-        void RotateR(Node *parent) {
-            Node *subL = parent->left;
-            Node *subLR = subL->right;
-            Node *ppNode = parent->p;
-
-            parent->left = subLR;
-            if (subLR)
-                subLR->p = parent;
-            subL->right = parent;
-            parent->p = subL;
-            if (ppNode == NULL) {
-                root = subL;
-                subL->p = NULL;
-            } else {
-                if (ppNode->left == parent)
-                    ppNode->left = subL;
-                else
-                    ppNode->right = subL;
-                subL->p = ppNode;
+        void insertFixup(Node *z) {
+            Node *y;
+            while (z->p->isRed == true) {
+                if (z->p == z->p->p->left) {
+                    y = z->p->p->right;
+                    if (y->isRed == true) {
+                        z->p->isRed = false;
+                        y->isRed = false;
+                        z->p->p->isRed = true;
+                        z = z->p->p;
+                    } else if (z == z->p->right) {
+                        z = z->p;
+                        RotateL(z);
+                    }
+                    z->p->isRed = false;
+                    z->p->p->isRed = true;
+                    RotateR(z->p->p);
+                } else {
+                    y = z->p->p->left;
+                    if (y->isRed == true) {
+                        z->p->isRed = false;
+                        y->isRed = false;
+                        z->p->p->isRed = true;
+                        z = z->p->p;
+                    } else if (z == z->p->left) {
+                        z = z->p;
+                        RotateR(z);
+                    }
+                    z->p->isRed = false;
+                    z->p->p->isRed = true;
+                    RotateL(z->p->p);
+                }
             }
+            root->isRed = false;
+            sz++;
         }
 
-        void RotateL(Node *parent) {
-            Node *subR = parent->right;
-            Node *subRL = subR->left;
-            Node *ppNode = parent->p;
+        void RotateR(Node *x) {
+            // if (x->left == nil)
+            //     return;
+            Node *y = x->left;
+            x->left = y->right;
+            if (y->right != nil)
+                y->right->p = x;
+            y->p = x->p;
+            if (x->p == nil)
+                root = y;
+            else if (x == x->p->right)
+                x->p->right = y;
+            else
+                x->p->left = y;
+            y->right = x;
+            x->p = y;
+        }
 
-            parent->right = subRL;
-            if (subRL)
-                subRL->p = parent;
-            subR->left = parent;
-            parent->p = subR;
-            if (ppNode == NULL) {
-                root = subR;
-                subR->p = NULL;
-            } else {
-                if (ppNode->left == parent)
-                    ppNode->left = subR;
-                else
-                    ppNode->right = subR;
-                subR->p = ppNode;
-            }
+        void RotateL(Node *x) {
+            // if (x->right == nil)
+            //     return;
+            Node *y = x->right;
+            x->right = y->left;
+            if (y->left != nil)
+                y->left->p = x;
+            y->p = x->p;
+            if (x->p == nil)
+                root = y;
+            else if (x == x->p->left)
+                x->p->left = y;
+            else
+                x->p->right = y;
+            y->left = x;
+            x->p = y;
         }
 
         bool treeErase(const Key &key) {
-            if (left[z] = nil[T ] || right[z] = nil[T ])
-            then y z
-            else y Tree-Successor(z)
-            if left[y] 6= nil[T ]
-            then x left[y]
-            else x right[y]
-            p[x] p[y]
-            if p[y] = nil[T ]
-            then root[T ] x
-            else if y = left[p[y]]
-            then left[p[y]] x
-            else right[p[y]] x
-            if y 6= z
-            then key[z] key[y]
-            if color[y] = black
-            then RB-Delete-Fixup(T;x)
-            return y
+            Node *z = find(key).getPtr();
+            if (z == nil)
+                return false;
+            Node *y = z;
+            Node *x;
+            bool y_original_color = y->isRed;
+            if (z->left == nil) {
+                x = z->right;
+                transplant(z, z->right);
+            } else if (z->right == nil) {
+                x = z->left;
+                transplant(z, z->left);
+            } else {
+                y = getMin(z->right);
+                y_original_color = y->isRed;
+                x = y->right;
+                if (y->p == z)
+                    x->p = y;
+                else {
+                    transplant(y, y->right);
+                    y->right = z->right;
+                    y->right->p = y;
+                }
+                transplant(z, y);
+                y->left = z->left;
+                y->left->p = y;
+                y->isRed = z->isRed;
+            }
+            if (y_original_color == false)
+                deleteFixup(x);
+            return true;
+        }
+
+        void deleteFixup(Node *x) {
+            Node *w;
+            while (x == root && x->isRed == false) {
+                if (x == x->p->left) {
+                    w = x->p->right;
+                    if (w->isRed == true) {
+                        w->isRed = false;
+                        x->p->isRed = true;
+                        RotateL(x->p);
+                        w = x->p->right;
+                    }
+                    if (w->left->isRed == false && w->right->isRed == false) {
+                        w->isRed = true;
+                        x = x->p;
+                    } else if (w->right->isRed == false) {
+                        w->left->isRed = false;
+                        w->isRed = true;
+                        RotateR(w);
+                        w = x->p->right;
+                    }
+                    w->isRed = x->p->isRed;
+                    x->p->isRed = false;
+                    w->right->isRed = false;
+                    RotateL(x->p);
+                    x = root;
+                } else {
+                    w = x->p->left;
+                    if (w->isRed == true) {
+                        w->isRed = false;
+                        x->p->isRed = true;
+                        RotateL(x->p);
+                        w = x->p->left;
+                    }
+                    if (w->right->isRed == false && w->left->isRed == false) {
+                        w->isRed = true;
+                        x = x->p;
+                    } else if (w->left->isRed == false) {
+                        w->right->isRed = false;
+                        w->isRed = true;
+                        RotateR(w);
+                        w = x->p->left;
+                    }
+                    w->isRed = x->p->isRed;
+                    x->p->isRed = false;
+                    w->left->isRed = false;
+                    RotateL(x->p);
+                    x = root;
+                }
+            }
+            x->isRed = false;
         }
 
         template <class InputIt>
@@ -351,7 +407,7 @@ namespace ft
 
         Node *getRoot() { return root; } // TODO tmp func
 
-        // void printTree() { printBT("", root, false); }
+        void printTree() { printBT("", root, false); }
 
     private:
 
@@ -369,52 +425,50 @@ namespace ft
         }
 
         Node *getMin(Node *node) const {
-            if (node == NULL)
-                return NULL;
+            if (node == nil)
+                return nil;
             while (node->left)
                 node = node->left;
             return node;
         }
 
         Node *getMax(Node *node) const {
-            if (node == NULL)
-                return NULL;
+            if (node == nil)
+                return nil;
             while (node->right)
                 node = node->right;
             return node;
         }
 
         void transplant(Node *u, Node *v) {
-            if (u->p == NULL)
+            if (u->p == nil)
                 root = v;
             else if (u == u->p->left)
                 u->p->left = v;
             else
                 u->p->right = v;
-            if (v != NULL)
+            if (v != nil)
                 v->p = u->p;
         }
 
-        // void printBT (
-        //     const std::string& prefix,
-        //     const Node<value_type>* nodeV,
-        //     bool isLeft
-        //     ) const {
-        //         std::cout << prefix;
-        //         std::cout << (isLeft ? "├──" : "└──" );
-        //         if (nodeV == NULL) {
-        //             std::cout <<"\033[0;36m"<< "nil" << "\033[0m"<<std::endl;
-        //             return ;
-        //         }
-        //         // print the value of the node
-        //         if (nodeV->isRed == 0)
-        //             std::cout <<"\033[0;36m"<< nodeV->pair.first<<"\033[0m"<<std::endl;
-        //         else
-        //             std::cout <<"\033[0;31m"<< nodeV->pair.first << "\033[0m"<<std::endl;
-        //         printBT( prefix + (isLeft ? "│   " : "    "), nodeV->left, true);
-        //         printBT( prefix + (isLeft ? "│   " : "    "), nodeV->right, false);
-        // }
+        void printBT (const std::string& prefix, const Node* nodeV, bool isLeft
+            ) const {
+                std::cout << prefix;
+                std::cout << (isLeft ? "├──" : "└──" );
+                if (nodeV == nil) {
+                    std::cout <<"\033[0;36m"<< "nil" << "\033[0m"<<std::endl;
+                    return ;
+                }
+                // print the value of the node
+                if (nodeV->isRed == 0)
+                    std::cout <<"\033[0;36m"<< nodeV->data.first<<"\033[0m"<<std::endl;
+                else
+                    std::cout <<"\033[0;31m"<< nodeV->data.first << "\033[0m"<<std::endl;
+                printBT( prefix + (isLeft ? "│   " : "    "), nodeV->left, true);
+                printBT( prefix + (isLeft ? "│   " : "    "), nodeV->right, false);
+        }
 
+        Node *nil;
         Node *root;
         key_compare comp;
         NodeAlloc alloc;

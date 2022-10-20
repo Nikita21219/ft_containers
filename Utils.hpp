@@ -56,12 +56,8 @@ namespace ft {
         typedef typename T::second_type Val;
         typedef T pair_type;
 
-        BTreeNode(const T &pair): data(pair) {
-            isRed = false;
-            left = NULL;
-            right = NULL;
-            p = NULL;
-        }
+        BTreeNode(const T &pair):
+        isRed(false), data(pair), left(NULL), right(NULL), p(NULL) {}
 
         ~BTreeNode() {}
 
