@@ -232,7 +232,7 @@ namespace ft
 
         bool treeErase(const Key &key) {
             Node *z = find(key).getPtr();
-            if (z == nil)
+            if (z == NULL)
                 return false;
             Node *y = z;
             Node *x;
