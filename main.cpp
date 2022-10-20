@@ -44,10 +44,8 @@ std::vector<int> copy_constructor_test(ft::map<T, V> mp) {
 
 int main() {
     ft::map<int, int> m;
-    m.insert(ft::make_pair(0, 0));
-    m.insert(ft::make_pair(1, 0));
-    m.insert(ft::make_pair(2, 0));
-    m.insert(ft::make_pair(3, 0));
+    for (int i = 0; i < 9; i++)
+        m.insert(ft::make_pair(i, 0));
     m.print();
 
     return 0;

@@ -30,16 +30,16 @@ namespace ft
         typedef Compare                                 key_compare;
 
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
-        nil(initNil()), root(nil), comp(comp), alloc(alloc), sz(0) {
-            root->right = nil;
-            root->left = nil;
-        }
+        nil(initNil()), root(nil), comp(comp), alloc(alloc), sz(0) {}
 
         // ~BTree() {treeEraseRange(begin(), end());}
 
         Node *initNil() {
             Node *nil = alloc.allocate(sizeof(Node));
             // alloc.construct(nil, value_type());
+            nil->left = NULL;
+            nil->right = NULL;
+            nil->p = NULL;
             return nil;
         }
 
@@ -115,8 +115,8 @@ namespace ft
             (void) start;
             Node *z = alloc.allocate(sizeof(Node));
             alloc.construct(z, value);
-            Node *y = nil;
             Node *x = root;
+            Node *y = x;
             while (x != nil) {
                 y = x;
                 if (z->data.first < x->data.first)
@@ -167,8 +167,10 @@ namespace ft
                         RotateR(z);
                     }
                     z->p->isRed = false;
-                    z->p->p->isRed = true;
-                    RotateL(z->p->p);
+                    if (z->p->p)
+                        z->p->p->isRed = true;
+                    if (z->p->p)
+                        RotateL(z->p->p);
                 }
             }
             root->isRed = false;
@@ -176,8 +178,6 @@ namespace ft
         }
 
         void RotateR(Node *x) {
-            // if (x->left == nil)
-            //     return;
             Node *y = x->left;
             x->left = y->right;
             if (y->right != nil)
@@ -194,9 +194,9 @@ namespace ft
         }
 
         void RotateL(Node *x) {
-            // if (x->right == nil)
-            //     return;
             Node *y = x->right;
+            if (y == NULL)
+                return;
             x->right = y->left;
             if (y->left != nil)
                 y->left->p = x;

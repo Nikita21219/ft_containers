@@ -8,9 +8,9 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "/Users/bclarind/Downloads/ft_containers/./containers",
+            "program": "./containers",
             "args": [],
-            "cwd": "${workspaceFolder}"
+            "cwd": "/Users/a1/Downloads/IT/school21/ft_containers"
         }
     ]
 }
