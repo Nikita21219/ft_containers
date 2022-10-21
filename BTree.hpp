@@ -117,6 +117,7 @@ namespace ft
                 root = alloc.allocate(sizeof(Node));
                 alloc.construct(root, value);
                 root->isRed = false;
+                sz++;
                 return ft::pair<iterator, bool>(iterator(root), true);
             }
             Node *parent = nil;
@@ -183,6 +184,7 @@ namespace ft
                 }
             }
             root->isRed = false;
+            sz++;
             return ft::pair<iterator, bool>(iterator(NULL), false);
         }
 
