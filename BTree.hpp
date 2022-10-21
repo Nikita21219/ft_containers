@@ -30,9 +30,15 @@ namespace ft
         typedef Compare                                 key_compare;
 
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
-        nil(NULL), root(nil), comp(comp), alloc(alloc), sz(0) {}
+        nil(NULL), root(nil), comp(comp), alloc(alloc), sz(0) {
+            // Node *endNode = alloc.allocate(sizeof(Node));
+            // endNode->p = root;
+        }
 
-        ~BTree() {treeEraseRange(begin(), end());}
+        ~BTree() {
+            treeEraseRange(begin(), end());
+            // alloc.deallocate(endNode, sizeof(Node));
+        }
 
         Node *initNil() {
             Node *nil = alloc.allocate(sizeof(Node));
@@ -48,7 +54,7 @@ namespace ft
         const_iterator cbegin() const               {return const_iterator(getMin(root));}
         reverse_iterator rbegin()                   {return reverse_iterator(getMax(root));}
         const_reverse_iterator crbegin() const      {return const_reverse_iterator(getMax(root));}
-        iterator end()                              {return iterator(NULL);}
+        iterator end()                              {return iterator(getMax(root));}
         const_iterator cend() const                 {return const_iterator(NULL);}
         reverse_iterator rend()                     {return reverse_iterator(NULL);}
         const_reverse_iterator crend() const        {return const_reverse_iterator(NULL);}
@@ -135,6 +141,7 @@ namespace ft
             }
             cur = alloc.allocate(sizeof(Node));
             alloc.construct(cur, value);
+            Node *res = cur;
             cur->isRed = true;
             if (parent->data.first < value.first) {
                 parent->right = cur;
@@ -185,7 +192,7 @@ namespace ft
             }
             root->isRed = false;
             sz++;
-            return ft::pair<iterator, bool>(iterator(NULL), false);
+            return ft::pair<iterator, bool>(iterator(res), true);
         }
 
         void RotateR(Node *parent) {
@@ -503,6 +510,7 @@ namespace ft
 
         Node *nil;
         Node *root;
+        Node *endNode;
         key_compare comp;
         NodeAlloc alloc;
         size_t sz;

@@ -57,7 +57,7 @@ namespace ft {
             ): alloc(alloc), comp(comp), tree() {
                 insert(first, last);
         }
-        
+
         map &operator= (const map &other) {
             tree = other.tree;
             return *this;
