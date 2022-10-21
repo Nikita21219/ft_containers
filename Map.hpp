@@ -8,14 +8,14 @@ namespace ft {
     class Key,
     class T,
     class Compare = std::less<Key>,
-    class Alloc = std::allocator<ft::pair<Key, T> > >
+    class Alloc = std::allocator<ft::pair<const Key, T> > >
     class map {
     public:
         typedef typename Alloc::pointer                     pointer;
         typedef typename Alloc::const_pointer               const_pointer;
         typedef Compare                                     key_compare;
         typedef Alloc                                       allocator_type;
-        typedef Key                                   key_type;
+        typedef const Key                                   key_type;
         typedef T                                           mapped_type;
         typedef typename ft::pair<key_type, mapped_type>    value_type;
         typedef BTree<value_type, Compare, Alloc>           Tree;

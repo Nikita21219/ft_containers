@@ -32,7 +32,7 @@ namespace ft
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
         nil(NULL), root(nil), comp(comp), alloc(alloc), sz(0) {}
 
-        // ~BTree() {treeEraseRange(begin(), end());}
+        ~BTree() {treeEraseRange(begin(), end());}
 
         Node *initNil() {
             Node *nil = alloc.allocate(sizeof(Node));

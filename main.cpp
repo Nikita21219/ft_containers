@@ -75,27 +75,9 @@ std::vector<int> erase_test_1(ft::map<T, V> mp) {
 int main() {
     {
         ft::map<int, int> m;
-        std::vector<int> v = erase_test_1(m);
-        for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++)
-            std::cout << *i << " ";
-        std::cout << "\n";
+        for (size_t i = 0; i < 100; i++)
+            m.insert(ft::make_pair<int, int>(i, 0));
     }
-    std::cout << "\n";
-    {
-        std::map<int, int> m;
-        std::vector<int> v = erase_test_1(m);
-        for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++)
-            std::cout << *i << " ";
-        std::cout << "\n";
-    }
-    std::cout << "\n";
-    return 0;
-
-    // for (int i = 0; i <= 10; i++)
-    //     m.insert(ft::make_pair(i, 0));
-    
-    // m.erase(7);
-    // m.print();
 
     return 0;
 }
