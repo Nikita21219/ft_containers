@@ -36,10 +36,10 @@ namespace ft
 
         Node *initNil() {
             Node *nil = alloc.allocate(sizeof(Node));
-            // alloc.construct(nil, value_type());
             nil->left = NULL;
             nil->right = NULL;
             nil->p = NULL;
+            nil->isRed = false;
             return nil;
         }
 
@@ -113,15 +113,15 @@ namespace ft
 
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             (void)start;
-            if (root == NULL) {
+            if (root == nil) {
                 root = alloc.allocate(sizeof(Node));
                 alloc.construct(root, value);
                 root->isRed = false;
                 return ft::pair<iterator, bool>(iterator(root), true);
             }
-            Node *parent = NULL;
+            Node *parent = nil;
             Node *cur = root;
-            while (cur) {
+            while (cur && cur != nil) {
                 if (cur->data.first < value.first) {
                     parent = cur;
                     cur = cur->right;
@@ -214,7 +214,7 @@ namespace ft
             Node *ppNode = parent->p;
 
             parent->right = subRL;
-            if (subRL)
+            if (subRL && subRL != nil)
                 subRL->p = parent;
             subR->left = parent;
             parent->p = subR;
@@ -231,37 +231,48 @@ namespace ft
         }
 
         bool treeErase(const Key &key) {
-            Node *z = find(key).getPtr();
-            if (z == NULL)
+            if (root == NULL)
                 return false;
-            Node *y = z;
-            Node *x;
-            bool y_original_color = y->isRed;
-            if (z->left == nil) {
-                x = z->right;
-                transplant(z, z->right);
-            } else if (z->right == nil) {
-                x = z->left;
-                transplant(z, z->left);
-            } else {
-                y = getMin(z->right);
-                y_original_color = y->isRed;
-                x = y->right;
-                if (y->p == z)
-                    x->p = y;
-                else {
-                    transplant(y, y->right);
-                    y->right = z->right;
-                    y->right->p = y;
-                }
-                transplant(z, y);
-                y->left = z->left;
-                y->left->p = y;
-                y->isRed = z->isRed;
+            Node *node = root;
+            while (node && node->data.first != key) {
+                if (comp(key, node->data.first) == false)
+                    node = node->right;
+                else if (comp(key, node->data.first))
+                    node = node->left;
             }
-            if (y_original_color == false)
-                deleteFixup(x);
-            return true;
+            return erase(node);
+        }
+
+        void RotateLeft(Node *x) {
+            Node *y = x->right;
+            x->right = y->left;
+            if (y->left != nil)
+                y->left->p = x;
+            y->p = x->p;
+            if (x->p == nil)
+                root = y;
+            else if (x == x->p->left)
+                x->p->left = y;
+            else
+                x->p->right = y;
+            y->left = x;
+            x->p = y;
+        }
+
+        void RotateRight(Node *x) {
+            Node *y = x->left;
+            x->left = y->right;
+            if (y->right != nil)
+                y->right->p = x;
+            y->p = x->p;
+            if (x->p == nil)
+                root = y;
+            else if (x == x->p->right)
+                x->p->right = y;
+            else
+                x->p->left = y;
+            y->right = x;
+            x->p = y;
         }
 
         void deleteFixup(Node *x) {
@@ -272,7 +283,7 @@ namespace ft
                     if (w->isRed == true) {
                         w->isRed = false;
                         x->p->isRed = true;
-                        RotateL(x->p);
+                        RotateLeft(x->p);
                         w = x->p->right;
                     }
                     if (w->left->isRed == false && w->right->isRed == false) {
@@ -281,20 +292,20 @@ namespace ft
                     } else if (w->right->isRed == false) {
                         w->left->isRed = false;
                         w->isRed = true;
-                        RotateR(w);
+                        RotateRight(w);
                         w = x->p->right;
                     }
                     w->isRed = x->p->isRed;
                     x->p->isRed = false;
                     w->right->isRed = false;
-                    RotateL(x->p);
+                    RotateLeft(x->p);
                     x = root;
                 } else {
                     w = x->p->left;
                     if (w->isRed == true) {
                         w->isRed = false;
                         x->p->isRed = true;
-                        RotateL(x->p);
+                        RotateLeft(x->p);
                         w = x->p->left;
                     }
                     if (w->right->isRed == false && w->left->isRed == false) {
@@ -303,13 +314,13 @@ namespace ft
                     } else if (w->left->isRed == false) {
                         w->right->isRed = false;
                         w->isRed = true;
-                        RotateR(w);
+                        RotateRight(w);
                         w = x->p->left;
                     }
                     w->isRed = x->p->isRed;
                     x->p->isRed = false;
                     w->left->isRed = false;
-                    RotateL(x->p);
+                    RotateLeft(x->p);
                     x = root;
                 }
             }
@@ -472,6 +483,7 @@ namespace ft
 
         void printBT (const std::string& prefix, const Node* nodeV, bool isLeft
             ) const {
+                // 5 - sega
                 std::cout << prefix;
                 std::cout << (isLeft ? "├──" : "└──" );
                 if (nodeV == nil) {
