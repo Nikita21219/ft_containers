@@ -66,10 +66,7 @@ namespace ft {
         bool operator==(const BidirIter &other) const                     {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                     {return !(*this == other);}
 
-        friend bool operator>(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
-        friend bool operator<(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
-        friend bool operator>=(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
-        friend bool operator<=(const BidirIter& lhs, const BidirIter& rhs);// TODO implement
+
         BidirIter& operator= (const BidirIter &other) {
             ptr = other.ptr;
             return *this;
@@ -96,7 +93,7 @@ namespace ft {
             ++(*this);
             return it;
         }
-    
+
         BidirIter operator--() {
             if (ptr->left) {
                 ptr = ptr->left;
@@ -239,15 +236,21 @@ namespace ft {
         }
 
         ReverseBidirIter<iterator_type>& operator++(int) {
-            ReverseBidirIter<iterator_type>& it = *this;
+            ReverseBidirIter<iterator_type> *it = new ReverseBidirIter(iter);
             iter--;
-            return it;
+            return *it;
         }
 
+        // ReverseBidirIter<iterator_type>& operator--(int) {
+        //     ReverseBidirIter<iterator_type>& it = *this;
+        //     iter++;
+        //     return it;
+        // }
+
         ReverseBidirIter<iterator_type>& operator--(int) {
-            ReverseBidirIter<iterator_type>& it = *this;
+            ReverseBidirIter<iterator_type> *it = new ReverseBidirIter(iter);
             iter++;
-            return it;
+            return *it;
         }
 
         //TODO need to realize operator-(iterator). reverse_iter1 - reverse_iter2
@@ -382,17 +385,29 @@ namespace ft {
         typedef typename iterator_type::pointer pointer;
         typedef typename iterator_type::difference_type difference_type;
 
-        ReverseRandAccessIt(Iter iter): iter(iter)                                          {}
-        iterator_type base() const                                                       {return iter;}
-        iterator_type operator->() const                                                 {return iter;}
-        reference operator*()                                                              {return *iter;}
-        reference operator[](int idx)                                                      {return *(iter + idx);}
-        bool operator!=(const ReverseRandAccessIt &other) const                             {return !(*this == other);}
-        bool operator==(const ReverseRandAccessIt &other) const                             {return this->iter == other.iter;}
-        friend bool operator>(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs)  {return lhs.ptr > rhs.ptr;}
-        friend bool operator<(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs)  {return lhs.ptr < rhs.ptr;}
-        friend bool operator>=(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs) {return lhs.ptr >= rhs.ptr;}
-        friend bool operator<=(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs) {return lhs.ptr <= rhs.ptr;}
+        ReverseRandAccessIt(Iter iter): iter(iter)  {}
+        iterator_type base() const                  {return iter;}
+        iterator_type operator->() const            {return iter;}
+        reference operator*()                       {return *iter;}
+        reference operator[](int idx)               {return *(iter + idx);}
+        bool operator!=(const ReverseRandAccessIt &other) const
+        {return !(*this == other);}
+        
+        bool operator==(const ReverseRandAccessIt &other) const
+        {return this->iter == other.iter;}
+
+        friend bool operator>(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs)
+        {return lhs.ptr > rhs.ptr;}
+
+        friend bool operator<(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs)
+        {return lhs.ptr < rhs.ptr;}
+
+        friend bool operator>=(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs)
+        {return lhs.ptr >= rhs.ptr;}
+
+        friend bool operator<=(const ReverseRandAccessIt& lhs, const ReverseRandAccessIt& rhs)
+        {return lhs.ptr <= rhs.ptr;}
+
 
         ReverseRandAccessIt<iterator_type>& operator++() {
             iter--;

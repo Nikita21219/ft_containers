@@ -18,7 +18,7 @@ namespace ft {
         typedef const Key                                   key_type;
         typedef T                                           mapped_type;
         typedef typename ft::pair<key_type, mapped_type>    value_type;
-        typedef BTree<value_type, Compare, Alloc>           Tree;
+        typedef BTree<value_type, Key, Compare, Alloc>      Tree;
         typedef typename std::size_t                        size_type;
         typedef typename std::ptrdiff_t                     difference_type;
         typedef value_type&                                 reference;
@@ -126,6 +126,7 @@ namespace ft {
         allocator_type get_allocator() const            {return alloc;}
 
         void print() {tree.printTree();}//TODO tmp line
+        Key maxVal() {return tree.maxVal;}//TODO tmp line
 
     private:
         allocator_type alloc;

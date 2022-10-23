@@ -7,6 +7,7 @@ namespace ft
 {
     template <
         class T,
+        class KeyDropConst,
         class Compare = std::less<typename T::first_type>,
         class Alloc = std::allocator<T>,
         class Node = ft::BTreeNode<T> >
@@ -30,14 +31,12 @@ namespace ft
         typedef Compare                                 key_compare;
 
         BTree(const Compare& comp = Compare(), const NodeAlloc& alloc = NodeAlloc()):
-        nil(NULL), root(nil), comp(comp), alloc(alloc), sz(0) {
-            // Node *endNode = alloc.allocate(sizeof(Node));
-            // endNode->p = root;
-        }
+        alloc(alloc), nil(NULL), root(nil), comp(comp), sz(0), 
+        endNode(initEndNode()), endNodeLeft(initEndNode()) {}
 
         ~BTree() {
             treeEraseRange(begin(), end());
-            // alloc.deallocate(endNode, sizeof(Node));
+            alloc.deallocate(endNode, sizeof(Node));
         }
 
         Node *initNil() {
@@ -49,20 +48,53 @@ namespace ft
             return nil;
         }
 
+        Node *initEndNode() {
+            Node *node = alloc.allocate(sizeof(Node));
+            node->p = root;
+            node->right = NULL;
+            node->left = NULL;
+            return node;
+        }
+
         BTree(const BTree &other)                   {*this = other;}
-        iterator begin()                            {return iterator(getMin(root));}
-        const_iterator cbegin() const               {return const_iterator(getMin(root));}
-        reverse_iterator rbegin()                   {return reverse_iterator(getMax(root));}
-        const_reverse_iterator crbegin() const      {return const_reverse_iterator(getMax(root));}
-        iterator end()                              {return iterator(getMax(root));}
-        const_iterator cend() const                 {return const_iterator(NULL);}
-        reverse_iterator rend()                     {return reverse_iterator(NULL);}
-        const_reverse_iterator crend() const        {return const_reverse_iterator(NULL);}
+        iterator end()                              {return iterator(endNode);}
+        const_iterator cend() const                 {return const_iterator(endNode);}
+        const_reverse_iterator crend() const        {return const_reverse_iterator(endNode);}
         size_type size() const                      {return sz;}
         iterator find(const Key &k)                 {return iterator(getNodeByKey(k));}
         const_iterator find(const Key &k) const     {return const_iterator(getNodeByKey(k));}
         const mapped_type &at(const Key &k) const   {return at(k);}
         key_compare key_comp() const                {return comp;}
+
+        reverse_iterator rend() {
+            if (size() == 0)
+                return reverse_iterator(endNode);
+            return reverse_iterator(getMin(root));
+        }
+
+        iterator begin() {
+            if (size() == 0)
+                return iterator(endNode);
+            return iterator(getMin(root));
+        }
+
+        const_iterator cbegin() const {
+            if (size() == 0)
+                return const_iterator(endNode);
+            return const_iterator(getMin(root));
+        }
+
+        const_reverse_iterator crbegin() const {
+            if (size() == 0)
+                return const_reverse_iterator(endNode);
+            return const_reverse_iterator(getMax(root));
+        }
+
+        reverse_iterator rbegin() {
+            if (size() == 0)
+                return reverse_iterator(endNode);
+            return reverse_iterator(getMax(root));
+        }
 
         void clear() {
             treeEraseRange(begin(), end());
@@ -118,17 +150,22 @@ namespace ft
         }
 
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
-            (void)start;
+            (void)start; //TODO delete this line
             if (root == nil) {
                 root = alloc.allocate(sizeof(Node));
                 alloc.construct(root, value);
                 root->isRed = false;
                 sz++;
+                maxVal = root->data.first;
+                minVal = root->data.first;
+                root->right = endNode;
+                root->left = endNode;
+                endNode->p = root;
                 return ft::pair<iterator, bool>(iterator(root), true);
             }
             Node *parent = nil;
             Node *cur = root;
-            while (cur && cur != nil) {
+            while (cur && cur != endNode) {
                 if (cur->data.first < value.first) {
                     parent = cur;
                     cur = cur->right;
@@ -192,6 +229,15 @@ namespace ft
             }
             root->isRed = false;
             sz++;
+            if (res->data.first > maxVal) {
+                endNode->p = res;
+                res->right = endNode;
+                maxVal = res->data.first;
+            } else if (res->data.first < minVal) {
+                endNodeLeft->p = res;
+                res->left = endNodeLeft;
+                minVal = res->data.first;
+            }
             return ft::pair<iterator, bool>(iterator(res), true);
         }
 
@@ -474,7 +520,7 @@ namespace ft
         Node *getMax(Node *node) const {
             if (node == nil)
                 return nil;
-            while (node->right)
+            while (node->right && node->right != endNode)
                 node = node->right;
             return node;
         }
@@ -508,12 +554,17 @@ namespace ft
                 printBT( prefix + (isLeft ? "│   " : "    "), nodeV->right, false);
         }
 
+        NodeAlloc alloc;
         Node *nil;
         Node *root;
-        Node *endNode;
         key_compare comp;
-        NodeAlloc alloc;
         size_t sz;
+        Node *endNode;
+        Node *endNodeLeft;
+
+    public://TODO tmp line
+        KeyDropConst maxVal;
+        KeyDropConst minVal;
     };
 }
 
