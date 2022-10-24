@@ -35,8 +35,8 @@ namespace ft
         endNode(initEndNode()), endNodeLeft(initEndNode()) {}
 
         ~BTree() {
-            treeEraseRange(begin(), end());
-            alloc.deallocate(endNode, sizeof(Node));
+            // treeEraseRange(begin(), end());
+            // alloc.deallocate(endNode, sizeof(Node));
         }
 
         Node *initNil() {
@@ -67,9 +67,9 @@ namespace ft
         key_compare key_comp() const                {return comp;}
 
         reverse_iterator rend() {
-            if (size() == 0)
-                return reverse_iterator(endNode);
-            return reverse_iterator(getMin(root));
+            return reverse_iterator(endNodeLeft);
+            // if (size() == 0)
+            // return reverse_iterator(getMin(root));
         }
 
         iterator begin() {
@@ -92,7 +92,7 @@ namespace ft
 
         reverse_iterator rbegin() {
             if (size() == 0)
-                return reverse_iterator(endNode);
+                return reverse_iterator(endNodeLeft);
             return reverse_iterator(getMax(root));
         }
 
@@ -159,13 +159,14 @@ namespace ft
                 maxVal = root->data.first;
                 minVal = root->data.first;
                 root->right = endNode;
-                root->left = endNode;
+                root->left = endNodeLeft;
                 endNode->p = root;
+                endNodeLeft->p = root;
                 return ft::pair<iterator, bool>(iterator(root), true);
             }
             Node *parent = nil;
             Node *cur = root;
-            while (cur && cur != endNode) {
+            while (cur && cur != endNode && cur != endNodeLeft) {
                 if (cur->data.first < value.first) {
                     parent = cur;
                     cur = cur->right;
@@ -512,7 +513,7 @@ namespace ft
         Node *getMin(Node *node) const {
             if (node == nil)
                 return nil;
-            while (node->left)
+            while (node->left && node->left != endNodeLeft)
                 node = node->left;
             return node;
         }

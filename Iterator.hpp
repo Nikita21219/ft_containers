@@ -175,17 +175,19 @@ namespace ft {
         }
     
         ConstBidirIter operator--() {
-            if (ptr->left) {
-                ptr = ptr->left;
-                while (ptr->right)
-                    ptr = ptr->right;
-            } else {
-                pointer tmp = ptr->p;
-                while (tmp && ptr == tmp->left) {
+            if (ptr) {
+                if (ptr->left) {
+                    ptr = ptr->left;
+                    while (ptr->right)
+                        ptr = ptr->right;
+                } else {
+                    pointer tmp = ptr->p;
+                    while (tmp && ptr == tmp->left) {
+                        ptr = tmp;
+                        tmp = tmp->p;
+                    }
                     ptr = tmp;
-                    tmp = tmp->p;
                 }
-                ptr = tmp;
             }
             return *this;
         }
