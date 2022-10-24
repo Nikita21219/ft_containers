@@ -92,6 +92,22 @@ namespace ft {
         struct BTreeNode *p;
     };
 
+    // template <typename T>
+    // class SmarPtr {
+    // public:
+    //     SmarPtr(): ptr(NULL) {}
+    //     SmarPtr(T *ptr): ptr(ptr) {}
+
+    //     ~SmarPtr() {
+    //         if (ptr)
+    //             delete ptr;
+    //     }
+
+    //     T &operator*() {return *ptr;}
+
+    // private:
+    //     T *ptr;
+    // };
 }
 
 #endif

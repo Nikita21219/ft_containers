@@ -202,7 +202,6 @@ namespace ft {
         pointer ptr;
     };
 
-
     template <typename Iter> // TODO inheritance typedefs from general iterator
     class ReverseBidirIter {
     public:
@@ -235,22 +234,16 @@ namespace ft {
             return *this;
         }
 
-        ReverseBidirIter<iterator_type>& operator++(int) {
-            ReverseBidirIter<iterator_type> *it = new ReverseBidirIter(iter);
-            iter--;
-            return *it;
+        ReverseBidirIter operator++(int) {
+            ReverseBidirIter it = *this;
+            ++(*this);
+            return it;
         }
 
-        // ReverseBidirIter<iterator_type>& operator--(int) {
-        //     ReverseBidirIter<iterator_type>& it = *this;
-        //     iter++;
-        //     return it;
-        // }
-
-        ReverseBidirIter<iterator_type>& operator--(int) {
-            ReverseBidirIter<iterator_type> *it = new ReverseBidirIter(iter);
-            iter++;
-            return *it;
+        ReverseBidirIter operator--(int) {
+            ReverseBidirIter it = *this;
+            --(*this);
+            return it;
         }
 
         //TODO need to realize operator-(iterator). reverse_iter1 - reverse_iter2
