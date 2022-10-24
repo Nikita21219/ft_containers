@@ -34,10 +34,8 @@ namespace ft
         alloc(alloc), nil(NULL), root(nil), comp(comp), sz(0), 
         endNode(initEndNode()), endNodeLeft(initEndNode()) {}
 
-        ~BTree() {
-            // treeEraseRange(begin(), end());
-            // alloc.deallocate(endNode, sizeof(Node));
-        }
+        // ~BTree() {}
+        ~BTree() {clear();}
 
         Node *initNil() {
             Node *nil = alloc.allocate(sizeof(Node));
@@ -68,8 +66,6 @@ namespace ft
 
         reverse_iterator rend() {
             return reverse_iterator(endNodeLeft);
-            // if (size() == 0)
-            // return reverse_iterator(getMin(root));
         }
 
         iterator begin() {
@@ -98,6 +94,8 @@ namespace ft
 
         void clear() {
             treeEraseRange(begin(), end());
+            alloc.deallocate(endNode, sizeof(endNode));
+            alloc.deallocate(endNodeLeft, sizeof(endNodeLeft));
             sz = 0;
         }
 
@@ -128,9 +126,17 @@ namespace ft
         }
 
         const BTree &operator=(const BTree &other) {
-            if (size())
-                treeEraseRange(begin(), end());
+            if (sz)
+                clear();
+            else
+                alloc.deallocate(endNode, sizeof(endNode));
+                alloc.deallocate(endNodeLeft, sizeof(endNodeLeft));
+            root = nil;
+            comp = other.comp;
+            endNode = initEndNode();
+            endNodeLeft = initEndNode();
             treeInsertRange(other.cbegin(), other.cend());
+            // sz = other.sz;
             return *this;
         }
 
@@ -151,6 +157,8 @@ namespace ft
 
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             (void)start; //TODO delete this line
+            if (find(value.first).getPtr())
+                return ft::pair<iterator, bool>(iterator(NULL), false);
             if (root == nil) {
                 root = alloc.allocate(sizeof(Node));
                 alloc.construct(root, value);
@@ -167,21 +175,17 @@ namespace ft
             Node *parent = nil;
             Node *cur = root;
             while (cur && cur != endNode && cur != endNodeLeft) {
-                if (cur->data.first < value.first) {
-                    parent = cur;
+                parent = cur;
+                if (comp(cur->data.first, value.first))
                     cur = cur->right;
-                } else if (cur->data.first > value.first) {
-                    parent = cur;
+                else
                     cur = cur->left;
-                } else {
-                    return ft::pair<iterator, bool>(iterator(NULL), false);
-                }
             }
             cur = alloc.allocate(sizeof(Node));
             alloc.construct(cur, value);
             Node *res = cur;
             cur->isRed = true;
-            if (parent->data.first < value.first) {
+            if (comp(parent->data.first, value.first)) {
                 parent->right = cur;
                 cur->p = parent;
             } else {
@@ -190,8 +194,7 @@ namespace ft
             }
             while (parent && parent->isRed == true) {
                 Node *grand = parent->p;
-                if (parent == grand->left)
-                {
+                if (parent == grand->left) {
                     Node *uncle = grand->right;
                     if (uncle && uncle->isRed == true) {
                         parent->isRed = uncle->isRed = false;
@@ -230,14 +233,14 @@ namespace ft
             }
             root->isRed = false;
             sz++;
-            if (res->data.first > maxVal) {
-                endNode->p = res;
-                res->right = endNode;
-                maxVal = res->data.first;
-            } else if (res->data.first < minVal) {
+            if (res->data.first < minVal) {
                 endNodeLeft->p = res;
                 res->left = endNodeLeft;
                 minVal = res->data.first;
+            } else if (res->data.first > maxVal) {
+                endNode->p = res;
+                res->right = endNode;
+                maxVal = res->data.first;
             }
             return ft::pair<iterator, bool>(iterator(res), true);
         }
@@ -286,7 +289,7 @@ namespace ft
             }
         }
 
-        bool treeErase(const Key &key) {
+        bool treeErase(const Key &key) {//TODO replace body on getNodeByKey()
             if (root == NULL)
                 return false;
             Node *node = root;
