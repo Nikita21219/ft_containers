@@ -157,8 +157,9 @@ namespace ft
 
         ft::pair<iterator, bool> treeInsert(const value_type &value, Node *start) {
             (void)start; //TODO delete this line
-            if (find(value.first).getPtr())
-                return ft::pair<iterator, bool>(iterator(NULL), false);
+            iterator find_it = find(value.first);
+            if (find_it.getPtr())
+                return ft::pair<iterator, bool>(find_it, false);
             if (root == nil) {
                 root = alloc.allocate(sizeof(Node));
                 alloc.construct(root, value);

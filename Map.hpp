@@ -127,6 +127,7 @@ namespace ft {
 
         void print() {tree.printTree();}//TODO tmp line
         Key maxVal() {return tree.maxVal;}//TODO tmp line
+        ft::BTreeNode<ft::pair<const int, int> > *getRoot(){return tree.getRoot();}//TODO tmp line
 
     private:
         allocator_type alloc;
