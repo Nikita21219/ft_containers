@@ -139,7 +139,6 @@ std::vector<int> comparator_test(ft::map<T, V> mp) {
 
 
 int main() {
-   
     // {
     //     std::cout << "std: ";
     //     std::map<int, int> m;
@@ -158,27 +157,22 @@ int main() {
     //     std::cout << "\n";
     // }
 
-    {
-        std::map<int, int, std::plus<int> > m;
-        m.insert(std::pair<int, int>(10, 0));
-        m.insert(std::pair<int, int>(11, 0));
-        m.insert(std::pair<int, int>(12, 0));
-        std::cout << "std: ";
-        printMap(m);
-    }
-
-    {
-        ft::map<int, int, std::plus<int> > m;
-        m.insert(ft::pair<int, int>(10, 0));
-        m.insert(ft::pair<int, int>(11, 0));
-        m.insert(ft::pair<int, int>(12, 0));
-        std::cout << "ft:  ";
-        printMap(m);
-    }
+    // {
+    //     std::map<int, int, std::plus<int> > m;
+    //     m.insert(std::pair<int, int>(10, 0));
+    //     m.insert(std::pair<int, int>(11, 0));
+    //     m.insert(std::pair<int, int>(12, 0));
+    //     std::cout << "std: ";
+    //     printMap(m);
+    // }
 
     // {
-    //     std::plus<int> func;
-    //     std::cout << "result of std::plus: " << static_cast<bool>(func(10, 5)) << "\n";
+    //     ft::map<int, int, std::plus<int> > m;
+    //     m.insert(ft::pair<int, int>(10, 0));
+    //     m.insert(ft::pair<int, int>(11, 0));
+    //     m.insert(ft::pair<int, int>(12, 0));
+    //     std::cout << "ft:  ";
+    //     printMap(m);
     // }
 
     return 0;

@@ -166,22 +166,35 @@ namespace ft
             Node *cur = root;
             while (cur && cur != endNode && cur != endNodeLeft) {
                 parent = cur;
-                if (comp(cur->data.first, value.first))
-                    cur = cur->right;
-                else
+                if (comp(value.first, cur->data.first))
                     cur = cur->left;
+                else
+                    cur = cur->right;
+                // if (comp(cur->data.first, value.first))
+                //     cur = cur->right;
+                // else
+                //     cur = cur->left;
             }
             cur = alloc.allocate(sizeof(Node));
             alloc.construct(cur, value);
             Node *res = cur;
             cur->isRed = true;
-            if (comp(parent->data.first, value.first)) {
-                parent->right = cur;
-                cur->p = parent;
-            } else {
+            if (comp(value.first, parent->data.first)) {
                 parent->left = cur;
                 cur->p = parent;
+            } else {
+                parent->right = cur;
+                cur->p = parent;
             }
+            // if (comp(parent->data.first, value.first)) {
+            //     parent->right = cur;
+            //     cur->p = parent;
+            // } else {
+            //     parent->left = cur;
+            //     cur->p = parent;
+            // }
+            // std::cout << "BEFORE\n\n";
+            // printTree();
             while (parent && parent->isRed == true) {
                 Node *grand = parent->p;
                 if (parent == grand->left) {
@@ -230,6 +243,8 @@ namespace ft
                 endNode->p = res;
                 res->right = endNode;
             }
+            // std::cout << "AFTER\n\n";
+            // printTree();
             return ft::pair<iterator, bool>(iterator(res), true);
         }
 
@@ -286,7 +301,7 @@ namespace ft
                     node = node->right;
                 else if (comp(key, node->data.first))
                     node = node->left;
-            }
+            } //TODO replace on getNodeByKey
             return erase(node);
         }
 
@@ -403,6 +418,7 @@ namespace ft
             alloc.destroy(node);
             alloc.deallocate(node, sizeof(node));
             sz--;
+            // TODO fix endNode and endNodeLeft
             return true;
         }
 
@@ -423,7 +439,7 @@ namespace ft
                 it++;
             }
             return it;
-        }
+        } //TODO need to fix
 
         // const_iterator lower_bound(const Key &k) const {
         //     const_iterator it = cbegin();
@@ -529,12 +545,11 @@ namespace ft
                 v->p = u->p;
         }
 
-        void printBT (const std::string& prefix, const Node* nodeV, bool isLeft
-            ) const {
+        void printBT(const std::string& prefix, const Node* nodeV, bool isLeft) const {
                 // 5 - sega
                 std::cout << prefix;
                 std::cout << (isLeft ? "├──" : "└──" );
-                if (nodeV == nil) {
+                if (nodeV == nil || nodeV == endNode || nodeV == endNodeLeft) {
                     std::cout <<"\033[0;36m"<< "nil" << "\033[0m"<<std::endl;
                     return ;
                 }
