@@ -115,7 +115,7 @@ namespace ft {
         const_reverse_iterator rend() const             {return tree.crend();}
         size_type erase(const key_type& k)              {return tree.treeErase(k) ? 1 : 0;}
         size_type size() const                          {return tree.size();}
-        bool empty() const                              {return size();}
+        bool empty() const                              {return !size();}
         mapped_type &operator[](const key_type &k)      {return tree[k];}
         mapped_type &at(const key_type& k)              {return tree.at(k);}
         const mapped_type &at(const key_type &k) const  {return tree.at(k);}
