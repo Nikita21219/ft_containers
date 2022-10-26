@@ -106,20 +106,20 @@ int main() {
     {
         std::cout << "ft:  ";
         ft::map<int, int> m;
-        std::vector<int> v = insert_test(m);
-        // for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++)
-        //     std::cout << *i << " ";
+        fillMap(m);
+        m.erase(4);
+        printMap(m);
         std::cout << "\n";
     }
 
-    {
-        std::cout << "std: ";
-        std::map<int, int> m;
-        std::vector<int> v = insert_test(m);
-        // for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++)
-        //     std::cout << *i << " ";
-        std::cout << "\n";
-    }
+    // {
+    //     std::cout << "std: ";
+    //     std::map<int, int> m;
+    //     std::vector<int> v = insert_test(m);
+    //     // for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++)
+    //     //     std::cout << *i << " ";
+    //     std::cout << "\n";
+    // }
 
     return 0;
 }

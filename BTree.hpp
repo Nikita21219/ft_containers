@@ -24,9 +24,9 @@ namespace ft
         typedef typename allocator_type::size_type      size_type;
         typedef Node                                    node_type;
         typedef BidirIter<Node>                         iterator;
-        typedef ConstBidirIter<Node>                    const_iterator;
-        typedef ReverseBidirIter<iterator>              reverse_iterator;
-        typedef ReverseBidirIter<const_iterator>        const_reverse_iterator;
+        typedef ConstBidirIter<Node>                    c_iterator;
+        typedef ReverseBidirIter<iterator>              r_iterator;
+        typedef ReverseBidirIter<c_iterator>            cr_iterator;
         typedef typename iterator::difference_type      difference_type;
         typedef Compare                                 key_compare;
 
@@ -57,36 +57,27 @@ namespace ft
             return node;
         }
 
-        BTree(const BTree &other)                   {*this = other;}
-        iterator end()                              {return iterator(endNode);}
-        const_iterator cend() const                 {return const_iterator(endNode);}
-        reverse_iterator rend()                     {return reverse_iterator(endNodeLeft);}
-        const_reverse_iterator crend() const        {return const_reverse_iterator(endNodeLeft);}
-        size_type size() const                      {return sz;}
-        iterator find(const Key &k)                 {return iterator(getNodeByKey(k));}
-        const_iterator find(const Key &k) const     {return const_iterator(getNodeByKey(k));}
-        const mapped_type &at(const Key &k) const   {return at(k);}
-        key_compare key_comp() const                {return comp;}
+        BTree(const BTree &other)                 {*this = other;}
+        iterator end()                            {return iterator(endNode);}
+        c_iterator cend() const                   {return c_iterator(endNode);}
+        r_iterator rend()                         {return r_iterator(endNodeLeft);}
+        cr_iterator crend() const                 {return cr_iterator(endNodeLeft);}
+        size_type size() const                    {return sz;}
+        iterator find(const Key &k)               {return iterator(getNodeByKey(k));}
+        c_iterator find(const Key &k) const       {return c_iterator(getNodeByKey(k));}
+        const mapped_type &at(const Key &k) const {return at(k);}
+        key_compare key_comp() const              {return comp;}
+        iterator begin()                          {return iterator(sz ? getMin(root) : endNode);}
+        c_iterator cbegin() const                 {return c_iterator(sz ? getMin(root) : endNode);}
+        cr_iterator crbegin() const               {return cr_iterator(sz ? getMax(root) : endNodeLeft);}
+        r_iterator rbegin()                       {return r_iterator(sz ? getMax(root) : endNodeLeft);}
 
-        iterator begin()
-        {return iterator(sz ? getMin(root) : endNode);}
-
-        const_iterator cbegin() const
-        {return const_iterator(sz ? getMin(root) : endNode);}
-
-        const_reverse_iterator crbegin() const
-        {return const_reverse_iterator(sz ? getMax(root) : endNodeLeft);}
-
-        reverse_iterator rbegin()
-        {return reverse_iterator(sz ? getMax(root) : endNodeLeft);}
+        mapped_type &operator[](const Key &k)
+        {return treeInsert(make_pair(k, mapped_type()), root).first->second;}
 
         void clear() {
             treeEraseRange(begin(), end());
             sz = 0;
-        }
-
-        mapped_type &operator[](const Key &k) {
-            return treeInsert(make_pair(k, mapped_type()), root).first->second;
         }
 
         void swap(BTree &other) {
@@ -157,10 +148,6 @@ namespace ft
                     cur = cur->left;
                 else
                     cur = cur->right;
-                // if (comp(cur->data.first, value.first))
-                //     cur = cur->right;
-                // else
-                //     cur = cur->left;
             }
             cur = alloc.allocate(sizeof(Node));
             alloc.construct(cur, value);
@@ -173,15 +160,6 @@ namespace ft
                 parent->right = cur;
                 cur->p = parent;
             }
-            // if (comp(parent->data.first, value.first)) {
-            //     parent->right = cur;
-            //     cur->p = parent;
-            // } else {
-            //     parent->left = cur;
-            //     cur->p = parent;
-            // }
-            // std::cout << "BEFORE\n\n";
-            // printTree();
             while (parent && parent->isRed == true) {
                 Node *grand = parent->p;
                 if (parent == grand->left) {
@@ -230,8 +208,6 @@ namespace ft
                 endNode->p = res;
                 res->right = endNode;
             }
-            // std::cout << "AFTER\n\n";
-            // printTree();
             return ft::pair<iterator, bool>(iterator(res), true);
         }
 
@@ -279,17 +255,11 @@ namespace ft
             }
         }
 
-        bool treeErase(const Key &key) {//TODO replace body on getNodeByKey()
-            if (root == NULL)
+        bool treeErase(const Key &key) {
+            iterator it = find(key);
+            if (it == endNode)
                 return false;
-            Node *node = root;
-            while (node && node->data.first != key) {
-                if (comp(key, node->data.first) == false)
-                    node = node->right;
-                else if (comp(key, node->data.first))
-                    node = node->left;
-            } //TODO replace on getNodeByKey
-            return erase(node);
+            return erase(it.getPtr());
         }
 
         void RotateLeft(Node *x) {
@@ -428,8 +398,8 @@ namespace ft
             return it;
         } //TODO need to fix
 
-        // const_iterator lower_bound(const Key &k) const {
-        //     const_iterator it = cbegin();
+        // c_iterator lower_bound(const Key &k) const {
+        //     c_iterator it = cbegin();
         //     while (it != cend()) {
         //         if (comp(it->first, k) == false)
         //             return it;
@@ -448,8 +418,8 @@ namespace ft
             return end();
         }
 
-        const_iterator upper_bound(const Key &k) const {
-            const_iterator it = cbegin();
+        c_iterator upper_bound(const Key &k) const {
+            c_iterator it = cbegin();
             while (it != cend()) {
                 if (comp(k, it->first))
                     return it;
@@ -472,18 +442,18 @@ namespace ft
             return ft::pair<iterator, iterator>(res_it1, res_it2);
         }
 
-        ft::pair<const_iterator, const_iterator> equal_range(const Key &k) const {
-            const_iterator lb_it = lower_bound(k);
-            const_iterator ub_it = upper_bound(k);
-            const_iterator it = cbegin();
+        ft::pair<c_iterator, c_iterator> equal_range(const Key &k) const {
+            c_iterator lb_it = lower_bound(k);
+            c_iterator ub_it = upper_bound(k);
+            c_iterator it = cbegin();
             while (it != lb_it && it != cend())
                 it++;
-            const_iterator res_it1 = it;
+            c_iterator res_it1 = it;
             it = cbegin();
             while (it != ub_it && it != cend())
                 it++;
-            const_iterator res_it2 = it;
-            return ft::pair<const_iterator, const_iterator>(res_it1, res_it2);
+            c_iterator res_it2 = it;
+            return ft::pair<c_iterator, c_iterator>(res_it1, res_it2);
         }
 
         Node *getRoot() { return root; } // TODO tmp func

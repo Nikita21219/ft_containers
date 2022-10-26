@@ -24,9 +24,9 @@ namespace ft {
         typedef value_type&                                 reference;
         typedef const value_type&                           const_reference;
         typedef typename Tree::iterator                     iterator;
-        typedef typename Tree::const_iterator               const_iterator;
-        typedef typename Tree::reverse_iterator             reverse_iterator;
-        typedef typename Tree::const_reverse_iterator       const_reverse_iterator;
+        typedef typename Tree::c_iterator                   const_iterator;
+        typedef typename Tree::r_iterator                   reverse_iterator;
+        typedef typename Tree::cr_iterator                  const_reverse_iterator;
         typedef typename Tree::node_type                    node_type;
 
         class value_compare {
