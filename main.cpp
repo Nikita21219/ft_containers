@@ -40,7 +40,6 @@ void fillMap(ft::map<T, V, C> &mp) {
 	mp.insert(ft::make_pair(4, 3));
 	mp.insert(ft::make_pair(11, 3));
 }
-
 template <class T, class V>
 std::vector<int> insert_test(std::map<T, V> mp) {
     std::vector<int> v;
@@ -68,6 +67,7 @@ std::vector<int> insert_test(std::map<T, V> mp) {
         v.push_back(it3->second);
     }
     v.push_back(mp.size());
+    printMap(mp);
     return v;
 }
 
@@ -98,6 +98,7 @@ std::vector<int> insert_test(ft::map<T, V> mp) {
         v.push_back(it3->second);
     }
     v.push_back(mp.size());
+    printMap(mp);
     return v;
 }
 
@@ -105,23 +106,18 @@ int main() {
     {
         std::cout << "ft:  ";
         ft::map<int, int> m;
-        fillMap(m);
-        ft::map<int, int> m2;
-        fillMap(m2);
-        // printMap(m);
-        m2.erase(7);
-        std::cout << (m <= m2) << "\n";
+        std::vector<int> v = insert_test(m);
+        // for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++)
+        //     std::cout << *i << " ";
         std::cout << "\n";
     }
+
     {
         std::cout << "std: ";
         std::map<int, int> m;
-        fillMap(m);
-        std::map<int, int> m2;
-        fillMap(m2);
-        m2.erase(7);
-        // printMap(m);
-        std::cout << (m <= m2) << "\n";
+        std::vector<int> v = insert_test(m);
+        // for (std::vector<int>::iterator i = v.begin(); i != v.end(); i++)
+        //     std::cout << *i << " ";
         std::cout << "\n";
     }
 
