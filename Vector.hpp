@@ -3,6 +3,12 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+// TODO need to fix:
+// std::vector<int> v;
+// for (size_t i = 0; i < 15; i++)
+//     v.insert(v.begin(), i);
+
+
 namespace ft {
     template <typename T, typename Alloc = std::allocator<T> >
     class vector {

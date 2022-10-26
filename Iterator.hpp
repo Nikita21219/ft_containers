@@ -66,7 +66,6 @@ namespace ft {
         bool operator==(const BidirIter &other) const                     {return ptr == other.ptr;}
         bool operator!=(const BidirIter &other) const                     {return !(*this == other);}
 
-
         BidirIter& operator= (const BidirIter &other) {
             ptr = other.ptr;
             return *this;
@@ -134,21 +133,20 @@ namespace ft {
         typedef typename iterator::reference                              reference;
         typedef const typename value_type::pair_type                      pair_type;
 
-        ConstBidirIter()                                                            {}
-        ConstBidirIter(pointer ptr): ptr(ptr)                                       {}
-        ConstBidirIter(const ConstBidirIter &other): ptr(other.ptr)                 {}
-        ConstBidirIter(const BidirIter<value_type> &other): ptr(other.getPtr())     {}
-        // TODO implement operator =
-        pair_type *operator->() const                                     {return &ptr->data;}
-        pair_type operator*()                                             {return ptr->data;}
-        bool operator==(const ConstBidirIter &other) const                {return ptr == other.ptr;}
-        bool operator!=(const ConstBidirIter &other) const                {return !(*this == other);}
-        const pointer& base() const                                       {return ptr;}
+        ConstBidirIter()                                                          {}
+        ConstBidirIter(pointer ptr): ptr(ptr)                                     {}
+        ConstBidirIter(const ConstBidirIter &other): ptr(other.ptr)               {}
+        ConstBidirIter(const BidirIter<value_type> &other): ptr(other.getPtr())   {}
+        pair_type *operator->() const                           {return &ptr->data;}
+        pair_type operator*()                                   {return ptr->data;}
+        bool operator==(const ConstBidirIter &other) const      {return ptr == other.ptr;}
+        bool operator!=(const ConstBidirIter &other) const      {return !(*this == other);}
+        const pointer& base() const                             {return ptr;}
 
-        friend bool operator>(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
-        friend bool operator<(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
-        friend bool operator>=(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
-        friend bool operator<=(const ConstBidirIter& lhs, const ConstBidirIter& rhs);// TODO implement
+        ConstBidirIter &operator=(const ConstBidirIter &other) {
+            ptr = other.ptr;
+            return *this;
+        }
 
         ConstBidirIter operator++() {
             if (ptr) {
@@ -322,6 +320,7 @@ namespace ft {
 
         RandAccessIt()                                                           {};
         RandAccessIt(pointer ptr): ptr(ptr)                                      {};
+        RandAccessIt(const RandAccessIt &other): ptr(other.ptr)                  {};
         reference operator*()                                                    {return *ptr;}
         pointer operator->() const                                               {return ptr;}
         reference operator[](int idx)                                            {return *(ptr + idx);}
@@ -335,6 +334,7 @@ namespace ft {
         difference_type operator-(RandAccessIt it)                               {return ptr - it.ptr;}
         RandAccessIt operator+(int n)                                            {return RandAccessIt(ptr + n);}
         RandAccessIt operator-(int n)                                            {return RandAccessIt(ptr - n);}
+        pointer getPtr() const                                                   {return ptr;}
 
         RandAccessIt operator++() {
             ptr++;
@@ -372,7 +372,7 @@ namespace ft {
         pointer ptr;
     };
 
-    template <typename Iter> // TODO inheritance typedefs from general iterator
+    template <typename Iter>
     class ReverseRandAccessIt {
     public:
         typedef Iter iterator_type;
@@ -380,11 +380,15 @@ namespace ft {
         typedef typename iterator_type::pointer pointer;
         typedef typename iterator_type::difference_type difference_type;
 
-        ReverseRandAccessIt(Iter iter): iter(iter)  {}
-        iterator_type base() const                  {return iter;}
-        iterator_type operator->() const            {return iter;}
-        reference operator*()                       {return *iter;}
-        reference operator[](int idx)               {return *(iter + idx);}
+        ReverseRandAccessIt(Iter iter): iter(iter)         {}
+        iterator_type base() const                         {return iter;}
+        iterator_type operator->() const                   {return iter;}
+        reference operator*()                              {return *iter;}
+        reference operator[](int idx)                      {return *(iter + idx);}
+        
+        difference_type operator-(const ReverseRandAccessIt &it)
+        {return it.iter.getPtr() - iter.getPtr();}
+
         bool operator!=(const ReverseRandAccessIt &other) const
         {return !(*this == other);}
         
@@ -427,12 +431,12 @@ namespace ft {
         ReverseRandAccessIt<iterator_type>& operator+(int n) {
             iter -= n;
             return *this;
-        }; //TODO fix error! return new ReverseRandAccessIt(iter - n)
+        };
         
         ReverseRandAccessIt<iterator_type>& operator-(int n) {
             iter += n;
             return *this;
-        }; //TODO fix error! return new ReverseRandAccessIt(iter - n)
+        };
 
         ReverseRandAccessIt<iterator_type>& operator++(int) {
             ReverseRandAccessIt<iterator_type>& it = *this;
@@ -445,8 +449,6 @@ namespace ft {
             iter++;
             return it;
         };
-
-        //TODO need to realize operator-(iterator). reverse_iter1 - reverse_iter2
 
     private:
         iterator_type iter;
