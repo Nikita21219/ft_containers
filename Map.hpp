@@ -134,6 +134,44 @@ namespace ft {
         key_compare comp;
         Tree tree;
     };
+
+    template <class Key, class T, class Compare, class Alloc>
+    bool operator==(const map<Key, T, Compare, Alloc>& l, const map<Key, T, Compare, Alloc>& r) {
+        typedef typename map<Key, T, Compare, Alloc>::const_iterator iterator;
+        if (l.size() != r.size())
+            return false;
+        iterator first_l = l.begin();
+        iterator last_l = l.end();
+        iterator first_r = r.begin();
+        for (iterator i = first_l; i != last_l; i++) {
+            if (first_l->first != first_r->first || first_l->second != first_r->second)
+                return false;
+            first_l++;
+            first_r++;
+        }
+        return true;
+    }
+
+    template <class K, class T, class Comp, class Alloc>
+    bool operator<(const map<K, T, Comp, Alloc>& l, const map<K, T, Comp, Alloc>& r)
+    {return ft::lexicographical_compare_three_way(l.begin(), l.end(), r.begin(), r.end(), Comp());}
+
+    template <class K, class T, class Comp, class Alloc>
+    bool operator<=(const map<K, T, Comp, Alloc>& l, const map<K, T, Comp, Alloc>& r)
+    {return (l < r || l == r);}
+
+    template <class K, class T, class Comp, class Alloc>
+    bool operator!=(const map<K, T, Comp, Alloc>& l, const map<K, T, Comp, Alloc>& r)
+    {return !(l == r);}
+
+    template <class K, class T, class Comp, class Alloc>
+    bool operator>(const map<K, T, Comp, Alloc>& l, const map<K, T, Comp, Alloc>& r)
+    {return (l < r == false && l != r);}
+
+    template <class K, class T, class Comp, class Alloc>
+    bool operator>=(const map<K, T, Comp, Alloc>& l, const map<K, T, Comp, Alloc>& r)
+    {return !(l < r);}
+
 }
 
 #endif
