@@ -40,6 +40,7 @@ void fillMap(ft::map<T, V, C> &mp) {
 	mp.insert(ft::make_pair(4, 3));
 	mp.insert(ft::make_pair(11, 3));
 }
+
 template <class T, class V>
 std::vector<int> insert_test(std::map<T, V> mp) {
     std::vector<int> v;

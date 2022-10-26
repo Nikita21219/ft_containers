@@ -125,9 +125,9 @@ namespace ft {
         iterator lower_bound(const key_type &k)         {return tree.lower_bound(k);}
         allocator_type get_allocator() const            {return alloc;}
 
-        void print() {tree.printTree();}//TODO tmp line
-        Key maxVal() {return tree.maxVal;}//TODO tmp line
-        ft::BTreeNode<ft::pair<const int, int> > *getRoot(){return tree.getRoot();}//TODO tmp line
+        // void print() {tree.printTree();}//TODO tmp line
+        // Key maxVal() {return tree.maxVal;}//TODO tmp line
+        // ft::BTreeNode<ft::pair<const int, int> > *getRoot(){return tree.getRoot();}//TODO tmp line
 
     private:
         allocator_type alloc;

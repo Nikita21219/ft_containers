@@ -375,7 +375,6 @@ namespace ft
             alloc.destroy(node);
             alloc.deallocate(node, sizeof(node));
             sz--;
-            // TODO fix endNode and endNodeLeft
             return true;
         }
 
@@ -396,17 +395,17 @@ namespace ft
                 it++;
             }
             return it;
-        } //TODO need to fix
+        }
 
-        // c_iterator lower_bound(const Key &k) const {
-        //     c_iterator it = cbegin();
-        //     while (it != cend()) {
-        //         if (comp(it->first, k) == false)
-        //             return it;
-        //         it++;
-        //     }
-        //     return cend();
-        // } //TODO copy above!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        c_iterator lower_bound(const Key &k) const {
+            c_iterator it = cbegin();
+            while (it != cend()) {
+                if (comp(it->first, k) == false)
+                    return it;
+                it++;
+            }
+            return it;
+        }
 
         iterator upper_bound(const Key &k) {
             iterator it = begin();
@@ -415,7 +414,7 @@ namespace ft
                     return it;
                 it++;
             }
-            return end();
+            return it;
         }
 
         c_iterator upper_bound(const Key &k) const {
@@ -425,7 +424,7 @@ namespace ft
                     return it;
                 it++;
             }
-            return cend();
+            return it;
         }
 
         ft::pair<iterator, iterator> equal_range(const Key &k) {
@@ -503,7 +502,6 @@ namespace ft
         }
 
         void printBT(const std::string& prefix, const Node* nodeV, bool isLeft) const {
-                // 5 - sega
                 std::cout << prefix;
                 std::cout << (isLeft ? "├──" : "└──" );
                 if (nodeV == nil || nodeV == endNode || nodeV == endNodeLeft) {
