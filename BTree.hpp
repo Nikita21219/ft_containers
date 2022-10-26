@@ -34,7 +34,6 @@ namespace ft
         alloc(alloc), nil(NULL), root(nil), comp(comp), sz(0), 
         endNode(initEndNode()), endNodeLeft(initEndNode()) {}
 
-        // ~BTree() {}
         ~BTree() {
             clear();
             alloc.deallocate(endNode, sizeof(endNode));
@@ -69,29 +68,17 @@ namespace ft
         const mapped_type &at(const Key &k) const   {return at(k);}
         key_compare key_comp() const                {return comp;}
 
-        iterator begin() {
-            if (size() == 0)
-                return iterator(endNode);
-            return iterator(getMin(root));
-        } //TODO fix to ternar operator
+        iterator begin()
+        {return iterator(sz ? getMin(root) : endNode);}
 
-        const_iterator cbegin() const {
-            if (size() == 0)
-                return const_iterator(endNode);
-            return const_iterator(getMin(root));
-        } //TODO fix to ternar operator
+        const_iterator cbegin() const
+        {return const_iterator(sz ? getMin(root) : endNode);}
 
-        const_reverse_iterator crbegin() const {
-            if (size() == 0)
-                return const_reverse_iterator(endNodeLeft);
-            return const_reverse_iterator(getMax(root));
-        } //TODO fix to ternar operator
+        const_reverse_iterator crbegin() const
+        {return const_reverse_iterator(sz ? getMax(root) : endNodeLeft);}
 
-        reverse_iterator rbegin() {
-            if (size() == 0)
-                return reverse_iterator(endNodeLeft);
-            return reverse_iterator(getMax(root));
-        } //TODO fix to ternar operator
+        reverse_iterator rbegin()
+        {return reverse_iterator(sz ? getMax(root) : endNodeLeft);}
 
         void clear() {
             treeEraseRange(begin(), end());
