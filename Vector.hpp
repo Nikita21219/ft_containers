@@ -223,7 +223,11 @@ namespace ft {
                 }
                 *it = tmp_val;
             } else if (sz == cp) {
-                pointer copy_arr = get_copy_arr(cp * 2);
+                pointer copy_arr;
+                if (cp == 0)
+                    copy_arr = get_copy_arr(1);
+                else
+                    copy_arr = get_copy_arr(cp * 2);
                 iterator copy_it = iterator(copy_arr);
                 if (pos == end()) {
                     result = iterator(copy_it + sz);
