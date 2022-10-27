@@ -99,7 +99,7 @@ int main() {
     {
         std::cout << "std: ";
         std::vector<int> v;
-		for (size_t i = 0; i < 15; i++)
+		for (size_t i = 0; i < 13; i++)
 			v.insert(v.begin(), i);
 		printVector(v);
     }
@@ -107,7 +107,7 @@ int main() {
     {
         std::cout << "ft:  ";
         ft::vector<int> v;
-		for (size_t i = 0; i < 15; i++)
+		for (size_t i = 0; i < 13; i++)
 			v.insert(v.begin(), i);
 		printVector(v);
     }

@@ -226,7 +226,7 @@ namespace ft {
                 pointer copy_arr;
                 if (cp == 0)
                     cp++;
-                copy_arr = get_copy_arr(cp * 2);
+                copy_arr = get_copy_arr(cp);
                 iterator copy_it = iterator(copy_arr);
                 if (pos == end()) {
                     result = iterator(copy_it + sz);
