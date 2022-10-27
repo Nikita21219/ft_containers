@@ -96,19 +96,18 @@ std::vector<int> constructor_test(ft::stack<T> stk) {
 }
 int main() {
 
-    // {
-    //     std::cout << "std: ";
-    //     std::vector<int> v;
-	// 	for (size_t i = 0; i < 15; i++)
-	// 		v.insert(v.begin(), i);
-	// 	printVector(v);
-    // }
+    {
+        std::cout << "std: ";
+        std::vector<int> v;
+		for (size_t i = 0; i < 15; i++)
+			v.insert(v.begin(), i);
+		printVector(v);
+    }
 
     {
         std::cout << "ft:  ";
         ft::vector<int> v;
-		// v.push_back(10);
-		for (size_t i = 0; i < 1; i++)
+		for (size_t i = 0; i < 15; i++)
 			v.insert(v.begin(), i);
 		printVector(v);
     }
