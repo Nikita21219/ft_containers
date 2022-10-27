@@ -3,12 +3,6 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-// TODO need to fix:
-// std::vector<int> v;
-// for (size_t i = 0; i < 15; i++)
-//     v.insert(v.begin(), i);
-
-
 namespace ft {
     template <typename T, typename Alloc = std::allocator<T> >
     class vector {
@@ -27,9 +21,7 @@ namespace ft {
         typedef ft::ReverseRandAccessIt<const_iterator>              const_reverse_iterator;
 
         explicit vector(const allocator_type& alloc = allocator_type()):
-        alloc(alloc), cp(0), sz(0) {
-            arr = this->alloc.allocate(cp);
-        }
+        alloc(alloc), cp(0), sz(0) {arr = this->alloc.allocate(cp);}
 
         explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()):
         alloc(alloc), cp(n), sz(n) {
@@ -58,28 +50,28 @@ namespace ft {
             this->alloc.deallocate(arr, cp);
         }
 
-        reference operator[] (size_type n) const       {return *(arr + n);}
-        size_type capacity() const                     {return cp;}
-        size_type size() const                         {return sz;}
-        bool empty() const                             {return sz == 0;}
-        reference front()                              {return arr[0];}
-        const_reference front() const                  {return arr[0];}
-        reference back()                               {return arr[sz - 1];}
-        const_reference back() const                   {return arr[sz - 1];}
-        allocator_type get_allocator() const           {return alloc;}
-        iterator begin()                               {return iterator(arr);}
-        iterator end()                                 {return iterator(arr + sz);}
-        const_iterator cbegin() const                  {return const_iterator(arr);}
-        const_iterator cend() const                    {return const_iterator(arr + sz);}
-        reverse_iterator rbegin()                      {return reverse_iterator(--end());}
-        reverse_iterator rend()                        {return reverse_iterator(--begin());}
-        const_reverse_iterator crbegin() const         {return const_reverse_iterator(--cend());}
-        const_reverse_iterator crend() const           {return const_reverse_iterator(--cbegin());}
-        value_type* data()                             {return &front();}
-        const value_type* data() const                 {return &front();}
-        void pop_back()                                {alloc.destroy(arr + (sz-- - 1));}
-        void clear()                                   {erase(begin(), end());}
-        size_type max_size() const                     {return std::numeric_limits<difference_type>::max();} //TODO may be alloc.max_size()
+        reference operator[] (size_type n) const {return *(arr + n);}
+        size_type capacity() const               {return cp;}
+        size_type size() const                   {return sz;}
+        bool empty() const                       {return sz == 0;}
+        reference front()                        {return arr[0];}
+        const_reference front() const            {return arr[0];}
+        reference back()                         {return arr[sz - 1];}
+        const_reference back() const             {return arr[sz - 1];}
+        allocator_type get_allocator() const     {return alloc;}
+        iterator begin()                         {return iterator(arr);}
+        iterator end()                           {return iterator(arr + sz);}
+        const_iterator cbegin() const            {return const_iterator(arr);}
+        const_iterator cend() const              {return const_iterator(arr + sz);}
+        reverse_iterator rbegin()                {return reverse_iterator(--end());}
+        reverse_iterator rend()                  {return reverse_iterator(--begin());}
+        const_reverse_iterator crbegin() const   {return const_reverse_iterator(--cend());}
+        const_reverse_iterator crend() const     {return const_reverse_iterator(--cbegin());}
+        value_type* data()                       {return &front();}
+        const value_type* data() const           {return &front();}
+        void pop_back()                          {alloc.destroy(arr + (sz-- - 1));}
+        void clear()                             {erase(begin(), end());}
+        size_type max_size() const               {return std::numeric_limits<difference_type>::max();}
 
         vector& operator= (const vector& x) {
             memory_reserve(x.capacity());
@@ -230,8 +222,11 @@ namespace ft {
                 iterator copy_it = iterator(copy_arr);
                 if (pos == end()) {
                     result = iterator(copy_it + sz);
-                    *result = val;
+                    alloc.construct(copy_arr + sz, val);
                     sz++;
+                    for (size_type i = 0; i < sz; i++)
+                        alloc.destroy(arr + i);
+                    alloc.deallocate(arr, cp);
                     arr = copy_arr;
                     return result;
                 }
@@ -269,7 +264,8 @@ namespace ft {
             size_type new_capacity = cp;
             while (new_capacity < cp + n) {
                 new_capacity += sz + n > cp ? cp * 2 : cp;
-                if (new_capacity > alloc.max_size()) throw std::bad_alloc();
+                if (new_capacity > alloc.max_size())
+                    throw std::bad_alloc();
             }
             pointer new_arr = this->alloc.allocate(sizeof(value_type) * (new_capacity));
             iterator it = begin();
@@ -300,7 +296,8 @@ namespace ft {
             size_type new_capacity = sz + dist > cp ? cp * 2 : cp;
             if (sz + dist >= cp * 2)
                 new_capacity = sz + dist;
-            if (new_capacity > alloc.max_size()) throw std::bad_alloc();
+            if (new_capacity > alloc.max_size())
+                throw std::bad_alloc();
             pointer new_arr = alloc.allocate(sizeof(value_type) * (new_capacity));
             iterator it = begin();
             size_type i = 0;
