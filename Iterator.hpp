@@ -202,7 +202,7 @@ namespace ft {
         pointer ptr;
     };
 
-    template <typename Iter> // TODO inheritance typedefs from general iterator
+    template <typename Iter>
     class ReverseBidirIter {
     public:
         typedef Iter iterator_type;
@@ -252,7 +252,7 @@ namespace ft {
         iterator_type iter;
     };
 
-    template <typename Iter> // TODO inheritance typedefs from general iterator
+    template <typename Iter>
     class ConstReverseBidirIter {
     public:
         typedef Iter iterator_type;
